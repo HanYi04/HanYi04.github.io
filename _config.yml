@@ -87,3 +87,4 @@ exclude:
   - vendor
   - serve.sh
   - new-post.sh
+  - push.sh
