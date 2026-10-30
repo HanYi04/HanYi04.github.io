@@ -82,6 +82,12 @@
     return;
   }
 
+  // 网页文件：直接在 iframe 里加载（同源，功能完整）
+  if (ext === 'html' || ext === 'htm') {
+    bodyEl.appendChild(el('iframe', { src: path, 'class': 'viewer-frame', title: fileName }));
+    return;
+  }
+
   if (imageExts.indexOf(ext) > -1) {
     bodyEl.appendChild(el('img', { src: path, alt: fileName, 'class': 'viewer-image' }));
     return;
@@ -116,12 +122,28 @@
     return;
   }
 
+  // ---- Office 文档：走微软的在线预览服务 ----
+  if (officeExts.indexOf(ext) > -1) {
+    var abs;
+    try {
+      abs = new URL(path, window.location.origin).href;
+    } catch (e) {
+      abs = path;
+    }
+    var viewerUrl = 'https://view.officeapps.live.com/op/embed.aspx?src=' + encodeURIComponent(abs);
+
+    bodyEl.appendChild(el('iframe', { src: viewerUrl, 'class': 'viewer-frame', title: fileName }));
+
+    var note = el('p', { 'class': 'viewer-note' });
+    note.textContent = '预览由微软 Office 在线服务提供。如果一直空白，说明该服务在当前网络下不可用，请点右上角「下载」。';
+    bodyEl.appendChild(note);
+    return;
+  }
+
   // ---- 无法预览的类型 ----
   var hint = el('div', { 'class': 'viewer-fallback' });
   var p1 = el('p');
-  p1.textContent = officeExts.indexOf(ext) > -1
-    ? '浏览器无法直接预览 Office 文档。'
-    : '这种类型的文件无法在浏览器里预览。';
+  p1.textContent = '这种类型的文件无法在浏览器里预览。';
   var p2 = el('p');
   p2.className = 'viewer-fallback-hint';
   p2.textContent = '请点击上方「下载」按钮保存到本地后打开。';

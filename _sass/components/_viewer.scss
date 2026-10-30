@@ -155,3 +155,11 @@
     flex-basis: 100%;
   }
 }
+
+// Office 在线预览下方的说明
+.viewer-note {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  margin-top: var(--space-3);
+  max-width: none;
+}

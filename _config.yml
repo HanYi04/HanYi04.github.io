@@ -44,6 +44,7 @@ analytics:
 nav_pages:
   - name: home
   - name: files
+  - name: preview
 
 # ============================================================
 #  以下一般不需要改

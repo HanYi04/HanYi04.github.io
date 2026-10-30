@@ -47,6 +47,11 @@
           {% assign nav_label = "下载" %}
           {% assign nav_active = false %}
           {% if page.url contains "files" %}{% assign nav_active = true %}{% endif %}
+        {% elsif nav.name == "preview" %}
+          {% assign nav_href = "/preview/" | relative_url %}
+          {% assign nav_label = "预览" %}
+          {% assign nav_active = false %}
+          {% if page.url contains "preview" %}{% assign nav_active = true %}{% endif %}
         {% elsif nav.name == "cv" %}
           {% assign nav_href = "/cv/" | relative_url %}
           {% assign nav_label = "CV" %}
