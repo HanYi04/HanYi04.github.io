@@ -84,6 +84,7 @@ exclude:
   - Gemfile.lock
   - README.md
   - 发布指南.md
+  - 留言板部署指南.md
   - node_modules
   - vendor
   - serve.sh
