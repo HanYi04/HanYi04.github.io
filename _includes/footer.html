@@ -23,12 +23,32 @@
 (function () {
   var el = document.getElementById('site-age');
   if (!el) return;
+
   var launchDate = new Date(el.getAttribute('data-launch') + 'T00:00:00');
-  var now = new Date();
-  var diff = now - launchDate;
-  if (diff < 0) return;
-  var days = Math.floor(diff / 86400000);
-  el.textContent = '已上线 ' + days + ' 天';
+  var weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+
+  function pad(n) { return n < 10 ? '0' + n : String(n); }
+
+  function update() {
+    var now = new Date();
+
+    // 2026-10-30 周五 14:52
+    var stamp = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate())
+              + ' ' + weekdays[now.getDay()]
+              + ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes());
+
+    var days = Math.floor((now - launchDate) / 86400000);
+    var age = days >= 0 ? '已上线 ' + days + ' 天' : '';
+
+    el.textContent = age ? stamp + ' · ' + age : stamp;
+  }
+
+  update();
+  // 每分钟刷新一次，对齐到整分钟
+  setTimeout(function () {
+    update();
+    setInterval(update, 60000);
+  }, (60 - new Date().getSeconds()) * 1000);
 })();
 </script>
 {% endif %}
