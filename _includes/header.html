@@ -1,0 +1,55 @@
+<nav class="navbar sticky-top navbar-expand-md">
+  <div class="container" style="max-width: var(--container-max);">
+
+    <!-- Brand + dark mode toggle -->
+    <div class="d-flex align-items-center" style="gap: var(--space-2);">
+      <a class="navbar-brand" href="{{ site.url }}{{ site.baseurl }}/">
+        <img src="{{ site.url }}{{ site.baseurl }}/favicon.svg"
+             width="24"
+             height="24"
+             class="d-inline-block align-text-top"
+             alt=""
+             style="border-radius: 5px;">
+        {{ site.name | escape }}
+      </a>
+
+      {% if site.dark_mode %}
+      <button class="dark-mode-toggle"
+              id="darkModeToggle"
+              aria-label="Toggle dark mode">
+        <i class="fa-solid fa-sun" id="themeIcon"></i>
+      </button>
+      {% endif %}
+    </div>
+
+    <!-- Mobile menu button -->
+    <button class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navigation -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        {% for nav in site.nav_pages %}
+        <li class="nav-item">
+          <a class="nav-link{% if page.url contains nav.name %} active{% endif %}"
+             href="{{ site.url }}{{ site.baseurl }}/{{ nav.name }}">
+            {% if nav.name == "cv" %}
+              CV
+            {% else %}
+              {{ nav.name | capitalize }}
+            {% endif %}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+  </div>
+</nav>

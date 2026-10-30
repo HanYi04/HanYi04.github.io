@@ -1,0 +1,89 @@
+# ============================================================
+#  站点配置 —— 你平时只需要动这一个文件
+#  改完保存，浏览器会自动刷新
+# ============================================================
+
+# ---------- 1. 你是谁 ----------
+name: "HanYi04"
+title: "一句话身份，例如：物理学研究生"
+institution: "你的学校或单位"
+email: "HanYi04@users.noreply.github.com"
+
+# 头像：把图片放进 assets/images/，这里只写文件名（例如 headshot.jpg）
+# 不想放头像就留空字符串 ""
+photo: ""
+
+# ---------- 2. 你的链接（用不到的留空即可） ----------
+links:
+  google_scholar: ""
+  github: ""
+  orcid: ""
+  researchgate: ""
+
+# ---------- 3. 站点设置 ----------
+accent_color: "#1a7a6d"      # 主题色：链接、按钮、标题下那条短线都跟随它
+dark_mode: true              # 是否在导航栏显示深色模式开关
+description: "个人主页"
+
+# 部署到 GitHub Pages 之后，把下面两行改成你的真实地址
+# 例：url: "https://yourname.github.io"  baseurl: "https://hanyi04.github.io"
+# 如果仓库不是 <用户名>.github.io 而是普通仓库，baseurl 要写 "/仓库名"
+url: "https://hanyi04.github.io"
+baseurl: ""
+
+# 页脚是否显示「已上线 N 天」。格式 YYYY-MM-DD，留空则不显示
+launch_date: "2026-10-29"
+
+# Google Analytics 的 GA4 编号，不需要统计就留空
+analytics:
+  google_id: ""
+
+# ---------- 4. 导航栏 ----------
+# 想要哪一页就留哪一行，不要的在行首加 # 注释掉。
+# name 必须对应 _pages/ 里的文件名（不含 .md）
+nav_pages:
+  - name: blogs
+  - name: files
+  - name: cv
+  - name: publications
+  - name: research
+  - name: gallery
+
+# ============================================================
+#  以下一般不需要改
+# ============================================================
+include:
+  - _pages
+
+sass:
+  quiet_deps: true
+
+markdown: kramdown
+highlighter: rouge
+lsi: false
+excerpt_separator: "\n\n"
+incremental: false
+
+kramdown:
+  input: GFM
+  hard_wrap: false
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  smart_quotes: lsquo,rsquo,ldquo,rdquo
+  enable_coderay: false
+  parse_block_html: true
+
+plugins:
+  - jekyll-sitemap
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - 发布指南.md
+  - node_modules
+  - vendor
+  - serve.sh
+  - new-post.sh
