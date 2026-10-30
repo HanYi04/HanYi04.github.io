@@ -116,3 +116,60 @@
   padding: 1px 7px;
   white-space: nowrap;
 }
+
+// ---------- 按文件夹分组 ----------
+.file-groups {
+  margin: var(--space-6) 0;
+}
+
+.file-group {
+  margin-bottom: var(--space-8);
+}
+
+.file-group-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: 0 0 var(--space-3);
+  border-bottom: 2px solid var(--border-strong);
+  margin-bottom: 0;
+}
+
+.file-group-name {
+  font-family: 'Noto Serif CJK SC', Georgia, serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 14px;
+    height: 11px;
+    margin-right: 8px;
+    border: 1.5px solid var(--text-muted);
+    border-radius: 2px;
+    vertical-align: baseline;
+  }
+}
+
+.file-group-count {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.file-group .file-list {
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  background-color: transparent;
+}
+
+.file-group .file-item {
+  padding-left: var(--space-1);
+  padding-right: var(--space-1);
+}
+
+.file-list--root {
+  margin-top: var(--space-6);
+}

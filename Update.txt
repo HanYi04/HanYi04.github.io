@@ -6,3 +6,6 @@ git push                                  # ③ 推送
 
 rm assets/files/旧文件.pdf
 git add -A && git commit -m "删掉旧文件" && git push
+
+cd /mnt/Workbench/Midsite
+git push
