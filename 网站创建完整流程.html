@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>网站创建与维护手册 · HanYi04</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f6f6f6;
+    --card: #ffffff;
+    --text: #1a1a1a;
+    --text-2: #4a4a4a;
+    --text-3: #8c8c8c;
+    --border: #e6e6e6;
+    --border-strong: #d4d4d4;
+    --accent: #d0021b;
+    --accent-soft: #fdf2f3;
+    --ok: #2f6f4e;
+    --warn: #8a6d1f;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans CJK SC', 'Source Han Sans SC', 'PingFang SC',
+                 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15.5px;
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* 侧边目录 */
+  .toc {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    max-height: 100vh;
+    overflow-y: auto;
+    padding: 48px 20px 48px 0;
+    border-right: 1px solid var(--border);
+    font-size: 13.5px;
+  }
+  .toc-title {
+    font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--text-3); margin-bottom: 14px; font-weight: 600;
+  }
+  .toc a {
+    display: block; padding: 5px 10px 5px 12px;
+    color: var(--text-2); text-decoration: none; border-bottom: none;
+    border-left: 2px solid transparent; transition: all .15s;
+    border-radius: 0 4px 4px 0;
+  }
+  .toc a:hover { color: var(--accent); background: var(--accent-soft); }
+  .toc a.sub { padding-left: 26px; font-size: 12.5px; color: var(--text-3); }
+
+  /* 正文 */
+  main { padding: 48px 0 120px 48px; min-width: 0; }
+  header.doc-head { margin-bottom: 52px; padding-bottom: 30px; border-bottom: 2px solid var(--text); }
+  h1 {
+    font-family: 'Noto Serif CJK SC', Georgia, serif;
+    font-size: 34px; font-weight: 800; letter-spacing: -.01em;
+    margin: 0 0 12px; line-height: 1.3;
+  }
+  .subtitle { color: var(--text-2); font-size: 17px; margin: 0 0 24px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 10px; font-size: 12.5px; color: var(--text-3); }
+  .meta span {
+    background: var(--bg-alt); border: 1px solid var(--border);
+    padding: 3px 10px; border-radius: 999px;
+  }
+
+  h2 {
+    font-family: 'Noto Serif CJK SC', Georgia, serif;
+    font-size: 25px; font-weight: 700; margin: 62px 0 20px;
+    padding-top: 14px; line-height: 1.35; letter-spacing: -.005em;
+  }
+  h2::after {
+    content: ''; display: block; width: 40px; height: 3px;
+    background: var(--accent); margin-top: 10px; border-radius: 2px;
+  }
+  h3 {
+    font-family: 'Noto Serif CJK SC', Georgia, serif;
+    font-size: 18.5px; font-weight: 700; margin: 36px 0 12px;
+  }
+  h4 { font-size: 15.5px; font-weight: 700; margin: 22px 0 8px; }
+  p { margin: 0 0 16px; color: var(--text-2); max-width: 76ch; }
+  strong { color: var(--text); font-weight: 600; }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(208,2,27,.28); }
+  a:hover { border-bottom-color: var(--accent); }
+
+  ul, ol { color: var(--text-2); padding-left: 22px; max-width: 76ch; }
+  li { margin-bottom: 7px; }
+  li::marker { color: var(--text-3); }
+
+  code {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Noto Sans Mono CJK SC', monospace;
+    font-size: .88em; background: var(--bg-alt);
+    border: 1px solid var(--border); padding: 1.5px 5px;
+    border-radius: 4px; color: var(--accent); white-space: nowrap;
+  }
+  pre {
+    background: var(--bg-alt); border: 1px solid var(--border);
+    border-left: 3px solid var(--border-strong); border-radius: 6px;
+    padding: 16px 18px; overflow-x: auto; margin: 16px 0 22px; line-height: 1.7;
+  }
+  pre code {
+    background: none; border: none; padding: 0;
+    color: #2b2b2b; font-size: 13.2px; white-space: pre;
+  }
+  pre .c { color: var(--text-3); font-style: italic; }
+
+  .table-wrap { overflow-x: auto; margin: 18px 0 26px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.7; }
+  th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th {
+    font-weight: 600; color: var(--text); border-bottom: 2px solid var(--border-strong);
+    background: var(--bg-alt); white-space: nowrap;
+  }
+  tbody tr:hover { background: var(--bg-alt); }
+  td code { font-size: .86em; }
+
+  .box {
+    border: 1px solid var(--border); border-left: 3px solid var(--text-3);
+    border-radius: 6px; padding: 14px 18px; margin: 20px 0 24px;
+    background: var(--card); font-size: 14.5px;
+  }
+  .box p:last-child { margin-bottom: 0; }
+  .box-title {
+    font-weight: 700; font-size: 13px; letter-spacing: .04em;
+    margin-bottom: 6px;
+  }
+  .box.tip { border-left-color: var(--ok); background: #f6faf7; }
+  .box.tip .box-title { color: var(--ok); }
+  .box.warn { border-left-color: var(--accent); background: var(--accent-soft); }
+  .box.warn .box-title { color: var(--accent); }
+  .box.note { border-left-color: var(--warn); background: #fdfaf2; }
+  .box.note .box-title { color: var(--warn); }
+
+  .flow {
+    display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+    margin: 22px 0 28px; font-size: 13px;
+  }
+  .flow .node {
+    background: var(--card); border: 1px solid var(--border-strong);
+    border-radius: 6px; padding: 8px 14px; font-weight: 600;
+  }
+  .flow .node.hot { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+  .flow .arrow { color: var(--text-3); }
+
+  .step { display: flex; gap: 14px; margin: 26px 0 8px; }
+  .step-num {
+    flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%;
+    background: var(--text); color: #fff; font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; margin-top: 3px;
+  }
+  .step-body { flex: 1; min-width: 0; }
+  .step-body h3 { margin-top: 0; }
+
+  .pathbox {
+    background: var(--bg-alt);
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--text);
+    margin: 14px 0 20px;
+    word-break: break-all;
+  }
+
+  footer {
+    margin-top: 80px; padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 13px; color: var(--text-3);
+  }
+
+  @media print {
+    .toc { display: none; }
+    .layout { display: block; max-width: none; padding: 0; }
+    main { padding: 0; }
+    body { font-size: 11pt; background: #fff; }
+    h2 { page-break-after: avoid; }
+    pre, table, .box { page-break-inside: avoid; }
+    a { color: var(--text); border-bottom: none; }
+    .box { border: 1px solid #ccc; background: #fff !important; }
+  }
+
+  @media (max-width: 860px) {
+    .layout { display: block; padding: 0 18px; }
+    .toc {
+      position: static; max-height: none; border-right: none;
+      border-bottom: 1px solid var(--border); padding: 24px 0;
+    }
+    .toc a { display: inline-block; border-left: none; border-radius: 4px; padding: 4px 9px; }
+    main { padding: 28px 0 80px; }
+    h1 { font-size: 26px; }
+    h2 { font-size: 21px; margin-top: 44px; }
+    code { white-space: normal; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+<nav class="toc">
+  <div class="toc-title">目录</div>
+  <a href="#overview">概览：网站现在是什么样</a>
+  <a href="#where">一、项目在哪</a>
+  <a href="#edit">二、日常编辑</a>
+  <a href="#edit-file" class="sub">2.1 加文件（最常用）</a>
+  <a href="#edit-text" class="sub">2.2 改首页文字</a>
+  <a href="#edit-color" class="sub">2.3 改配色</a>
+  <a href="#edit-nav" class="sub">2.4 改导航</a>
+  <a href="#edit-page" class="sub">2.5 加新页面</a>
+  <a href="#edit-del" class="sub">2.6 删文件</a>
+  <a href="#update">三、更新与发布</a>
+  <a href="#update-cmd" class="sub">3.1 三条命令</a>
+  <a href="#update-auth" class="sub">3.2 认证方式</a>
+  <a href="#update-net" class="sub">3.3 网络问题</a>
+  <a href="#update-verify" class="sub">3.4 验证部署</a>
+  <a href="#local">四、本地预览</a>
+  <a href="#env">五、环境准备（换机器才需要）</a>
+  <a href="#struct">六、项目结构详解</a>
+  <a href="#deploy">七、首次部署</a>
+  <a href="#capacity">八、容量与文件策略</a>
+  <a href="#pitfalls">九、踩坑清单</a>
+  <a href="#cheatsheet">附录：命令速查</a>
+</nav>
+
+<main>
+
+<header class="doc-head">
+  <h1>网站创建与维护手册</h1>
+  <p class="subtitle">一个三页静态站（首页 / 下载 / 预览）+ 日常编辑与更新方法</p>
+  <div class="meta">
+    <span>更新于 2026-10-30</span>
+    <span>Jekyll 4.4.1</span>
+    <span>Ruby 3.3.6</span>
+    <span>GitHub Pages</span>
+    <span>黑白灰 + 红</span>
+  </div>
+</header>
+
+<!-- ============================================================ -->
+<h2 id="overview">概览：网站现在是什么样</h2>
+
+<p>网站只有三页，全部由 Markdown 和配置生成，托管在 GitHub Pages。加内容只需要把文件拷进一个目录然后推送，<strong>不用写代码、不用改列表</strong>。</p>
+
+<div class="flow">
+  <div class="node">首页 <code>/</code></div>
+  <div class="arrow">→</div>
+  <div class="node">下载 <code>/files/</code></div>
+  <div class="arrow">→</div>
+  <div class="node hot">预览 <code>/view/</code></div>
+</div>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>页面</th><th>地址</th><th>作用</th><th>怎么进入</th></tr></thead>
+<tbody>
+<tr><td>首页</td><td><code>/</code></td><td>自我介绍、联系方式、文件目录入口</td><td>导航「首页」或左上角名字</td></tr>
+<tr><td>下载</td><td><code>/files/</code></td><td>文件列表，点击<strong>直接下载</strong></td><td>导航「下载」或首页红色按钮</td></tr>
+<tr><td>预览</td><td><code>/preview/</code></td><td>同一个文件列表，点击<strong>在线打开</strong></td><td>导航「预览」</td></tr>
+<tr><td>查看器</td><td><code>/view/?f=...</code></td><td>真正显示文件内容的页面</td><td>在预览页点某个文件</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>技术栈</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>层</th><th>选型</th><th>为什么</th></tr></thead>
+<tbody>
+<tr><td>静态生成</td><td>Jekyll</td><td>GitHub Pages 原生支持，Markdown + Liquid 足够</td></tr>
+<tr><td>样式</td><td>Bootstrap 5.3.3（SCSS 按需引入）+ 自定义层</td><td>只用需要的模块，最终 CSS 约 200KB</td></tr>
+<tr><td>配色</td><td>黑白灰 + 红 <code>#d0021b</code></td><td>红是唯一彩色，只用于强调</td></tr>
+<tr><td>托管</td><td>GitHub Pages + Actions</td><td>免费、不用备案、推代码即部署</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="where">一、项目在哪</h2>
+
+<p>分三层，改的时候只需要动第一层。</p>
+
+<h3>① 源文件（你要编辑的）</h3>
+<div class="pathbox">/mnt/Workbench/Midsite</div>
+
+<p>这是<strong>唯一的原件</strong>。所有页面、配置、样式、资料都在这里。</p>
+
+<div class="box warn">
+<div class="box-title">⚠️ 这块盘是 USB 移动硬盘</div>
+<p><code>/mnt/Workbench</code> 是 <code>/dev/sda4</code>，而 <code>/dev/sda</code> 是一块 Thinkplus 512G USB 移动硬盘。你的<strong>系统根目录也在同一块盘的 sda3</strong>。</p>
+<p>所以：拔盘 = 系统和项目一起消失。备份必须<strong>复制到别的物理磁盘</strong>，放在同一块盘的其他分区不算备份。</p>
+<p>好消息是代码已经推到 GitHub，云端有副本。但 <code>assets/files/</code> 里没推送过的大文件只在本地。</p>
+</div>
+
+<h3>② 构建产物（自动生成，别手改）</h3>
+<div class="pathbox">/mnt/Workbench/Midsite/_site/</div>
+
+<p>Jekyll 把 Markdown 编译成 HTML/CSS/JS 后放在这里。<strong>每次构建都会整个重写</strong>，手改无效。这个目录不会上传到 GitHub。</p>
+
+<h3>③ 线上</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>东西</th><th>位置</th></tr></thead>
+<tbody>
+<tr><td>源码仓库</td><td>https://github.com/HanYi04/HanYi04.github.io</td></tr>
+<tr><td>访问地址</td><td>https://hanyi04.github.io</td></tr>
+<tr><td>实际文件</td><td>GitHub 服务器 + 全球 CDN 节点（不在你电脑上）</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>完整链路</h3>
+<pre><code>本地改文件（/mnt/Workbench/Midsite）
+    ↓  git push
+GitHub 仓库收到源码
+    ↓  GitHub Actions 自动运行 jekyll build
+GitHub 服务器生成 _site
+    ↓  发布到 CDN
+访客访问 hanyi04.github.io ← 拿到 CDN 上的文件</code></pre>
+
+<!-- ============================================================ -->
+<h2 id="edit">二、日常编辑</h2>
+
+<p>这一章是你平时最会用到的部分。所有操作都在终端里，三条命令一组。</p>
+
+<h3 id="edit-file">2.1 加文件（最常用）</h3>
+
+<p>把文件放进 <code>assets/files/</code>，然后推送。<strong>不用改任何代码，列表自动更新。</strong></p>
+
+<pre><code>cd /mnt/Workbench/Midsite
+
+<span class="c"># ① 把文件拷进目录</span>
+cp ~/某份讲义.pdf assets/files/
+
+<span class="c"># ② 登记改动</span>
+git add -A
+git commit -m "加讲义"
+
+<span class="c"># ③ 推送（会问密码，见 3.2）</span>
+git push</code></pre>
+
+<p>也可以三步合成一条：</p>
+<pre><code>cd /mnt/Workbench/Midsite &amp;&amp; cp ~/讲义.pdf assets/files/ &amp;&amp; git add -A &amp;&amp; git commit -m "加讲义" &amp;&amp; git push</code></pre>
+
+<p>推完等 <strong>1～2 分钟</strong>，刷新线上页面，文件会同时出现在「下载」和「预览」两页，按修改时间倒序排，新的在最前。</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>限制</th><th>数值</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td>单文件大小</td><td><strong>100 MB</strong></td><td><code>git push</code> 硬限制，超了直接推不上去</td></tr>
+<tr><td>建议大小</td><td>&lt; 25 MB</td><td>再大访客打开会慢</td></tr>
+<tr><td>文件名</td><td>避免空格和 <code>? * | &lt; &gt;</code></td><td>中文可以用，英文+数字+短横线最保险</td></tr>
+<tr><td>子目录</td><td>支持</td><td>放 <code>assets/files/子目录/</code> 也会被列出</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3 id="edit-text">2.2 改首页文字</h3>
+
+<p>首页内容在 <code>_pages/home.md</code>，但名字、身份、单位、邮箱这些在 <code>_config.yml</code>：</p>
+
+<pre><code>name: "HanYi04"                 <span class="c"># 导航栏和页脚显示的名字</span>
+title: "一句话身份"              <span class="c"># 首页那句「我是 XXX」</span>
+institution: "你的学校或单位"
+email: "你的邮箱"
+photo: ""                       <span class="c"># 头像文件名，放 assets/images/ 下</span></code></pre>
+
+<p>改完推送即可。想改首页的段落文字，直接编辑 <code>_pages/home.md</code>（Markdown 语法，<code>**粗体**</code>、<code>- 列表</code> 这样写）。</p>
+
+<div class="box note">
+<div class="box-title">首页还留着占位符</div>
+<p>现在首页写着「一句话身份，例如：物理学研究生」和「你的学校或单位」，这两个是占位文本，记得改成你自己的。</p>
+</div>
+
+<h3 id="edit-color">2.3 改配色</h3>
+
+<p>当前是<strong>黑白灰 + 红</strong>，红 <code>#d0021b</code> 是唯一的彩色。</p>
+
+<p>只改主色，动一处：</p>
+<pre><code><span class="c"># _config.yml</span>
+accent_color: "#d0021b"</code></pre>
+
+<p>改完整套红（含深色模式）要同时改 <code>_sass/base/_variables.scss</code>：</p>
+
+<pre><code>:root {
+  --accent: #d0021b;              <span class="c">/* 亮色模式的主色 */</span>
+  --accent-hover: #a80116;
+  --accent-light: rgba(208, 2, 27, 0.07);
+}
+
+[data-bs-theme="dark"] {
+  --accent: #ff4d63;              <span class="c">/* 深色模式下要亮一档 */</span>
+  --accent-hover: #ff7186;
+}</code></pre>
+
+<p>同一个文件里还有背景色、文字色、边框色、阴影，全部是 CSS 变量，改一处全站生效。</p>
+
+<h3 id="edit-nav">2.4 改导航</h3>
+
+<p>导航项由 <code>_config.yml</code> 的 <code>nav_pages</code> 控制：</p>
+
+<pre><code>nav_pages:
+  - name: home       <span class="c"># 显示「首页」，链接 /</span>
+  - name: files      <span class="c"># 显示「下载」，链接 /files/</span>
+  - name: preview    <span class="c"># 显示「预览」，链接 /preview/</span></code></pre>
+
+<p>不想要哪一项就在行首加 <code>#</code> 注释掉。</p>
+
+<p>中文显示名映射在 <code>_includes/header.html</code> 里（<code>home</code>→首页、<code>files</code>→下载、<code>preview</code>→预览）。想加新导航项，除了 <code>nav_pages</code> 加一行，还要在那个文件里补一段映射。</p>
+
+<h3 id="edit-page">2.5 加新页面</h3>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body">
+    <p>在 <code>_pages/</code> 下新建 <code>about.md</code>：</p>
+<pre><code>---
+title: "关于"
+layout: gridlay
+permalink: /about/
+---
+
+## 关于
+
+这里写内容。</code></pre>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body">
+    <p>在 <code>_config.yml</code> 的 <code>nav_pages</code> 里加一行 <code>- name: about</code>，并在 <code>_includes/header.html</code> 里补一段中文名映射。</p>
+  </div>
+</div>
+
+<p>可用的 <code>layout</code>：<code>gridlay</code>（常规页，带淡入）、<code>homelay</code>（窄栏居中，首页用）、<code>page</code>、<code>post</code>。</p>
+
+<div class="box tip">
+<div class="box-title">之前删掉的页面还在</div>
+<p>博客、CV、论文、研究、相册、留言板的模板都归档在 <code>_archive/</code> 里（下划线开头，Jekyll 不处理）。想恢复就把文件移回 <code>_pages/</code>，再在 <code>nav_pages</code> 加一行。</p>
+</div>
+
+<h3 id="edit-del">2.6 删文件</h3>
+
+<pre><code>cd /mnt/Workbench/Midsite
+rm assets/files/旧文件.pdf
+git add -A
+git commit -m "删掉旧文件"
+git push</code></pre>
+
+<p>推完列表自动少一项。</p>
+
+<!-- ============================================================ -->
+<h2 id="update">三、更新与发布</h2>
+
+<p>改完任何东西，都是同一个流程：<strong>add → commit → push</strong>。推上去之后 GitHub 自动构建，1～2 分钟生效。</p>
+
+<h3 id="update-cmd">3.1 三条命令</h3>
+
+<pre><code>cd /mnt/Workbench/Midsite
+git add -A                        <span class="c"># 把所有改动加入暂存区</span>
+git commit -m "说明这次改了什么"    <span class="c"># 做一次提交</span>
+git push                          <span class="c"># 推到 GitHub</span></code></pre>
+
+<h4>这三条命令各自在干什么</h4>
+<div class="table-wrap">
+<table>
+<thead><tr><th>命令</th><th>作用</th><th>类比</th></tr></thead>
+<tbody>
+<tr><td><code>git add -A</code></td><td>把新增/修改/删除的文件标记为「待提交」</td><td>把东西装进箱子</td></tr>
+<tr><td><code>git commit</code></td><td>给这批改动打一个带说明的快照</td><td>封箱并贴上标签</td></tr>
+<tr><td><code>git push</code></td><td>把这个快照送到 GitHub</td><td>发货</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="box tip">
+<div class="box-title">提交信息怎么写</div>
+<p>随便写，自己能看懂就行，比如「加讲义」「改邮箱」「换了配色」。这些信息会留在历史记录里，方便以后回溯。</p>
+</div>
+
+<h4>推送失败了怎么办</h4>
+
+<p>项目里带了 <code>./push.sh</code>，会<strong>自动重试 40 次</strong>（约 3 分钟），网络一通就推上去：</p>
+
+<pre><code>cd /mnt/Workbench/Midsite
+./push.sh</code></pre>
+
+<h3 id="update-auth">3.2 认证方式</h3>
+
+<p>推送需要向 GitHub 证明「你是你」。两种方式，配一次就行。</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th></th><th>Token（HTTPS）</th><th>SSH 密钥</th></tr></thead>
+<tbody>
+<tr><td>怎么用</td><td><code>git push</code> 时输入用户名 + 粘贴令牌</td><td>什么都不用输</td></tr>
+<tr><td>有效期</td><td>自定，通常 90 天</td><td>永久</td></tr>
+<tr><td>抗网络波动</td><td>走 443 端口，容易断</td><td>走 22 端口，稳</td></tr>
+<tr><td>配一次能做</td><td>需要重新生成</td><td>一直有效</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="box warn">
+<div class="box-title">令牌绝对不要贴进任何对话或截图</div>
+<p><code>ghp_...</code> 等于你账号的写权限。一旦泄露，立刻去
+<a href="https://github.com/settings/tokens">github.com/settings/tokens</a> 删掉。
+只在本机终端里粘贴（终端不回显）。</p>
+<p>生成时必须勾选 <strong><code>repo</code></strong> 和 <strong><code>workflow</code></strong> 两项——少了 <code>workflow</code> 推不上去，会报
+<code>refusing to allow a Personal Access Token to create or update workflow</code>。</p>
+</div>
+
+<h4>配 SSH（推荐，一劳永逸）</h4>
+
+<pre><code><span class="c"># 1. 生成密钥（不需要联网）</span>
+ssh-keygen -t ed25519 -C "HanYi04" -f ~/.ssh/id_ed25519 -N ""
+
+<span class="c"># 2. 打印公钥，整行复制</span>
+cat ~/.ssh/id_ed25519.pub
+
+<span class="c"># 3. 粘贴到 github.com/settings/keys → New SSH key</span>
+
+<span class="c"># 4. 切换远程地址为 SSH</span>
+cd /mnt/Workbench/Midsite
+git remote set-url origin git@github.com:HanYi04/HanYi04.github.io.git
+
+<span class="c"># 5. 推送（第一次问 yes/no，输 yes）</span>
+git push -u origin main</code></pre>
+
+<p>配完以后再也不用输任何东西，也不会过期。</p>
+
+<h3 id="update-net">3.3 网络问题</h3>
+
+<p>这台机器到 GitHub 的 HTTPS 通道会<strong>被动态阻断</strong>——我实测过连续 8 次探测全部失败，过一会儿又恢复。表现是 <code>git push</code> 卡住或超时。</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>通道</th><th>稳定性</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td><code>github.com</code> HTTPS (443)</td><td>不稳，反复断</td><td>被 TLS 层识别拦截</td></tr>
+<tr><td><code>github.com</code> SSH (22)</td><td><strong>从未失败</strong></td><td>测了 7 次全通</td></tr>
+<tr><td><code>*.github.io</code></td><td>很稳，约 900ms</td><td>走 Fastly CDN，与主站不同线路</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>对策按顺序试：</p>
+<ol>
+<li><strong>装 Cloudflare WARP</strong>（已装，任务栏里那个）——<code>warp-cli status</code> 看到 Connected 就生效</li>
+<li><strong>改用 SSH</strong>（见上一节）——那条通道没被针对过</li>
+<li><strong>换网络</strong>——手机热点效果最明显</li>
+</ol>
+
+<div class="box tip">
+<div class="box-title">网站本身不受影响</div>
+<p>被封的只是「你操作 GitHub」这条路。别人访问 <code>hanyi04.github.io</code> 走的是 Fastly CDN，一直很稳。所以推送失败不等于网站挂了。</p>
+</div>
+
+<h3 id="update-verify">3.4 验证部署</h3>
+
+<p>推完不等于生效，要等 GitHub Actions 构建完成。</p>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body">
+    <p>打开仓库的 <strong>Actions</strong> 标签：</p>
+    <p>https://github.com/HanYi04/HanYi04.github.io/actions</p>
+    <p>最新那条如果显示绿色勾 <strong>Build and Deploy</strong>，就说明构建成功。黄色圆点是还在跑，红叉是有错误。</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body">
+    <p>刷新网站，<strong>强制刷新</strong>绕过浏览器缓存：</p>
+    <p>Firefox 里按 <code>Ctrl + Shift + R</code>，或者访问 <code>https://hanyi04.github.io/?v=2</code>（加个参数）</p>
+  </div>
+</div>
+
+<div class="box note">
+<div class="box-title">改了没变化？按顺序排查</div>
+<ol style="margin-bottom:0">
+<li>Actions 里是绿色勾吗？如果是红叉，点进去看哪一步报错</li>
+<li>是不是浏览器缓存？强制刷新试试</li>
+<li>GitHub Pages 有几十秒 CDN 缓存，再等一会儿</li>
+<li>是不是推错分支了？确认在 <code>main</code> 分支上</li>
+</ol>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="local">四、本地预览</h2>
+
+<p>不想等线上构建，可以先在本地看效果。</p>
+
+<pre><code>cd /mnt/Workbench/Midsite
+./serve.sh              <span class="c"># 只有本机能看 http://127.0.0.1:4000</span>
+./serve.sh --lan        <span class="c"># 同一 WiFi 的手机/平板也能看，会打印内网地址</span></code></pre>
+
+<p>浏览器打开 <strong>http://127.0.0.1:4000</strong>。改完文件保存，页面自动刷新，不用重启。按 <code>Ctrl+C</code> 停止。</p>
+
+<div class="box tip">
+<div class="box-title">本地预览和线上是同一份内容</div>
+<p>本地预览会把 <code>_site/</code> 重新构建一遍，和 GitHub 上构建出来的结果一致。所以本地看没问题，线上基本也没问题。</p>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="env">五、环境准备（换机器才需要）</h2>
+
+<p>当前这台机器已经装好了：Ruby 在 <code>~/.local/ruby</code>，Jekyll 4.4.1 已安装。以下内容仅在你换电脑时参考。</p>
+
+<h3>为什么装在 ~/.local</h3>
+<p>系统没有 sudo 权限（沙箱限制），所以全部用户级安装，不碰系统目录。</p>
+
+<h3>5.1 编译 Ruby</h3>
+
+<div class="box warn">
+<div class="box-title">关键前提：缺 zlib 和 yaml 头文件</div>
+<p>系统有 <code>libssl-dev</code>，但<strong>没有 <code>zlib.h</code> 和 <code>yaml.h</code></strong>。不补上的话，编译出的 Ruby 无法使用 gem（RubyGems 依赖 zlib）。</p>
+</div>
+
+<pre><code>mkdir -p /tmp/rbsrc &amp;&amp; cd /tmp/rbsrc
+
+<span class="c"># zlib</span>
+wget -q -O zlib-1.3.1.tar.gz https://github.com/madler/zlib/releases/download/v1.3.1/zlib-1.3.1.tar.gz
+tar xzf zlib-1.3.1.tar.gz &amp;&amp; cd zlib-1.3.1
+./configure --prefix="$HOME/.local" &amp;&amp; make -j"$(nproc)" &amp;&amp; make install
+cd ..
+
+<span class="c"># libyaml</span>
+wget -q -O yaml-0.2.5.tar.gz https://github.com/yaml/libyaml/releases/download/0.2.5/yaml-0.2.5.tar.gz
+tar xzf yaml-0.2.5.tar.gz &amp;&amp; cd yaml-0.2.5
+./configure --prefix="$HOME/.local" &amp;&amp; make -j"$(nproc)" &amp;&amp; make install
+cd ..
+
+<span class="c"># Ruby（20 核约 5-8 分钟）</span>
+wget -q -O ruby-3.3.6.tar.gz https://cache.ruby-lang.org/pub/ruby/3.3/ruby-3.3.6.tar.gz
+tar xzf ruby-3.3.6.tar.gz &amp;&amp; cd ruby-3.3.6
+./configure --prefix="$HOME/.local/ruby" \
+  --with-zlib-dir="$HOME/.local" \
+  --with-libyaml-dir="$HOME/.local" \
+  --disable-install-doc --without-gmp --without-readline \
+  CPPFLAGS="-I$HOME/.local/include" LDFLAGS="-L$HOME/.local/lib"
+make -j"$(nproc)" &amp;&amp; make install</code></pre>
+
+<p>验证三个关键扩展：</p>
+<pre><code>~/.local/ruby/bin/ruby -e 'require "zlib"; require "yaml"; require "openssl"; puts "全部可用"'</code></pre>
+
+<h3>5.2 安装 Jekyll</h3>
+<pre><code>cd /mnt/Workbench/Midsite
+export PATH="$HOME/.local/ruby/bin:$PATH"
+bundle install</code></pre>
+
+<p>会装 38 个 gem，包括 jekyll 4.4.1、sass-embedded、kramdown、jekyll-sitemap。</p>
+
+<!-- ============================================================ -->
+<h2 id="struct">六、项目结构详解</h2>
+
+<pre><code>Midsite/
+├── _config.yml          <span class="c">站点配置：名字、邮箱、主题色、导航、上线日期</span>
+├── _pages/              <span class="c">四个页面</span>
+│   ├── home.md          <span class="c">首页</span>
+│   ├── files.md         <span class="c">下载页（点击直接下载）</span>
+│   ├── preview.md       <span class="c">预览页（点击进入查看器）</span>
+│   └── view.md          <span class="c">查看器页面</span>
+├── _includes/
+│   ├── head.html        <span class="c">meta、字体、MathJax、深色模式</span>
+│   ├── header.html      <span class="c">导航栏（含中文名映射）</span>
+│   ├── footer.html      <span class="c">页脚（日期时间 + 上线天数）</span>
+│   └── file-list.html   <span class="c">文件列表组件，下载页和预览页共用</span>
+├── _layouts/            <span class="c">页面骨架：default / gridlay / homelay / page / post</span>
+├── _sass/
+│   ├── base/_variables.scss    <span class="c">所有颜色和间距变量（改配色看这里）</span>
+│   ├── components/_files.scss  <span class="c">文件列表样式</span>
+│   ├── components/_viewer.scss <span class="c">查看器样式</span>
+│   └── bootstrap/       <span class="c">Bootstrap 5.3.3 原版 SCSS（92 个文件）</span>
+├── assets/
+│   ├── main.scss        <span class="c">→ 编译成 /assets/main.css</span>
+│   ├── files/           <span class="c">★ 你的资料放这里</span>
+│   ├── images/          <span class="c">图片</span>
+│   └── js/
+│       ├── site.js      <span class="c">深色模式切换等</span>
+│       └── viewer.js    <span class="c">查看器的文件渲染逻辑</span>
+├── _archive/            <span class="c">已归档的旧页面（Jekyll 不处理，可随时恢复）</span>
+├── .github/workflows/
+│   └── deploy.yml       <span class="c">GitHub Actions 自动部署配置</span>
+├── serve.sh             <span class="c">本地预览</span>
+├── push.sh              <span class="c">自动重试推送</span>
+└── README.md            <span class="c">简要说明</span></code></pre>
+
+<div class="box note">
+<div class="box-title">下划线开头的目录不会被直接发布</div>
+<p><code>_pages</code>、<code>_includes</code>、<code>_sass</code>、<code>_layouts</code>、<code>_archive</code> 都是 Jekyll 的处理对象或忽略目录，不会原样出现在成品里。只有 <code>assets/</code> 下的文件才会被直接复制发布。</p>
+</div>
+
+<h3>文件列表是怎么自动生成的</h3>
+
+<p><code>_includes/file-list.html</code> 的核心只有一行 Liquid：</p>
+
+<pre><code>{% raw %}{% assign all_files = site.static_files | where_exp: "f", "f.path contains '/assets/files/'" | sort: "modified_time" | reverse %}{% endraw %}</code></pre>
+
+<p>意思是：<strong>扫描所有静态文件，挑出路径里带 <code>/assets/files/</code> 的，按修改时间倒序排</strong>。所以你把文件放进那个目录，构建时自动就被收录了。</p>
+
+<!-- ============================================================ -->
+<h2 id="deploy">七、首次部署（已完成，仅供换仓库时参考）</h2>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body">
+    <h3>建仓库</h3>
+    <p>在 <a href="https://github.com/new">github.com/new</a> 建一个名为 <code>用户名.github.io</code> 的 <strong>Public</strong> 仓库，<strong>三个初始化选项都不要勾</strong>（README / .gitignore / license）。</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body">
+    <h3>推送代码</h3>
+<pre><code>cd /mnt/Workbench/Midsite
+git remote add origin https://github.com/用户名/用户名.github.io.git
+git push -u origin main</code></pre>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-body">
+    <h3>打开 Pages</h3>
+    <p>仓库 → <strong>Settings</strong> → <strong>Pages</strong> → <strong>Source</strong> 选 <strong>GitHub Actions</strong>（不要选 Deploy from a branch）。</p>
+    <p>然后去 <strong>Actions</strong> 等绿色勾，访问 <code>https://用户名.github.io</code>。</p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="capacity">八、容量与文件策略</h2>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>项目</th><th>限制</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td>网页上传</td><td>单文件 <strong>25MB</strong></td><td>通过 GitHub 网页拖拽</td></tr>
+<tr><td><code>git push</code></td><td>单文件 <strong>100MB</strong>（硬限）</td><td>50MB 开始告警</td></tr>
+<tr><td>仓库总量</td><td>建议 &lt;1GB，硬限 5GB</td><td>超 1GB 后 clone 会变慢</td></tr>
+<tr><td>Pages 站点</td><td>发布产物 ≤1GB</td><td>带宽软限 100GB/月</td></tr>
+<tr><td>Releases 附件</td><td>单文件 <strong>2GB</strong></td><td>不占仓库体积</td></tr>
+<tr><td>Git LFS</td><td>1GB 存储 + 1GB/月流量</td><td><strong>Pages 不支持 LFS</strong>，别用</td></tr>
+<tr><td>Actions</td><td>公开仓库<strong>无限免费</strong></td><td>你的仓库是 Public</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="box warn">
+<div class="box-title">大文件绝对不要 commit 进仓库</div>
+<p>Git 是只增不减的：提交一个 500MB 文件，哪怕第二天删掉再提交，它<strong>仍然永久留在历史记录里</strong>，仓库体积一分不减。要清理得重写整个历史，非常麻烦。</p>
+<p>超过 100MB 的文件放网盘，在首页贴个链接。</p>
+</div>
+
+<h3>粗略的容量估算</h3>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>内容</th><th>能放多少</th></tr></thead>
+<tbody>
+<tr><td>Markdown 文章（每篇 5KB）</td><td>约 20 万篇（1GB 上限）</td></tr>
+<tr><td>PDF 讲义（每份 5MB）</td><td>约 200 份</td></tr>
+<tr><td>照片（每张 3MB）</td><td>约 330 张</td></tr>
+<tr><td>视频</td><td>基本放不了</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="pitfalls">九、踩坑清单</h2>
+
+<p>这些都是实际遇到并解决过的问题，记下来避免重复踩。</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>问题</th><th>现象</th><th>原因与解法</th></tr></thead>
+<tbody>
+<tr>
+<td>Markdown 里的 HTML 变代码块</td>
+<td>页面上直接显示 <code>&lt;div class="..."&gt;</code> 源码</td>
+<td>kramdown 把缩进 4 空格的 HTML 当代码块。用 <code>{::nomarkdown}...{:/nomarkdown}</code> 包起来</td>
+</tr>
+<tr>
+<td>公式变纯文本</td>
+<td>显示 <code>[ E = mc^2 ]</code></td>
+<td>用了 <code>\(...\)</code> 或 <code>\[...\]</code>，反斜杠被 Markdown 吃掉。改用 <code>$...$</code> 和 <code>$$...$$</code></td>
+</tr>
+<tr>
+<td>改 <code>url</code> 时误改 <code>baseurl</code></td>
+<td>所有链接变成双份域名</td>
+<td><code>s.replace('url: ""')</code> 会匹配到 <code>baseurl: ""</code> 里的子串。要按行首精确匹配</td>
+</tr>
+<tr>
+<td>页脚整块空白</td>
+<td>版权行消失了</td>
+<td>用 <code>s.find()</code> 截取时把后半段 HTML 一起删了。要用 <code>rfind()</code> 定位或整文件重写</td>
+</tr>
+<tr>
+<td>CI 构建失败，找不到 SCSS</td>
+<td>Actions 报错</td>
+<td><code>.gitignore</code> 里的 <code>vendor/</code> 把 <code>_sass/bootstrap/vendor/</code> 也忽略了。改成 <code>/vendor/</code>（只忽略根目录）</td>
+</tr>
+<tr>
+<td>推送被拒，提示 workflow</td>
+<td><code>refusing to allow a Personal Access Token...</code></td>
+<td>token 没勾 <code>workflow</code> 权限。重新生成时把 <code>repo</code> 和 <code>workflow</code> 都勾上</td>
+</tr>
+<tr>
+<td>改了线上没变化</td>
+<td>还是旧页面</td>
+<td>浏览器缓存。按 <code>Ctrl + Shift + R</code> 强制刷新，或访问 <code>域名/?v=2</code></td>
+</tr>
+<tr>
+<td>导航看起来少一项</td>
+<td>以为页面没生成</td>
+<td>导航项由 <code>_config.yml</code> 的 <code>nav_pages</code> 决定，不在里面就不显示，哪怕页面文件存在</td>
+</tr>
+<tr>
+<td>PDF 预览不出来</td>
+<td>查看器区域空白</td>
+<td>浏览器内置 PDF 阅读器的问题。已用 <code>&lt;object&gt;</code> 加了 fallback，实在不行点右上角「下载」</td>
+</tr>
+<tr>
+<td>Word 预览一直转圈</td>
+<td>预览区空白</td>
+<td>走的是微软在线服务 <code>view.officeapps.live.com</code>，国内网络不稳定。下载后本地打开即可</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="cheatsheet">附录：命令速查</h2>
+
+<h3>日常（最常用）</h3>
+<pre><code>cd /mnt/Workbench/Midsite
+
+<span class="c"># 加文件</span>
+cp ~/某文件.pdf assets/files/
+git add -A &amp;&amp; git commit -m "加文件" &amp;&amp; git push
+
+<span class="c"># 看改了什么</span>
+git status
+
+<span class="c"># 本地预览</span>
+./serve.sh
+
+<span class="c"># 推送失败时自动重试</span>
+./push.sh</code></pre>
+
+<h3>构建相关</h3>
+<pre><code>export PATH="$HOME/.local/ruby/bin:$PATH"
+
+bundle exec jekyll build              <span class="c"># 只构建到 _site/</span>
+bundle exec jekyll serve --livereload <span class="c"># 构建 + 本地服务</span>
+rm -rf _site .jekyll-cache            <span class="c"># 清缓存重来</span></code></pre>
+
+<h3>git 相关</h3>
+<pre><code>git log --oneline -5                  <span class="c"># 看最近 5 次提交</span>
+git status                            <span class="c"># 看工作区改动</span>
+git diff                              <span class="c"># 看具体改了哪几行</span>
+git checkout -- 文件名                 <span class="c"># 撤销某个文件的改动</span>
+git remote -v                         <span class="c"># 看远程地址（HTTPS 还是 SSH）</span></code></pre>
+
+<h3>网络诊断</h3>
+<pre><code>warp-cli status                                        <span class="c"># WARP 是否连着</span>
+timeout 5 bash -c "echo &gt; /dev/tcp/github.com/443"     <span class="c"># 443 端口通不通</span>
+git ls-remote https://github.com/HanYi04/HanYi04.github.io HEAD  <span class="c"># git 协议通不通</span></code></pre>
+
+<h3>GitHub 网页入口</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th>要做什么</th><th>地址</th></tr></thead>
+<tbody>
+<tr><td>看构建状态</td><td>github.com/HanYi04/HanYi04.github.io/actions</td></tr>
+<tr><td>改 Pages 设置</td><td>仓库 → Settings → Pages</td></tr>
+<tr><td>生成/删除令牌</td><td>github.com/settings/tokens</td></tr>
+<tr><td>管理 SSH 密钥</td><td>github.com/settings/keys</td></tr>
+<tr><td>浏览器里编辑代码</td><td>仓库页面按 <code>.</code> 键（github.dev）</td></tr>
+</tbody>
+</table>
+</div>
+
+<footer>
+  <p>本文档是单文件离线 HTML，不依赖任何外部资源，可直接双击打开或打印。</p>
+  <p>网站：<strong>https://hanyi04.github.io</strong> · 项目：<strong>/mnt/Workbench/Midsite</strong></p>
+  <p>更新于 2026-10-30</p>
+</footer>
+
+</main>
+</div>
+</body>
+</html>

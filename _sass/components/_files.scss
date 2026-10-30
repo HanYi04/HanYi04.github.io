@@ -104,3 +104,15 @@
     background-color: var(--accent-hover);
   }
 }
+
+// 子目录标签：只给放在文件夹里的文件显示
+.file-dir {
+  flex: 0 0 auto;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 1px 7px;
+  white-space: nowrap;
+}
