@@ -369,6 +369,38 @@ git push</code></pre>
 </table>
 </div>
 
+<h4>用文件夹分类</h4>
+
+<p><code>assets/files/</code> 下可以建任意子文件夹，列表里会自动给文件夹里的文件加一个灰色的文件夹名标签，一眼能看出归类：</p>
+
+<pre><code>assets/files/
+├── 课程讲义/
+│   ├── 第一章.pdf
+│   └── 第二章.pdf
+├── 实验数据/
+│   └── 结果.csv
+└── 说明.txt          <span class="c">← 直接放在根目录的文件</span></code></pre>
+
+<p>列表显示效果：</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>类型</th><th>文件夹</th><th>文件名</th><th>日期</th></tr></thead>
+<tbody>
+<tr><td>PDF</td><td><code>课程讲义/</code></td><td>第一章.pdf</td><td>2026-10-30</td></tr>
+<tr><td>CSV</td><td><code>实验数据/</code></td><td>结果.csv</td><td>2026-10-30</td></tr>
+<tr><td>TXT</td><td><em>（不显示）</em></td><td>说明.txt</td><td>2026-10-30</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>根目录的文件不显示文件夹标签。文件夹只做分类用，不影响「下载」和「预览」的行为——点哪个都是同样的操作。</p>
+
+<div class="box note">
+<div class="box-title">改列表组件时的坑</div>
+<p><code>_includes/file-list.html</code> 里的 HTML <strong>必须顶格写</strong>。一旦缩进 4 个空格，kramdown 会把它当成 Markdown 代码块，整段 HTML 被转义成纯文本显示在页面上。</p>
+</div>
+
 <h3 id="edit-text">2.2 改首页文字</h3>
 
 <p>首页内容在 <code>_pages/home.md</code>，但名字、身份、单位、邮箱这些在 <code>_config.yml</code>：</p>
