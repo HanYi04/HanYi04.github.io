@@ -18,7 +18,7 @@ permalink: /files/
 <div class="file-list">
 {% for file in all_files %}
   {% assign ext = file.extname | downcase | remove_first: "." %}
-  <a class="file-item" href="{{ file.path | relative_url }}" target="_blank" rel="noopener">
+  <a class="file-item" href="{{ '/view/' | relative_url }}?f={{ file.path | url_encode }}">
     <span class="file-ext" data-ext="{{ ext }}">{{ ext }}</span>
     <span class="file-name">{{ file.name }}</span>
     <span class="file-date">{{ file.modified_time | date: "%Y-%m-%d" }}</span>

@@ -21,7 +21,7 @@ links:
   researchgate: ""
 
 # ---------- 3. 站点设置 ----------
-accent_color: "#1a7a6d"      # 主题色：链接、按钮、标题下那条短线都跟随它
+accent_color: "#d0021b"      # 唯一彩色：红（链接、按钮、标题短线）
 dark_mode: true              # 是否在导航栏显示深色模式开关
 description: "个人主页"
 

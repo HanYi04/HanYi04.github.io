@@ -45,13 +45,11 @@
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
 
-  // 常见类型给一点点区分，仍是克制的灰阶 + 主题色
-  &[data-ext='pdf'] { color: #b03a2e; border-color: rgba(176, 58, 46, 0.3); }
-  &[data-ext='zip'],
-  &[data-ext='7z'],
-  &[data-ext='rar'] { color: #8a6d3b; border-color: rgba(138, 109, 59, 0.3); }
-  &[data-ext='md'],
-  &[data-ext='txt'] { color: var(--text-secondary); }
+  // 只有 PDF 用红（唯一的彩色点缀），其余保持灰阶
+  &[data-ext='pdf'] {
+    color: var(--accent);
+    border-color: rgba(208, 2, 27, 0.25);
+  }
 }
 
 .file-name {

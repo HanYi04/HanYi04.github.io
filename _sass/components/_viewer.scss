@@ -1,0 +1,157 @@
+// =============================================================
+// 文件预览页
+// =============================================================
+
+.viewer-wrap {
+  margin-top: var(--space-4);
+}
+
+.viewer-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.viewer-back {
+  flex: 0 0 auto;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  background-image: none !important;
+
+  &:hover {
+    color: var(--accent);
+  }
+}
+
+.viewer-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.viewer-download {
+  flex: 0 0 auto;
+  padding: var(--space-2) var(--space-4);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: var(--accent);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  background-image: none !important;
+  transition: background-color var(--transition-fast);
+
+  &:hover {
+    color: #fff;
+    background-color: var(--accent-hover);
+  }
+}
+
+.viewer-body {
+  min-height: 60vh;
+}
+
+// PDF：给足高度，让它像阅读器而不是缩在角落
+.viewer-frame {
+  width: 100%;
+  height: calc(100vh - 220px);
+  min-height: 480px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-secondary);
+}
+
+.viewer-image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+}
+
+.viewer-video {
+  display: block;
+  width: 100%;
+  max-height: 70vh;
+  border-radius: var(--radius-md);
+  background-color: #000;
+}
+
+.viewer-audio {
+  display: block;
+  width: 100%;
+  margin: var(--space-8) 0;
+}
+
+// 纯文本 / Markdown 源码
+.viewer-text {
+  font-family: 'JetBrains Mono', 'Noto Sans Mono CJK SC', monospace;
+  font-size: 0.875rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 75vh;
+  overflow-y: auto;
+}
+
+.viewer-frame {
+  display: block;
+}
+
+.viewer-frame .viewer-fallback {
+  padding: var(--space-12) var(--space-6);
+  border: none;
+}
+
+.viewer-fallback {
+  padding: var(--space-16) var(--space-6);
+  text-align: center;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-lg);
+  color: var(--text-secondary);
+
+  p {
+    max-width: none;
+    margin-bottom: var(--space-2);
+  }
+}
+
+.viewer-fallback-hint {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.viewer-error {
+  padding: var(--space-10) 0;
+  text-align: center;
+  color: var(--accent);
+  max-width: none;
+}
+
+@media (max-width: 600px) {
+  .viewer-frame {
+    height: 70vh;
+  }
+
+  .viewer-title {
+    order: 3;
+    flex-basis: 100%;
+  }
+}
