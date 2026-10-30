@@ -245,3 +245,29 @@ baseurl: ""
 **改完没反应？** `serve.sh` 还在跑的话刷新浏览器；如果是样式改动，按 `Ctrl+C` 重启一次。
 
 **中文文件名下载乱码？** 换成英文名。
+
+---
+
+## 附：关于留言板（当前未启用）
+
+这份仓库里保留了一套完整的留言板实现，但**目前没有启用**，网站是纯静态的。
+
+保留的文件（不参与 Jekyll 构建，不影响线上）：
+
+| 文件 | 作用 |
+|---|---|
+| `functions/api/messages.js` | 留言读写接口，含限流与校验 |
+| `functions/api/file/[[key]].js` | 附件下载接口 |
+| `schema.sql` | 数据库表结构 |
+| `wrangler.toml` | Cloudflare 绑定配置 |
+| `_archive/guestbook.md` | 留言板页面（已归档，不发布） |
+| `留言板部署指南.md` | 完整部署步骤 |
+
+将来想启用，按这三步：
+
+1. 把 `_archive/guestbook.md` 移回 `_pages/`，并在 `_config.yml` 的 `nav_pages` 里加回 `- name: guestbook`
+2. 按 `留言板部署指南.md` 在 Cloudflare 建 Pages 项目 + D1 数据库
+3. 如果要附件功能，再开通 R2 并取消 `wrangler.toml` 和页面里的注释
+
+**为什么没启用**：留言板需要后端才能工作，而 GitHub Pages 是纯静态托管，跑不了后端代码。
+启用的话等于给网站再引入一个平台（Cloudflare），目前判断必要性不足。
