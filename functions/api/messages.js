@@ -88,6 +88,9 @@ export const onRequestPost = async ({ env, request }) => {
   if (name.length > MAX_NAME) {
     return json({ ok: false, error: `昵称最多 ${MAX_NAME} 字` }, 400);
   }
+  if (file && !env.FILES) {
+    return json({ ok: false, error: '本站暂未开放附件上传，请把文件传到网盘后在留言里贴链接' }, 400);
+  }
   if (file && file.size > MAX_FILE) {
     return json({ ok: false, error: '附件不能超过 20MB' }, 413);
   }

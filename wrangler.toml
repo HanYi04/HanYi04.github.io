@@ -8,6 +8,16 @@ binding = "DB"
 database_name = "guestbook"
 database_id = "local-dev"
 
-[[r2_buckets]]
-binding = "FILES"
-bucket_name = "hanyi04-files"
+# ------------------------------------------------------------
+#  附件功能默认关闭：以下 R2 配置需要先在 Cloudflare 开通 R2
+#  （开通时要求绑定支付方式，即使不超免费额度）。
+#
+#  将来想启用附件：
+#    1. 取消下面三行的注释
+#    2. 在 _pages/guestbook.md 里取消附件输入框的注释
+#    3. 在 Cloudflare 控制台建同名 bucket，并在 Pages 项目里绑定 FILES
+#
+# [[r2_buckets]]
+# binding = "FILES"
+# bucket_name = "hanyi04-files"
+# ------------------------------------------------------------

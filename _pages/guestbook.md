@@ -6,7 +6,7 @@ permalink: /guestbook/
 
 ## 留言板
 
-有话想说、想留个联系方式、或者想传个文件，都可以写在这里。昵称可以留空，留空就显示「匿名」。
+有话想说、想留个联系方式、或者想分享个链接，都可以写在这里。昵称可以留空，留空就显示「匿名」。
 
 {::nomarkdown}
 <div class="gb-wrap">
@@ -23,11 +23,16 @@ permalink: /guestbook/
                 placeholder="想说的话，最多 2000 字"></textarea>
     </div>
 
+    <!-- 附件功能默认关闭（需要 Cloudflare R2，开通要求绑支付方式）。
+         想启用时取消下面的注释，并同步打开 wrangler.toml 里的 r2_buckets。
     <div class="gb-row">
       <label for="gb-file">附件</label>
       <input id="gb-file" name="file" type="file">
-      <p class="gb-hint">可选，单个文件不超过 20MB。图片会在留言里直接显示下载链接。</p>
+      <p class="gb-hint">可选，单个文件不超过 20MB。</p>
     </div>
+    -->
+
+    <p class="gb-hint">需要分享文件的话，可以先传到网盘，再把链接贴在留言里。</p>
 
     <div class="gb-actions">
       <button type="submit" class="gb-submit">发布留言</button>

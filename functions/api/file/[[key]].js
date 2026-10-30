@@ -22,6 +22,13 @@ export const onRequestGet = async ({ env, params }) => {
     return new Response('Not found', { status: 404 });
   }
 
+  if (!env.FILES) {
+    return new Response('本站未启用附件存储', {
+      status: 404,
+      headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+    });
+  }
+
   const obj = await env.FILES.get(key);
   if (!obj) {
     return new Response('文件不存在或已被删除', {
