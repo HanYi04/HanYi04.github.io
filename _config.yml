@@ -88,3 +88,4 @@ exclude:
   - serve.sh
   - new-post.sh
   - push.sh
+  - watch-github.sh
