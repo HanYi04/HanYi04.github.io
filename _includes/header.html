@@ -37,16 +37,30 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         {% for nav in site.nav_pages %}
+        {% if nav.name == "home" %}
+          {% assign nav_href = "/" | relative_url %}
+          {% assign nav_label = "首页" %}
+          {% assign nav_active = false %}
+          {% if page.url == "/" %}{% assign nav_active = true %}{% endif %}
+        {% elsif nav.name == "files" %}
+          {% assign nav_href = "/files/" | relative_url %}
+          {% assign nav_label = "下载" %}
+          {% assign nav_active = false %}
+          {% if page.url contains "files" %}{% assign nav_active = true %}{% endif %}
+        {% elsif nav.name == "cv" %}
+          {% assign nav_href = "/cv/" | relative_url %}
+          {% assign nav_label = "CV" %}
+          {% assign nav_active = false %}
+          {% if page.url contains "cv" %}{% assign nav_active = true %}{% endif %}
+        {% else %}
+          {% assign nav_href = "/" | append: nav.name | append: "/" | relative_url %}
+          {% assign nav_label = nav.name | capitalize %}
+          {% assign nav_active = false %}
+          {% if page.url contains nav.name %}{% assign nav_active = true %}{% endif %}
+        {% endif %}
         <li class="nav-item">
-          <a class="nav-link{% if page.url contains nav.name %} active{% endif %}"
-             href="{{ site.url }}{{ site.baseurl }}/{{ nav.name }}">
-            {% if nav.name == "cv" %}
-              CV
-            {% elsif nav.name == "files" %}
-              文件
-            {% else %}
-              {{ nav.name | capitalize }}
-            {% endif %}
+          <a class="nav-link{% if nav_active %} active{% endif %}" href="{{ nav_href }}">
+            {{ nav_label }}
           </a>
         </li>
         {% endfor %}
