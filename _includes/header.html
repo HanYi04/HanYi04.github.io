@@ -42,6 +42,8 @@
              href="{{ site.url }}{{ site.baseurl }}/{{ nav.name }}">
             {% if nav.name == "cv" %}
               CV
+            {% elsif nav.name == "files" %}
+              文件
             {% else %}
               {{ nav.name | capitalize }}
             {% endif %}

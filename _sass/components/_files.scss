@@ -1,0 +1,108 @@
+// =============================================================
+// 文件目录列表
+// =============================================================
+
+.file-list {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: var(--bg-card);
+  margin: var(--space-6) 0;
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--border-color);
+  text-decoration: none;
+  background-image: none !important;   // 覆盖全局链接的动画下划线
+  transition: background-color var(--transition-fast);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background-color: var(--bg-secondary);
+  }
+}
+
+// 扩展名徽章
+.file-ext {
+  flex: 0 0 auto;
+  min-width: 3rem;
+  padding: 2px 8px;
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+
+  // 常见类型给一点点区分，仍是克制的灰阶 + 主题色
+  &[data-ext='pdf'] { color: #b03a2e; border-color: rgba(176, 58, 46, 0.3); }
+  &[data-ext='zip'],
+  &[data-ext='7z'],
+  &[data-ext='rar'] { color: #8a6d3b; border-color: rgba(138, 109, 59, 0.3); }
+  &[data-ext='md'],
+  &[data-ext='txt'] { color: var(--text-secondary); }
+}
+
+.file-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  color: var(--text-primary);
+  font-size: 0.9375rem;
+  word-break: break-all;
+}
+
+.file-date {
+  flex: 0 0 auto;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.file-count,
+.file-empty {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-top: var(--space-4);
+}
+
+@media (max-width: 600px) {
+  .file-item {
+    padding: var(--space-3) var(--space-4);
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+
+  .file-date {
+    width: 100%;
+    padding-left: calc(3rem + var(--space-3));
+  }
+}
+
+// 首页的“打开文件目录”入口按钮
+.btn-entry {
+  display: inline-block;
+  padding: var(--space-3) var(--space-6);
+  font-weight: 600;
+  color: #fff;
+  background-color: var(--accent);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  background-image: none !important;
+  transition: background-color var(--transition-fast);
+
+  &:hover {
+    color: #fff;
+    background-color: var(--accent-hover);
+  }
+}

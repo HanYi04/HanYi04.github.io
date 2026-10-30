@@ -1,34 +1,35 @@
 ---
-title: "Files"
+title: "文件下载"
 layout: gridlay
 permalink: /files/
 ---
 
-## 文件与资料
+## 文件下载
 
-把 PDF、讲义、代码压缩包等放进 `assets/files/` 目录，然后在下面加一条链接。
+{% comment %}
+  自动扫描 assets/files/ 目录下所有文件并列出。
+  加文件只需把文件拷进 assets/files/，推上去就会自动出现在这里。
+{% endcomment %}
 
-<div class="section-card">
+{% assign all_files = site.static_files | where_exp: "f", "f.path contains '/assets/files/'" | sort: "modified_time" | reverse %}
 
-### 怎么加一个文件
+{% if all_files.size > 0 %}
 
-1. 把文件拷进 `assets/files/`
-2. 在下面「下载」里加一行链接
-
-链接的写法（照抄改文件名）：
-
-{% raw %}
-```markdown
-[讲义第一讲 PDF]({{ '/assets/files/lecture-01.pdf' | relative_url }})
-```
-{% endraw %}
-
-文件名建议用英文、数字和短横线，避免空格和中文——有些浏览器下载时文件名会乱码。
-
-### 下载
-
-<ul>
-  <li><a href="{{ '/assets/files/示例文件.txt' | relative_url }}">示例文件.txt</a> — 演示用，可以删掉</li>
-</ul>
-
+<div class="file-list">
+{% for file in all_files %}
+  {% assign ext = file.extname | downcase | remove_first: "." %}
+  <a class="file-item" href="{{ file.path | relative_url }}" target="_blank" rel="noopener">
+    <span class="file-ext" data-ext="{{ ext }}">{{ ext }}</span>
+    <span class="file-name">{{ file.name }}</span>
+    <span class="file-date">{{ file.modified_time | date: "%Y-%m-%d" }}</span>
+  </a>
+{% endfor %}
 </div>
+
+<p class="file-count">共 {{ all_files.size }} 个文件</p>
+
+{% else %}
+
+<p class="file-empty">还没有文件。把文件放进 <code>assets/files/</code> 目录，推送到 GitHub 后就会自动出现在这里。</p>
+
+{% endif %}

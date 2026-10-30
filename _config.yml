@@ -42,12 +42,7 @@ analytics:
 # 想要哪一页就留哪一行，不要的在行首加 # 注释掉。
 # name 必须对应 _pages/ 里的文件名（不含 .md）
 nav_pages:
-  - name: blogs
   - name: files
-  - name: cv
-  - name: publications
-  - name: research
-  - name: gallery
 
 # ============================================================
 #  以下一般不需要改
@@ -93,6 +88,6 @@ exclude:
   - package-lock.json
   - package.json
   - schema.sql
-  - wrangler.jsonc
+  - wrangler.toml
   - functions
   - _archive
