@@ -1,0 +1,13 @@
+name = "hanyi04-site"
+pages_build_output_dir = "./_site"
+compatibility_date = "2025-07-18"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "guestbook"
+database_id = "local-dev"
+
+[[r2_buckets]]
+binding = "FILES"
+bucket_name = "hanyi04-files"

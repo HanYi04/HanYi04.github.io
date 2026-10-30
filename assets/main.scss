@@ -40,6 +40,7 @@ $baseurl: "{{ site.url }}{{ site.baseurl }}";
 @import "components/publication";
 @import "components/search";
 @import "components/chips";
+@import "components/guestbook";
 
 // Layouts
 @import "layouts/grid";

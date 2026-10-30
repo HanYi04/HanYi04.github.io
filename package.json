@@ -1,0 +1,9 @@
+{
+  "name": "hanyi04-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "个人网站 + 留言板（Cloudflare Pages Functions + D1 + R2）",
+  "devDependencies": {
+    "wrangler": "^3.114.17"
+  }
+}

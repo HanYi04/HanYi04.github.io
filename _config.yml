@@ -43,6 +43,7 @@ analytics:
 # name 必须对应 _pages/ 里的文件名（不含 .md）
 nav_pages:
   - name: blogs
+  - name: guestbook
   - name: files
   - name: cv
   - name: publications
@@ -89,3 +90,8 @@ exclude:
   - new-post.sh
   - push.sh
   - watch-github.sh
+  - package-lock.json
+  - package.json
+  - schema.sql
+  - wrangler.jsonc
+  - functions

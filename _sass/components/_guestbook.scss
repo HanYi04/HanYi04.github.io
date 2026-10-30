@@ -1,0 +1,202 @@
+// =============================================================
+// 留言板
+// =============================================================
+
+.gb-wrap {
+  max-width: 760px;
+}
+
+.gb-form {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  margin: var(--space-6) 0 var(--space-8);
+  box-shadow: var(--shadow-sm);
+}
+
+.gb-row {
+  margin-bottom: var(--space-4);
+
+  label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--space-2);
+  }
+
+  input[type='text'],
+  textarea {
+    width: 100%;
+    font-family: inherit;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+
+    &:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-light);
+    }
+
+    &::placeholder {
+      color: var(--text-muted);
+    }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 6rem;
+  }
+
+  input[type='file'] {
+    display: block;
+    width: 100%;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    padding: var(--space-2) 0;
+  }
+}
+
+.gb-hint {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  margin: var(--space-2) 0 0;
+  max-width: none;
+}
+
+.gb-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-top: var(--space-6);
+}
+
+.gb-submit {
+  font-family: inherit;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-6);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), opacity var(--transition-fast);
+
+  &:hover:not(:disabled) {
+    background-color: var(--accent-hover);
+    border-color: var(--accent-hover);
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}
+
+.gb-status {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+
+  &--ok { color: #2f6f4e; }
+  &--error { color: #c0392b; }
+  &--busy { color: var(--text-muted); }
+}
+
+.gb-divider {
+  margin: var(--space-8) 0;
+}
+
+.gb-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.gb-empty {
+  color: var(--text-muted);
+  text-align: center;
+  padding: var(--space-10) 0;
+  max-width: none;
+}
+
+.gb-item {
+  padding: var(--space-6) 0;
+  border-bottom: 1px solid var(--border-color);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.gb-item-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.gb-item-name {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+}
+
+.gb-item-time {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.gb-item-body {
+  color: var(--text-secondary);
+  line-height: 1.8;
+  white-space: pre-wrap;   // 保留用户输入的换行
+  word-break: break-word;
+}
+
+.gb-item-file {
+  margin-top: var(--space-3);
+  font-size: 0.875rem;
+}
+
+.gb-item-filesize {
+  color: var(--text-muted);
+  margin-left: var(--space-1);
+}
+
+.gb-more-wrap {
+  text-align: center;
+  margin-top: var(--space-8);
+}
+
+.gb-more {
+  font-family: inherit;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-6);
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+
+  &:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+}
+
+@media (max-width: 600px) {
+  .gb-form {
+    padding: var(--space-6);
+  }
+}
