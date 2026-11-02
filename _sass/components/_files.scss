@@ -173,3 +173,54 @@
 .file-list--root {
   margin-top: var(--space-6);
 }
+
+// ---------- 文件夹折叠 ----------
+.file-group {
+  > summary {
+    list-style: none;          // 去掉默认三角
+    cursor: pointer;
+    user-select: none;
+    padding-top: var(--space-3);
+    padding-bottom: var(--space-3);
+    transition: border-color var(--transition-fast);
+
+    &::-webkit-details-marker { display: none; }
+    &::marker { content: ''; }
+
+    &:hover {
+      border-bottom-color: var(--accent);
+      .file-group-name { color: var(--accent); }
+    }
+  }
+
+  // 自定义箭头：收起时指向右，展开时转向下
+  > summary::before {
+    content: '';
+    flex: 0 0 auto;
+    width: 0;
+    height: 0;
+    border-left: 5px solid var(--text-muted);
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    align-self: center;
+    margin-right: 2px;
+    transition: transform var(--transition-base), border-left-color var(--transition-fast);
+  }
+
+  &[open] > summary::before {
+    transform: rotate(90deg);
+  }
+
+  > summary:hover::before {
+    border-left-color: var(--accent);
+  }
+}
+
+// 展开后的内容淡入
+.file-group[open] .file-list {
+  animation: fade-up 0.25s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .file-group[open] .file-list { animation: none; }
+}
