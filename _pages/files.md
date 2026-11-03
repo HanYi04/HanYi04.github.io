@@ -9,3 +9,5 @@ permalink: /files/
 点击文件名直接保存到本地。想在浏览器里先看一眼，去 [预览页]({{ '/preview/' | relative_url }})。
 
 {% include file-list.html mode="download" %}
+
+<script src="{{ '/assets/js/file-tree.js' | relative_url }}" defer></script>

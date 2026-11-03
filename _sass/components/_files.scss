@@ -224,3 +224,42 @@
 @media (prefers-reduced-motion: reduce) {
   .file-group[open] .file-list { animation: none; }
 }
+
+// ---------- 嵌套的文件夹（子目录）----------
+.file-group--nested {
+  margin-left: var(--space-6);
+  margin-bottom: var(--space-4);
+
+  > summary {
+    padding-top: var(--space-2);
+    padding-bottom: var(--space-2);
+    border-bottom-width: 1px;
+    border-bottom-color: var(--border-color);
+  }
+
+  .file-group-name {
+    font-size: 1rem;
+
+    // 子目录的图标小一号
+    &::before {
+      width: 12px;
+      height: 9px;
+    }
+  }
+
+  .file-group-count {
+    font-size: 0.75rem;
+  }
+}
+
+// 顶层的第一层目录之间留出更大间距
+.file-tree > .file-group {
+  margin-bottom: var(--space-8);
+  border-bottom: none;
+}
+
+@media (max-width: 600px) {
+  .file-group--nested {
+    margin-left: var(--space-3);
+  }
+}
