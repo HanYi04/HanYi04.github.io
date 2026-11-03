@@ -4,25 +4,31 @@
 #   ./push.sh "加了几份讲义"  → 自定义提交说明
 cd "$(dirname "$0")" || exit 1
 
-# ---- 1. 检查有没有改动 ----
+# ---- 1. 有没有新改动？----
 if [ -z "$(git status --porcelain)" ]; then
-  echo "没有需要提交的改动，所有文件都已是最新。"
-  exit 0
-fi
+  # 没有新改动，但可能还有提交没推上去
+  ahead=$(git rev-list --count origin/main..HEAD 2>/dev/null || echo 0)
+  if [ "$ahead" -eq 0 ]; then
+    echo "没有需要提交的改动，所有文件都已是最新，也没有待推送的提交。"
+    exit 0
+  fi
+  echo "没有新改动，但本地有 $ahead 个提交尚未推送，继续推送…"
+  echo
+else
+  echo "── 发现以下改动 ──"
+  git status --short
+  echo
 
-echo "── 发现以下改动 ──"
-git status --short
-echo
-
-# ---- 2. 提交 ----
-msg="${1:-更新 $(date '+%Y-%m-%d %H:%M')}"
-git add -A
-if ! git commit -q -m "$msg"; then
-  echo "❌ 提交失败，已中止。"
-  exit 1
+  # ---- 2. 提交 ----
+  msg="${1:-更新 $(date '+%Y-%m-%d %H:%M')}"
+  git add -A
+  if ! git commit -q -m "$msg"; then
+    echo "❌ 提交失败，已中止。"
+    exit 1
+  fi
+  echo "✅ 已提交：$msg"
+  echo
 fi
-echo "✅ 已提交：$msg"
-echo
 
 # ---- 3. 推送（失败自动重试）----
 max=40
