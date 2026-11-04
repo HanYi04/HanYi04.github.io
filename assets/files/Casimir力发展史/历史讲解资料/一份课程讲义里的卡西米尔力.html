@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>一份课程讲义里的卡西米尔力</title>
+<style>
+  :root{
+    --ink:#141414; --ink-2:#3d3d3d; --ink-3:#6b6b6b; --ink-4:#9a9a9a;
+    --line:#e3e3e3; --line-2:#cfcfcf; --panel:#f8f8f8; --panel-2:#fcfcfc;
+    --red:#c00000; --red-soft:#fdf4f4;
+    --serif:"Noto Serif CJK SC","Songti SC",serif;
+    --sans:"Noto Sans CJK SC","Source Han Sans SC","Microsoft YaHei",sans-serif;
+    --mono:"DejaVu Sans Mono","Liberation Mono",monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:#fff;color:var(--ink);font-family:var(--sans);
+       font-size:15.5px;line-height:1.85;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:900px;margin:0 auto;padding:52px 28px 110px}
+
+  header.top{border-bottom:2px solid var(--ink);padding-bottom:22px;margin-bottom:26px}
+  .kicker{font-size:12px;letter-spacing:.2em;color:var(--ink-3);text-transform:uppercase;margin-bottom:14px}
+  h1{font-family:var(--serif);font-size:32px;line-height:1.32;margin:0 0 14px;font-weight:700}
+  h1 em{font-style:normal;color:var(--red)}
+  .sub{font-size:16px;color:var(--ink-2);margin:0;font-family:var(--serif)}
+  .meta{font-size:12.5px;color:var(--ink-3);margin-top:16px;line-height:1.75}
+
+  section{margin:52px 0 0}
+  h2.sec{font-family:var(--serif);font-size:23px;margin:0 0 16px;font-weight:700;
+          display:flex;align-items:baseline;gap:14px}
+  h2.sec .num{font-family:var(--mono);font-size:11.5px;color:var(--red);letter-spacing:.12em;padding-top:5px}
+  h3.sub{font-size:16.5px;margin:28px 0 10px;font-weight:600}
+  h3.sub::before{content:"";display:inline-block;width:13px;height:2px;background:var(--red);
+                 vertical-align:middle;margin-right:9px}
+  p{margin:11px 0}
+  strong{font-weight:600}
+  em{font-style:normal;color:var(--red)}
+  code{font-family:var(--mono);font-size:.88em;background:var(--panel);padding:1px 5px;border:1px solid var(--line)}
+
+  blockquote{margin:18px 0;padding:13px 18px;border-left:2px solid var(--line-2);
+             background:var(--panel-2);color:var(--ink-2);font-family:var(--serif);
+             font-size:14.5px;line-height:1.8}
+  blockquote p{margin:5px 0}
+
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px}
+  th{text-align:left;font-weight:600;font-size:12.5px;color:var(--ink-2);
+     border-bottom:1.5px solid var(--ink);padding:8px 10px}
+  td{border-bottom:1px solid var(--line);padding:8px 10px;vertical-align:top}
+  tr:last-child td{border-bottom:1px solid var(--line-2)}
+  td.k{font-weight:600}
+  tbody tr:hover{background:var(--panel-2)}
+
+  .card{border:1px solid var(--line);background:#fff;padding:16px 20px;margin:18px 0}
+  .card .t{font-size:12.5px;letter-spacing:.06em;color:var(--red);font-weight:600;margin-bottom:7px}
+  .card p:last-child{margin-bottom:0}
+  .card.note{background:var(--red-soft);border-color:#f0d6d6}
+
+  .slide{border:1px solid var(--line);margin:14px 0;padding:0}
+  .slide .h{background:var(--panel);border-bottom:1px solid var(--line);padding:9px 16px;
+            font-size:12.5px;color:var(--ink-3);font-family:var(--mono)}
+  .slide .b{padding:12px 16px}
+  .slide .b p{margin:6px 0}
+
+  ol.tight{padding-left:22px;margin:12px 0}
+  ol.tight li{margin:7px 0}
+
+  footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--line);
+         font-size:12.5px;color:var(--ink-4);line-height:1.7}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="kicker">讲义梳理 · physics 522</div>
+  <h1>一份课程讲义里的<em>卡西米尔力</em></h1>
+  <p class="sub">18 页幻灯片，把七十年压成一条线——以及从它追出的四篇文献</p>
+  <div class="meta">
+    原件：<code>casimir522.pdf</code>（18 页，Keynote 制作）　|　课程：physics 522, Spring 2026，"Friday Feature"，M. Gold<br>
+    本文是对讲义的整理与注解，**不是原文转载**；讲义中的文字引用均标注为 "讲义原话"
+  </div>
+</header>
+
+<!-- ============ 1 ============ -->
+<section id="s1">
+  <h2 class="sec"><span class="num">01</span>它的叙事顺序</h2>
+
+  <p>这份讲义的结构，和我们桌面那几份文档几乎重合——说明这个领域的教学路径已经相当固定了：</p>
+
+  <table>
+    <thead><tr><th style="width:8%">页</th><th style="width:30%">主题</th><th>内容</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="k">起点</td><td>直接引用 Casimir 1948 原文（Proc. KNAW 51, 793–795）</td></tr>
+      <tr><td>2–4</td><td class="k">公式</td><td>真空能 → 板—板 → 球—板</td></tr>
+      <tr><td>5</td><td class="k">两个修正</td><td>温度依赖、有限电导率</td></tr>
+      <tr><td>6</td><td class="k">分界</td><td>vdW 与 Casimir 的关系 + Lamoreaux 装置参数</td></tr>
+      <tr><td>7–10</td><td class="k">1997 实验</td><td>扭摆、间距微调、真空、电容检测、粗糙度修正</td></tr>
+      <tr><td>11–13</td><td class="k">AFM 时代</td><td>激光测偏转、R=100 μm、10⁻¹² N 量级</td></tr>
+      <tr><td>14</td><td class="k">现代</td><td>PRB 85, 165443 (2012)——频移技术</td></tr>
+      <tr><td>15</td><td class="k">表面</td><td>KPFM（开尔文探针）测表面电势</td></tr>
+      <tr><td>16–18</td><td class="k">新物理</td><td>Ma 2026 / Bressi 2002 / 轴子约束 2017</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>它的价值不在深度，而在于把"从 1948 到 2026"这条线一次走完</strong>——而且每一段都给了具体文献。</p>
+</section>
+
+<!-- ============ 2 ============ -->
+<section id="s2">
+  <h2 class="sec"><span class="num">02</span>从最原始的公式开始</h2>
+
+  <p>讲义第 3 页给出的形式，与 Casimir 原文一模一样（连单位都换成了 CGS）：</p>
+
+  <blockquote>
+    <p><b>讲义原话</b>：<br>
+    E/A = E₀/A = −π²ħc/(240 a⁴)　→　F/A = π²ħc/(240 a⁴)·(−1) = 0.016/a<sub>μ</sub><sup>4</sup> dyn/cm²</p>
+    <p style="font-size:13px;color:var(--ink-3)">"minus means attractive；1 dyn = wt of 0.001 g"</p>
+  </blockquote>
+
+  <p>注意最后那半句——**它把力的单位翻译成了"重量"**：1 达因 = 0.001 克的重。这是个很好的教学技巧，因为对初学者来说"达因"没有直觉，而"0.001 g 压在上面"立刻就有画面了。</p>
+
+  <div class="card">
+    <div class="t">对照：我们算过的值</div>
+    <p style="margin:0">0.016/a<sub>μ</sub>⁴ dyn/cm²，在 a = 1 μm 处 = <b>1.6×10⁻² dyn/cm² = 1.6×10⁻³ Pa ≈ 1.6 mPa</b>。<br>
+    与 Casimir 原文的 0.013/a<sub>μ</sub>⁴（=1.3 mPa）略有差异，属于不同精度/单位换算的取整。**量级完全一致。**</p>
+  </div>
+
+  <p>第 4 页转到球—板几何（用于真实实验），第 5 页立刻接上**两个修正**：</p>
+
+  <table>
+    <thead><tr><th style="width:24%">修正</th><th>为什么必须加</th></tr></thead>
+    <tbody>
+      <tr><td class="k">温度依赖</td><td>T ≠ 0 时，热涨落贡献一个额外的项（大间距时主导）</td></tr>
+      <tr><td class="k">有限电导率</td><td>真实金属不是理想导体，穿透深度有限 → 反射系数 &lt; 1</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>这两条正是我们主文档里反复讲的东西</strong>：温度 → Matsubara 求和；有限电导率 → ε(iξ) 与 Drude/plasma 之争。</p>
+</section>
+
+<!-- ============ 3 ============ -->
+<section id="s3">
+  <h2 class="sec"><span class="num">03</span>它怎么解释"vdW 与 Casimir 的关系"</h2>
+
+  <p>讲义第 6 页这段值得完整引述，因为它代表了**教科书的标准口径**：</p>
+
+  <blockquote>
+    <p><b>讲义原话</b>："The Casimir force is closely related to the van der Waals (vdW) attraction between dielectric bodies. <b>Formally, Eq. (1) is obtained by letting the dielectric constant ε in the Lifshitz theory [6] approach infinity</b>, which is an appropriate description for a conducting material. However, in practical terms, the Casimir and van der Waals forces are quite different; the van der Waals force is always attractive, whereas the <b>sign of the Casimir force is geometry dependent</b>. vdW dominant for distances &lt; 100 nm, Casimir dominant for larger distance &gt; 100 nm."</p>
+  </blockquote>
+
+  <p>三点，逐条看：</p>
+
+  <table>
+    <thead><tr><th style="width:26%">讲义的说法</th><th>评价</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="k">Casimir 力是 Lifshitz 理论里 <b>ε → ∞</b> 的极限</td>
+        <td>✅ <b>准确</b>。这正是 Casimir 1948 与 Lifshitz 1956 的关系——后者把前者当作理想导体极限。</td>
+      </tr>
+      <tr>
+        <td class="k">"van der Waals 力总是吸引"</td>
+        <td>⚠️ <b>需要限定</b>。在<b>真空中同种材料</b>之间成立；但两种物体浸在介质中时，有效 Hamaker 常数可为负 → <b>排斥</b>（我们的主文档第 7 章讲过 <code>A₁₃₁ = (√A₁₁ − √A₃₃)²</code>）。</td>
+      </tr>
+      <tr>
+        <td class="k">"Casimir 力的符号依赖几何"</td>
+        <td>⚠️ <b>表述易误解</b>。力本身在同种材料间仍是吸引；"几何依赖"指的是<b>不同形状/材料组合</b>下可以出现净排斥（如介质夹层）。讲义这句压缩得太狠。</td>
+      </tr>
+      <tr>
+        <td class="k">100 nm 是分界</td>
+        <td>✅ 大体成立（对金属 λ_p ≈ 137 nm，对介质 ≈ 100 nm），但它是<b>渐变</b>而非开关。</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="card note">
+    <div class="t">这份讲义最容易被误读的一句</div>
+    <p style="margin:0">"vdW 总是吸引、Casimir 依赖几何"——如果照字面记，会在读到 R07（不同材料、镀层）或 Hamaker 介质修正时卡住。<br>
+    <strong>更稳的说法</strong>：两者是同一个 Lifshitz 公式在不同距离/不同 ε 下的表现；<b>符号由材料和几何共同决定</b>，不只是几何。</p>
+  </div>
+</section>
+
+<!-- ============ 4 ============ -->
+<section id="s4">
+  <h2 class="sec"><span class="num">04</span>Lamoreaux 1997：讲义给了全套参数</h2>
+
+  <p>这是这份讲义里**信息密度最高**的一段。它把 Lamoreaux 1997 的装置参数几乎列全了：</p>
+
+  <table>
+    <caption>讲义第 6–8 页列出的装置参数（已与 H10 原文核对一致）</caption>
+    <thead><tr><th style="width:28%">部件</th><th>参数</th></tr></thead>
+    <tbody>
+      <tr><td class="k">下板</td><td>石英光学平晶，直径 <b>2.54 cm</b>，厚 <b>0.5 cm</b></td></tr>
+      <tr><td class="k">上板</td><td>球面透镜，曲率半径 <b>11.3 ± 0.1 cm</b>，直径 <b>4 cm</b></td></tr>
+      <tr><td class="k">镀层</td><td>两面均蒸镀<b>铜</b>，厚 <b>0.5 mm</b></td></tr>
+      <tr><td class="k">测力</td><td><b>扭摆</b>（torsion pendulum）+ 微调间距；用<b>电容变化</b>测位移</td></tr>
+      <tr><td class="k">真空</td><td><b>10⁻⁴ Torr</b>（消除黏滞阻尼）</td></tr>
+      <tr><td class="k">反馈</td><td>反馈系统锁定扭摆角度（"two compensator..."）</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>关于"R = 11 cm"这个数</strong>：讲义里标了 <code>R=11cm</code>。这个曲率半径决定了力的量级——球—板力 ∝ R，所以 <b>R 越大信号越强</b>，但 PFA 的适用性要求 R ≫ d（11 cm ≫ 1 μm，绰绰有余）。</p>
+
+  <p>讲义还标出了力的标度：</p>
+
+  <blockquote>
+    <p><b>讲义原话</b>："characteristic |F| ∝ a⁻³ to 600 nm"　——　注意：这是<b>球—板</b>几何的推迟标度（F ∝ 1/d³），不是平行板的 1/d⁴。</p>
+  </blockquote>
+
+  <div class="card">
+    <div class="t">为什么此处必须区分几何</div>
+    <p style="margin:0">
+    · <b>平行板</b>：F/A ∝ 1/d⁴<br>
+    · <b>球—板</b>（PFA）：F ∝ R/d³<br>
+    讲义同时出现 "F ∝ a⁻³"（第 8 页）和 "F ∝ a⁻⁴"（另一处），**不是矛盾，是几何不同**。看文献时这是最常见的混淆点。</p>
+  </div>
+</section>
+
+<!-- ============ 5 ============ -->
+<section id="s5">
+  <h2 class="sec"><span class="num">05</span>AFM 时代与表面电势</h2>
+
+  <p>讲义第 11–13 页转到现代方法，给出的关键数字是：</p>
+
+  <blockquote>
+    <p><b>讲义原话</b>："deflection measured by <b>laser</b> (diode ratio A/B)"、"<b>R = 100 μm</b>"、"<b>10⁻¹² N = 10⁻¹ μdyne</b>"</p>
+  </blockquote>
+
+  <p>三句话概括了 Mohideen 一代的技术：**激光光杠杆**测偏转、**百微米球**、**皮牛级力**。</p>
+
+  <p>第 14 页引出 <b>PRB 85, 165443 (2012)</b>——我顺着这条线索查了，那是 <b>Chang 等（Mohideen 组）用频移技术测力梯度</b>的论文，已归档为 <code>H14</code>。</p>
+
+  <p>第 15 页提到 <b>KPFM（Kelvin probe force microscopy）</b>——和集内赵海燕那篇硕士论文（MEMS 开尔文探针）是同一条技术路线。**测表面电势，正是为了压掉 patch。**</p>
+</section>
+
+<!-- ============ 6 ============ -->
+<section id="s6">
+  <h2 class="sec"><span class="num">06</span>从"测量"转向"检验新物理"</h2>
+
+  <p>讲义最后三页（16–18）是整个叙事的方向转变——**不再问"卡西米尔力对不对"，而问"它能告诉我们什么新东西"**。</p>
+
+  <div class="slide">
+    <div class="h">第 16 页 · Ma, Takhistov &amp; Iizuka 2026</div>
+    <div class="b">
+      <p><b>讲义原话</b>："Casimir Geometry as a Probe of Short Range Forces", Ma, Xiaolin and Takhistov, Volodymyr and Iizuka, Hideo, eprint = "2603.22413", 2026</p>
+      <p>讲义还摘了它的引言："Tests of possible new short range forces that manifest as deviations from Newton's inverse square law… A broad range of theories beyond the Standard Model predict that deviations from Newtonian gravity can appear at submicron scales, including scenarios with extra spatial dimensions or new light bosons."</p>
+      <p style="color:var(--ink-3);font-size:13px">→ 已归档：<code>09_新物理检验/N01</code></p>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="h">第 17 页 · Bressi 等 2002</div>
+    <div class="b">
+      <p><b>讲义原话</b>："Measurement of the Casimir Force between Parallel Metallic Surfaces", Bressi, G. and Carugno, G. and Onofrio, R. and Ruoso, G. <b>Phys. Rev. Lett. 88, 4, 2002</b></p>
+      <p style="color:var(--ink-3);font-size:13px">→ 已归档：<code>08_历史实验/H15</code>（罕见的平行板几何，4 页短文）</p>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="h">第 18 页 · 2017 年轴子约束</div>
+    <div class="b">
+      <p><b>讲义原话</b>：Constraints on axion-like particles and non-Newtonian gravity from measuring the <b>difference</b> of Casimir forces　<code>arxiv.org/pdf/1704.05892.pdf</code></p>
+      <p style="color:var(--ink-3);font-size:13px">→ 已归档：<code>09_新物理检验/N02</code></p>
+    </div>
+  </div>
+
+  <p><strong>这三条线索的共同逻辑</strong>：不测绝对值，测<b>差值</b>或<b>几何依赖</b>——已知的卡西米尔贡献在差中部分抵消，剩下的偏差才用来约束新物理。</p>
+</section>
+
+<!-- ============ 7 ============ -->
+<section id="s7">
+  <h2 class="sec"><span class="num">07</span>从这份讲义追出的四篇文献</h2>
+
+  <p>这就是它作为"线索"的实际价值：</p>
+
+  <table>
+    <thead><tr><th style="width:10%">编号</th><th style="width:34%">文献</th><th>价值</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="k">H14</td>
+        <td>Chang 等, *Gradient of the Casimir force … <b>frequency-shift technique</b>*, <b>PRB 85, 165443 (2012)</b></td>
+        <td><b>D1（秦莉兰 2015）所用频移方法的标准文献</b>——这份讲义把它标为"understanding correction details"，一语中的</td>
+      </tr>
+      <tr>
+        <td class="k">H15</td>
+        <td>Bressi 等, *…between <b>Parallel Metallic Plates</b>*, <b>PRL 88, 041804 (2002)</b></td>
+        <td>极罕见的<b>平行板</b>几何；结果与理论有偏差，曾引发长期讨论</td>
+      </tr>
+      <tr>
+        <td class="k">N01</td>
+        <td>Ma, Takhistov &amp; Iizuka, *Casimir Geometry as a Probe of Short Range Forces*, arXiv:2603.22413 (2026)</td>
+        <td>把<b>几何</b>当变量：不同几何下力标度不同，新物理未必同比例变化</td>
+      </tr>
+      <tr>
+        <td class="k">N02</td>
+        <td>*Constraints on axion-like particles … from measuring the <b>difference</b> of Casimir forces*, arXiv:1704.05892 (2017)</td>
+        <td>"测差值"范式：已知贡献相消，剩偏差约束新物理</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>加上讲义本身引用的 <b>Casimir 1948</b>、<b>Lifshitz</b>、<b>Lamoreaux 1997</b>——**一份 18 页的课程讲义，串起了集内 7 篇文献**。</p>
+</section>
+
+<!-- ============ 8 ============ -->
+<section id="s8">
+  <h2 class="sec"><span class="num">08</span>怎么用这份讲义</h2>
+
+  <table>
+    <thead><tr><th style="width:30%">如果你的目的是</th><th>建议</th></tr></thead>
+    <tbody>
+      <tr><td class="k">快速建立时间线</td><td>看第 1–3 节（本文）就够；18 页原件的顺序也是这个</td></tr>
+      <tr><td class="k">搞懂某一代实验</td><td>别只看讲义——它每页只有几行。用 <code>卡西米尔力实验方法_六代装置详解.html</code>，那里有 9 张原文装置图</td></tr>
+      <tr><td class="k">学理论推导</td><td>讲义几乎没有推导。用 <code>从范德瓦耳斯力到卡西米尔力.html</code></td></tr>
+      <tr><td class="k">找论文</td><td>讲义每页都给具体引用，这是它最大的用处</td></tr>
+    </tbody>
+  </table>
+
+  <div class="card note">
+    <div class="t">一句话评价</div>
+    <p style="margin:0">
+    <b>好的地方</b>：结构完整、引用具体、有教学巧思（把达因翻译成克重）。<br>
+    <b>要留神的地方</b>：几处压缩过猛的表述（"vdW 总是吸引"、"Casimir 符号依赖几何"），以及正文里的 OCR 连字错误（vdW 被识别成 vdR、ε 被识别成 e、finite 被识别成 nite）。<br>
+    <strong>当作"地图"用很好，当作"教材"不够。</strong></p>
+  </div>
+</section>
+
+<footer>
+  <p>原件：<code>~/桌面/casimir522.pdf</code>（18 页，physics 522 Spring 2026，M. Gold）。本文为整理与注解，讲义原文以引号标出。</p>
+  <p>相关文档：<code>从范德瓦耳斯力到卡西米尔力.html</code>（理论）· <code>卡西米尔力实验方法_六代装置详解.html</code>（实验）</p>
+</footer>
+
+</div>
+</body>
+</html>

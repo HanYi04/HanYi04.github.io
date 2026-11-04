@@ -128,11 +128,11 @@
     <li><a href="#s4">推迟：光速有限带来的折扣</a></li>
     <li><a href="#s5">Casimir–Polder 1948：把"瞬时"换成"推迟"</a></li>
     <li><a href="#s6">能量的频率分布是如何被改写的</a></li>
-    <li><a href="#s7">为什么不能"把板上的原子加起来"</a></li>
+    <li><a href="#s7">Hamaker 1937：把"原子对"积分成"几何"</a></li>
     <li><a href="#s8">Casimir 1948：换一条路——数模式</a></li>
     <li><a href="#s9">两篇论文的分工</a></li>
     <li><a href="#s10">局限，以及接下来的一步</a></li>
-    <li><a href="#s11">附录：原文与量纲总表</a></li>
+    <li><a href="#s11">原文与量纲总表</a></li>
   </ol>
 </nav>
 
@@ -182,41 +182,53 @@
   <p><strong>只有第三种（London 色散力）跟真空涨落有关</strong>——它是后面整条故事线的主角。对金属、惰性气体这类没有永久偶极的体系，vdW 力几乎全部来自它。</p>
 
   <figure>
-    <svg viewBox="0 0 700 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="范德瓦耳斯力三种成分示意">
+    <svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="范德瓦耳斯力三种成分示意">
+      <defs>
+        <marker id="dipA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#c00000"/>
+        </marker>
+        <marker id="dipB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#9a9a9a"/>
+        </marker>
+      </defs>
       <g font-family="'Noto Sans CJK SC',sans-serif">
-        <!-- Keesom -->
-        <g transform="translate(40,40)">
+        <g transform="translate(50,40)">
           <text x="0" y="0" font-size="12.5" fill="#141414">Keesom：永久 ↔ 永久</text>
-          <circle cx="30" cy="55" r="18" fill="none" stroke="#141414" stroke-width="1.8"/>
-          <circle cx="100" cy="55" r="18" fill="none" stroke="#141414" stroke-width="1.8"/>
-          <line x1="18" y1="55" x2="42" y2="55" stroke="#c00000" stroke-width="2.6"/>
-          <line x1="88" y1="55" x2="112" y2="55" stroke="#c00000" stroke-width="2.6"/>
-          <text x="8" y="95" font-size="11" fill="#6b6b6b">两个都有固定偶极</text>
+          <circle cx="34" cy="58" r="17" fill="none" stroke="#141414" stroke-width="1.6"/>
+          <line x1="24" y1="58" x2="46" y2="58" stroke="#c00000" stroke-width="2.2" marker-end="url(#dipA)"/>
+          <text x="28" y="90" font-size="12" fill="#c00000">μ₁</text>
+          <circle cx="112" cy="58" r="17" fill="none" stroke="#141414" stroke-width="1.6"/>
+          <line x1="102" y1="58" x2="124" y2="58" stroke="#c00000" stroke-width="2.2" marker-end="url(#dipA)"/>
+          <text x="106" y="90" font-size="12" fill="#c00000">μ₂</text>
+          <text x="0" y="118" font-size="11" fill="#6b6b6b">两者天生都有固定偶极矩</text>
         </g>
 
-        <!-- Debye -->
-        <g transform="translate(260,40)">
+        <g transform="translate(268,40)">
           <text x="0" y="0" font-size="12.5" fill="#141414">Debye：永久 ↔ 诱导</text>
-          <circle cx="30" cy="55" r="18" fill="none" stroke="#141414" stroke-width="1.8"/>
-          <circle cx="100" cy="55" r="18" fill="none" stroke="#141414" stroke-width="1.8"/>
-          <line x1="18" y1="55" x2="42" y2="55" stroke="#c00000" stroke-width="2.6"/>
-          <line x1="92" y1="55" x2="108" y2="55" stroke="#c00000" stroke-width="1.6" stroke-dasharray="3 2"/>
-          <text x="8" y="95" font-size="11" fill="#6b6b6b">第二个被"拉"出偶极</text>
+          <circle cx="34" cy="58" r="17" fill="none" stroke="#141414" stroke-width="1.6"/>
+          <line x1="24" y1="58" x2="46" y2="58" stroke="#c00000" stroke-width="2.2" marker-end="url(#dipA)"/>
+          <text x="30" y="90" font-size="12" fill="#c00000">μ</text>
+          <circle cx="112" cy="58" r="17" fill="none" stroke="#141414" stroke-width="1.6"/>
+          <line x1="100" y1="58" x2="118" y2="58" stroke="#9a9a9a" stroke-width="1.8" stroke-dasharray="4 2" marker-end="url(#dipB)"/>
+          <text x="96" y="90" font-size="11.5" fill="#9a9a9a">μ_ind</text>
+          <text x="0" y="118" font-size="11" fill="#6b6b6b">第二个被第一个的场"拉"出偶极</text>
         </g>
 
-        <!-- London -->
-        <g transform="translate(480,40)">
+        <g transform="translate(486,40)">
           <text x="0" y="0" font-size="12.5" fill="#c00000">London：瞬时 ↔ 诱导</text>
-          <circle cx="30" cy="55" r="18" fill="none" stroke="#141414" stroke-width="1.8"/>
-          <circle cx="100" cy="55" r="18" fill="none" stroke="#141414" stroke-width="1.8"/>
-          <line x1="16" y1="55" x2="44" y2="55" stroke="#c00000" stroke-width="2.6"/>
-          <line x1="92" y1="55" x2="108" y2="55" stroke="#c00000" stroke-width="1.6" stroke-dasharray="3 2"/>
-          <!-- 抖动 -->
-          <path d="M20,25 q5,-8 10,0 q5,8 10,0" fill="none" stroke="#c00000" stroke-width="1.2" opacity="0.7"/>
-          <text x="8" y="95" font-size="11" fill="#6b6b6b">电子随机抖动，瞬间成偶极</text>
+          <circle cx="34" cy="58" r="17" fill="none" stroke="#141414" stroke-width="1.6"/>
+          <line x1="24" y1="58" x2="46" y2="58" stroke="#c00000" stroke-width="2.2" marker-end="url(#dipA)"/>
+          <text x="20" y="90" font-size="11.5" fill="#c00000">μ(t)</text>
+          <circle cx="112" cy="58" r="17" fill="none" stroke="#141414" stroke-width="1.6"/>
+          <line x1="100" y1="58" x2="118" y2="58" stroke="#9a9a9a" stroke-width="1.8" stroke-dasharray="4 2" marker-end="url(#dipB)"/>
+          <text x="96" y="90" font-size="11.5" fill="#9a9a9a">μ_ind</text>
+          <path d="M22,26 q6,-9 12,0 q6,9 12,0" fill="none" stroke="#c00000" stroke-width="1.3" opacity="0.8"/>
+          <text x="0" y="118" font-size="11" fill="#6b6b6b">电子随机抖动 → 偶极随时间变</text>
         </g>
 
-        <text x="40" y="180" font-size="11.5" fill="#6b6b6b">三者都给出能量 ∝ 1/r⁶、力 ∝ 1/r⁷；只有 London 项与真空涨落同源，是卡西米尔力的"祖先"。</text>
+        <line x1="50" y1="188" x2="660" y2="188" stroke="#e3e3e3"/>
+        <text x="50" y="210" font-size="11.5" fill="#3d3d3d">箭头 = 偶极矩矢量 μ（指向从负端到正端）；实线箭头 = 永久偶极，虚线箭头 = 被诱导出的偶极。</text>
+        <text x="50" y="234" font-size="11.5" fill="#6b6b6b">三者都给出能量 ∝ 1/r⁶、力 ∝ 1/r⁷；只有 London 项与真空涨落同源，是卡西米尔力的"祖先"。</text>
       </g>
     </svg>
     <figcaption><b>图 1</b>　范德瓦耳斯力的三种成分。教科书把三者合称 vdW 力，但它们物理来源不同——只有 London 色散力属于量子涨落。</figcaption>
@@ -357,15 +369,19 @@
         </mfrac>
       </math>
     </div>
-    <div class="cap">式 (4)：从能级与跃迁偶极矩算 C₆（London 1930）</div>
+    <div class="cap">式 (4)：从能级与跃迁偶极矩算 C₆（London 1930）　<b style="color:#c00000">【本式采用高斯制 CGS】</b></div>
     <div class="vars-wrap">
-      <p class="lbl">符号 · 量纲</p>
+      <p class="lbl">符号 · 量纲（高斯制 / SI 对照）</p>
       <table class="vars">
-        <tr><th style="width:14%">符号</th><th style="width:36%">含义</th><th style="width:20%">量纲</th><th>备注</th></tr>
-        <tr><td class="sym">𝐝</td><td>偶极矩算符</td><td class="dim">C·m（SI）</td><td>—</td></tr>
-        <tr><td class="sym">E_n</td><td>第 n 个能级</td><td class="dim">J</td><td>—</td></tr>
-        <tr><td class="sym">⟨0|𝐝|n⟩</td><td>跃迁偶极矩</td><td class="dim">C·m</td><td>决定"多容易被极化"</td></tr>
+        <tr><th style="width:14%">符号</th><th style="width:30%">含义</th><th style="width:24%">高斯制</th><th>SI 制</th></tr>
+        <tr><td class="sym">𝐝</td><td>偶极矩算符</td><td class="dim">statC·cm（esu·cm）</td><td class="dim">C·m</td></tr>
+        <tr><td class="sym">E_n</td><td>第 n 个能级</td><td class="dim">erg</td><td class="dim">J</td></tr>
+        <tr><td class="sym">C₆</td><td>色散系数</td><td class="dim"><b>erg·cm⁶</b></td><td class="dim"><b>J·m⁶</b></td></tr>
       </table>
+      <p style="font-size:12.5px;color:var(--ink-3);margin:8px 0 0">
+        换算到 SI：<b>C₆(SI) = (1/4πε₀)² × C₆(上式)</b>。<br>
+        原因：偶极—偶极相互作用在高斯制写成 d₁d₂/R³，在 SI 写成 (1/4πε₀)·d₁d₂/R³；平方（二阶微扰）后多出 (1/4πε₀)²。
+      </p>
     </div>
   </div>
 
@@ -382,19 +398,92 @@
         <mi>d</mi><mi>ξ</mi>
       </math>
     </div>
-    <div class="cap">式 (5)：C₆ 的极化率积分形式</div>
+    <div class="cap">式 (5)：C₆ 的极化率积分形式（McLachlan）　<b style="color:#c00000">【本式采用高斯制 CGS】</b></div>
     <div class="vars-wrap">
-      <p class="lbl">符号 · 量纲</p>
+      <p class="lbl">符号 · 量纲（高斯制 / SI 对照）</p>
       <table class="vars">
-        <tr><th style="width:14%">符号</th><th style="width:36%">含义</th><th style="width:20%">量纲</th><th>备注</th></tr>
-        <tr><td class="sym">α(iξ)</td><td>原子在虚频 ξ 的极化率</td><td class="dim">C·m²/V</td><td>H 原子 ≈ 0.667 Å³（×4πε₀）</td></tr>
-        <tr><td class="sym">ξ</td><td>虚频</td><td class="dim">s⁻¹</td><td>由 iω → iξ 变换得到</td></tr>
-        <tr><td class="sym">ħ</td><td>约化普朗克常数</td><td class="dim">J·s</td><td>1.055×10⁻³⁴</td></tr>
+        <tr><th style="width:14%">符号</th><th style="width:30%">含义</th><th style="width:24%">高斯制</th><th>SI 制</th></tr>
+        <tr><td class="sym">α(iξ)</td><td>原子在虚频 ξ 的极化率</td><td class="dim">cm³</td><td class="dim">C·m²/V</td></tr>
+        <tr><td class="sym">ξ</td><td>虚频</td><td class="dim">s⁻¹</td><td class="dim">s⁻¹</td></tr>
+        <tr><td class="sym">ħ</td><td>约化普朗克常数</td><td class="dim">erg·s</td><td class="dim">J·s</td></tr>
+        <tr><td class="sym">C₆</td><td>色散系数</td><td class="dim"><b>erg·cm⁶</b></td><td class="dim"><b>J·m⁶</b></td></tr>
       </table>
+      <p style="font-size:12.5px;color:var(--ink-3);margin:8px 0 0">
+        SI 形式：C₆ = (3ħ/π)·(1/4πε₀)²·∫α₁(iξ)α₂(iξ)dξ，此时 α 用 SI 单位（C·m²/V）。
+      </p>
     </div>
   </div>
 
   <p><strong>量纲验算</strong>：ħ·[α]²·[ξ] = (J·s)(C·m²/V)²(s⁻¹) = J·(F·m²)² = <strong>J·m⁶</strong> ✓</p>
+
+  <h3 class="sub">2.2 C₆ 在现实中怎么测出来</h3>
+
+  <p>C₆ 不是"只能从理论上算"的数——它可以被实验测定。历史上走过五条路：</p>
+
+  <table>
+    <caption>测定 C₆ 的五种实验路径</caption>
+    <thead><tr><th style="width:5%">#</th><th style="width:22%">方法</th><th style="width:42%">测什么 / 怎么反推</th><th>适用与精度</th></tr></thead>
+    <tbody>
+      <tr><td>①</td><td class="k">第二维里系数</td><td>测气体状态方程 <code>pV/RT = 1 + B(T)/V + …</code>，从 B(T) 的温度依赖反推</td><td><b>最经典</b>；惰性气体可达 1–5%</td></tr>
+      <tr><td>②</td><td class="k">分子束散射</td><td>两束原子交叉碰撞，测散射截面随速度/角度的变化</td><td>直接探长程势；适合难挥发物种</td></tr>
+      <tr><td>③</td><td class="k">光谱（跃迁偶极矩）</td><td>用式 (4)：测能级间距与跃迁偶极矩，直接算</td><td>精度高；需完整光谱数据</td></tr>
+      <tr><td>④</td><td class="k">vdW 复合物光谱</td><td>两原子形成的弱束缚分子（如 Ar₂、Na₂）的振转能级</td><td><b>最直接</b>，能给出整条势能曲线</td></tr>
+      <tr><td>⑤</td><td class="k">极化率 + 电离能</td><td>代入 London 近似式（见 2.3）</td><td>误差通常 20–50%，但极方便</td></tr>
+    </tbody>
+  </table>
+
+  <div class="card">
+    <div class="t">为什么"第二维里系数"是最老也最可靠的一条</div>
+    <p style="margin:0">C₆ 本质上描述的是"两个分子靠近时能量怎么降"。而气体的<b>非理想性</b>（第二维里系数 B(T)）恰恰是这种<b>成对相互作用</b>的宏观体现。<br>
+    <strong>测一条 p–V–T 曲线，就能反推出 C₆</strong>——这是 1930 年代唯一可行的办法，Keesom 就是这样验证 London 理论的。</p>
+  </div>
+
+  <h3 class="sub">2.3 London 的近似公式：用两个可测量估算 C₆</h3>
+
+  <p>这是 London 1930 年给出的、至今仍在用的估算方法。他把原子看成"固有频率 ω₀ 的振子"，得到：</p>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <msub><mi>C</mi><mn>6</mn></msub><mo>≈</mo>
+        <mfrac><mn>3</mn><mn>2</mn></mfrac>
+        <mo>·</mo>
+        <mfrac>
+          <mrow><msub><mi>I</mi><mn>1</mn></msub><msub><mi>I</mi><mn>2</mn></msub></mrow>
+          <mrow><msub><mi>I</mi><mn>1</mn></msub><mo>+</mo><msub><mi>I</mi><mn>2</mn></msub></mrow>
+        </mfrac>
+        <mo>·</mo>
+        <msub><mi>α</mi><mn>1</mn></msub><mo>′</mo>
+        <msub><mi>α</mi><mn>2</mn></msub><mo>′</mo>
+      </math>
+    </div>
+    <div class="cap">式 (6)：London 的单振子近似式——只需要极化率与电离能两个可测量</div>
+    <div class="vars-wrap">
+      <p class="lbl">符号 · 量纲 · 典型值</p>
+      <table class="vars">
+        <tr><th style="width:14%">符号</th><th style="width:32%">含义</th><th style="width:24%">量纲</th><th>如何得到</th></tr>
+        <tr><td class="sym">I</td><td>电离能</td><td class="dim">J（或 eV）</td><td>光谱测；H：13.6 eV</td></tr>
+        <tr><td class="sym">α′</td><td><b>几何极化率</b> = α/(4πε₀)</td><td class="dim">m³（或 Å³）</td><td>折射率 + Lorentz–Lorenz 关系；H：0.667 Å³</td></tr>
+        <tr><td class="sym">C₆</td><td>色散系数</td><td class="dim">J·m⁶</td><td>—</td></tr>
+      </table>
+      <p style="font-size:12.5px;color:var(--ink-3);margin:8px 0 0">
+        量纲验算：J × m³ × m³ = <b>J·m⁶</b> ✓（用几何极化率后，这个式子在高斯制与 SI 下形式相同）
+      </p>
+    </div>
+  </div>
+
+  <div class="card note">
+    <div class="t">数值验算：拿 H–H 试一下</div>
+    <p style="margin:0">
+      α′ = 0.667 Å³，I = 13.6 eV<br>
+      代入式 (7)：C₆ ≈ (3/2) × (13.6/2 eV) × (0.667 Å³)² = <b>7.3×10⁻⁷⁹ J·m⁶</b><br>
+      精确值（光谱实测）：<b>6.1×10⁻⁷⁹ J·m⁶</b><br>
+      → 误差 <b>+19%</b>。
+    </p>
+  </div>
+
+  <p><strong>为什么这个粗糙公式这么好用？</strong>因为色散力的本质就是"偶极涨落 + 极化响应"：<br>
+  <b>I</b> 代表"电子被激发有多难"（决定涨落多剧烈），<b>α′</b> 代表"被极化有多容易"（决定响应多强）。两个因素一乘，量级就抓住了。</p>
 
   <div class="card note">
     <div class="t">London 的推导藏着一个假设</div>
@@ -462,7 +551,7 @@
         <mfrac><mrow><mn>2</mn><mi>π</mi><mi>R</mi></mrow><mi>λ</mi></mfrac>
       </math>
     </div>
-    <div class="cap">式 (6)：推迟的判据——相位积累。它等于"传播时间 ÷ 抖动周期 × 2π"</div>
+    <div class="cap">式 (7)：推迟的判据——相位积累。它等于"传播时间 ÷ 抖动周期 × 2π"</div>
     <div class="vars-wrap">
       <p class="lbl">符号 · 量纲</p>
       <table class="vars">
@@ -577,7 +666,7 @@
         <mfrac><mrow><msub><mi>α</mi><mn>1</mn></msub><msub><mi>α</mi><mn>2</mn></msub></mrow><msup><mi>R</mi><mn>7</mn></msup></mfrac>
       </math>
     </div>
-    <div class="cap">式 (7)：两个原子的推迟极限（R ≫ c/ω₀）。换成力就是 ∝ R⁻⁸</div>
+    <div class="cap">式 (8)：两个原子的推迟极限（R ≫ c/ω₀）。换成力就是 ∝ R⁻⁸</div>
     <div class="vars-wrap">
       <p class="lbl">符号 · 量纲 · 典型值</p>
       <table class="vars">
@@ -597,7 +686,7 @@
         <mfrac><mi>α</mi><msup><mi>d</mi><mn>4</mn></msup></mfrac>
       </math>
     </div>
-    <div class="cap">式 (8)：一个原子与理想导体板的推迟极限（d ≫ c/ω₀）</div>
+    <div class="cap">式 (9)：一个原子与理想导体板的推迟极限（d ≫ c/ω₀）</div>
     <div class="vars-wrap">
       <p class="lbl">符号 · 量纲</p>
       <table class="vars">
@@ -638,7 +727,7 @@
         <mspace width=".5em"/><mo>(</mo><mi>R</mi><mo>≫</mo><mi>c</mi><mo>/</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo>
       </math>
     </div>
-    <div class="cap">式 (9)：推迟的"修正因子"结构。原文用的词就是 correction factor</div>
+    <div class="cap">式 (10)：推迟的"修正因子"结构。原文用的词就是 correction factor</div>
     <div class="vars-wrap">
       <p class="lbl">符号 · 量纲</p>
       <table class="vars">
@@ -712,7 +801,7 @@
         <mo>−</mo><mfrac><msup><mrow><mo>(</mo><msup><mi>q</mi><mrow><mi>x</mi><mo>,</mo><mi>y</mi></mrow></msup><mo>)</mo></mrow><mn>2</mn></msup><mrow><mn>16</mn><msup><mi>R</mi><mn>3</mn></msup></mrow></mfrac>
       </math>
     </div>
-    <div class="cap">式 (10)：偶极与导体板的静电相互作用（非推迟）。垂直分量系数 1/8，平行分量 1/16</div>
+    <div class="cap">式 (11)：偶极与导体板的静电相互作用（非推迟）。垂直分量系数 1/8，平行分量 1/16</div>
     <div class="vars-wrap">
       <p class="lbl">符号 · 量纲</p>
       <table class="vars">
@@ -792,7 +881,7 @@
         <mo>{</mo><mo>…</mo><mo>}</mo>
       </math>
     </div>
-    <div class="cap">式 (11)：C-P 的虚频积分（原文式 22 的结构）。推迟的全部作用浓缩在指数因子 e^(−2uR) 里</div>
+    <div class="cap">式 (12)：C-P 的虚频积分（原文式 22 的结构）。推迟的全部作用浓缩在指数因子 e^(−2uR) 里</div>
     <div class="vars-wrap">
       <p class="lbl">符号 · 量纲</p>
       <table class="vars">
@@ -818,7 +907,7 @@
         <mi>d</mi><mi>ξ</mi>
       </math>
     </div>
-    <div class="cap">式 (12)：非推迟的情形——<b>积分号外面没有指数因子</b>，所有频率"平等"贡献</div>
+    <div class="cap">式 (13)：非推迟的情形——<b>积分号外面没有指数因子</b>，所有频率"平等"贡献</div>
   </div>
 
   <figure>
@@ -867,7 +956,7 @@
         <mfrac><mrow><mi>d</mi><mi>x</mi></mrow><mrow><mn>2</mn><mi>R</mi></mrow></mfrac>
       </math>
     </div>
-    <div class="cap">式 (13)：换元后，R 从积分里"干净地"提出一次</div>
+    <div class="cap">式 (14)：换元后，R 从积分里"干净地"提出一次</div>
   </div>
 
   <p>换元之后，积分变成</p>
@@ -885,7 +974,7 @@
         <mo>⋅</mo><mo>(</mo><mi>…</mi><mo>)</mo>
       </math>
     </div>
-    <div class="cap">式 (14)：R 提到积分外，剩下的积分与 R 无关 → 原来 1/R⁶ 上再乘 1/R，成为 1/R⁷</div>
+    <div class="cap">式 (15)：R 提到积分外，剩下的积分与 R 无关 → 原来 1/R⁶ 上再乘 1/R，成为 1/R⁷</div>
   </div>
 
   <div class="card note">
@@ -910,76 +999,602 @@
 
 <!-- ================= 7 ================= -->
 <section id="s7">
-  <h2 class="sec"><span class="num">07</span>为什么不能"把板上的原子加起来"</h2>
+  <h2 class="sec"><span class="num">07</span>Hamaker 1937：把"原子对"积分成"几何"</h2>
 
-  <p>这里有个很自然的想法：既然原子—原子有了，原子—板不就是"原子对板上所有原子求和"吗？</p>
+  <p>前三章讲的都是<strong>两个原子之间</strong>的力。但实验里没有"两个原子"，只有<strong>球、板、颗粒</strong>。把前者变成后者，是 <b>H. C. Hamaker</b> 在 1937 年做的事。</p>
 
-  <p><strong>答案是：不是。而且这条路从原理上就走不通。</strong></p>
+  <div class="eq" style="background:#fff;border-left:3px solid var(--red);border-top:none;border-right:none;border-bottom:none;padding-left:18px">
+    <div class="body">
+      <p style="margin:0;font-size:14.5px">
+      <b>题录</b>　H. C. Hamaker, <i>The London—van der Waals attraction between spherical particles</i>,
+      <b>Physica 4(10), 1058–1072 (1937)</b>　DOI <code>10.1016/S0031-8914(37)80203-7</code><br>
+      <b>作者单位</b>　Natuurkundig Laboratorium der <b>N.V. Philips' Gloeilampenfabrieken</b>, Eindhoven<br>
+      <b>状态</b>　Elsevier 付费墙（DOI 解析 403），未获原文；以下公式按标准教科书（Israelachvili）表述
+      </p>
+    </div>
+  </div>
 
-  <h3 class="sub">7.1 相加能算出的部分</h3>
+  <div class="card note">
+    <div class="t">一个巧合：三个人都在飞利浦</div>
+    <p style="margin:0"><b>Hamaker</b>（1937，胶体）、<b>Overbeek</b>（1940s，胶体反常）、<b>Casimir</b>（1942 年加入，1946 年任研究主任）——<strong>同一家公司、同一个实验室</strong>。<br>
+    所以"vdW → 推迟 → 卡西米尔"这条线，很大程度是<b>飞利浦物理实验室的内部故事</b>。</p>
+  </div>
 
-  <p>先承认：<strong>在非推迟（近距离）情形，相加恰好给出正确答案。</strong>这就是 Hamaker 在 1930 年代用的办法。把板看成密度 ρ 的原子集合，对半空间积分：</p>
+  <h3 class="sub">7.1 核心假设：把原子两两相加</h3>
+
+  <p>Hamaker 的做法非常直接：<strong>假设原子对之间的力可以两两相加</strong>，然后对两个物体的体积做积分。</p>
 
   <div class="eq">
     <div class="body" style="text-align:center">
       <math display="block">
-        <mi>E</mi><mo>=</mo>
-        <msub><mo>∫</mo><mtext>板</mtext></msub>
-        <mfrac><mrow><mo>−</mo><mi>ρ</mi><msub><mi>C</mi><mn>6</mn></msub></mrow><msup><mi>r</mi><mn>6</mn></msup></mfrac>
-        <mi>d</mi><mi>V</mi>
-        <mspace width="1em"/><mo>=</mo><mspace width="1em"/>
-        <mo>−</mo><mfrac><mrow><mi>π</mi><mi>ρ</mi><msub><mi>C</mi><mn>6</mn></msub></mrow><mrow><mn>6</mn><msup><mi>d</mi><mn>3</mn></msup></mrow></mfrac>
+        <mi>E</mi><mo>=</mo><mo>−</mo>
+        <msub><mi>ρ</mi><mn>1</mn></msub><msub><mi>ρ</mi><mn>2</mn></msub>
+        <msub><mi>C</mi><mn>6</mn></msub>
+        <msub><mo>∫</mo><mrow><mi>V</mi><mn>1</mn></mrow></msub>
+        <msub><mo>∫</mo><mrow><mi>V</mi><mn>2</mn></mrow></msub>
+        <mfrac><mrow><mi>d</mi><msub><mi>V</mi><mn>1</mn></msub><mspace width=".2em"/><mi>d</mi><msub><mi>V</mi><mn>2</mn></msub></mrow>
+              <msup><mi>r</mi><mn>6</mn></msup></mfrac>
       </math>
     </div>
-    <div class="cap">式 (15)：Hamaker 相加给出的原子—板能量。结果 ∝ 1/d³，与非推迟的 C-P 结果一致</div>
+    <div class="cap">式 (7.1)：Hamaker 的出发点——把 C₆ 对两个体积积分（高斯制；SI 需乘 1/(4πε₀)²）</div>
     <div class="vars-wrap">
       <p class="lbl">符号 · 量纲</p>
       <table class="vars">
-        <tr><th style="width:14%">符号</th><th style="width:36%">含义</th><th style="width:20%">量纲</th><th>备注</th></tr>
-        <tr><td class="sym">ρ</td><td>板的数密度</td><td class="dim">m⁻³</td><td>~10²⁹</td></tr>
-        <tr><td class="sym">C₆</td><td>原子—板原子的色散系数</td><td class="dim">J·m⁶</td><td>—</td></tr>
-        <tr><td class="sym">d</td><td>原子到板的距离</td><td class="dim">m</td><td>—</td></tr>
-        <tr><td class="sym">E</td><td>相互作用能</td><td class="dim">J</td><td>结果 ∝ 1/d³</td></tr>
+        <tr><th style="width:14%">符号</th><th style="width:34%">含义</th><th style="width:20%">量纲</th><th>备注</th></tr>
+        <tr><td class="sym">ρ₁, ρ₂</td><td>两物体的原子数密度</td><td class="dim">m⁻³</td><td>固体 ~10²⁹</td></tr>
+        <tr><td class="sym">C₆</td><td>原子对色散系数</td><td class="dim">J·m⁶</td><td>式 (2) 中的那个</td></tr>
+        <tr><td class="sym">r</td><td>两个体积元之间的距离</td><td class="dim">m</td><td>积分变量</td></tr>
       </table>
     </div>
   </div>
 
-  <p><strong>所以"相加"在近距离是对的</strong>——这也是为什么 Hamaker 的方法在胶体化学里用了几十年。</p>
+  <p>这个积分对三种几何都能解析算出（或化成单重积分），结果里就冒出一个<strong>只依赖材料、不依赖几何</strong>的组合：</p>
 
-  <h3 class="sub">7.2 但推迟的情形下，相加必然失效</h3>
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <msub><mi>A</mi><mi>H</mi></msub><mo>=</mo>
+        <msup><mi>π</mi><mn>2</mn></msup>
+        <msub><mi>ρ</mi><mn>1</mn></msub><msub><mi>ρ</mi><mn>2</mn></msub>
+        <msub><mi>C</mi><mn>6</mn></msub>
+      </math>
+    </div>
+    <div class="cap">式 (7.2)：<b>Hamaker 常数</b>——"材料本身的吸引力强度"，与形状无关</div>
+    <div class="vars-wrap">
+      <p class="lbl">符号 · 量纲 · 典型值</p>
+      <table class="vars">
+        <tr><th style="width:14%">符号</th><th style="width:32%">含义</th><th style="width:20%">量纲</th><th>典型值</th></tr>
+        <tr><td class="sym">A_H</td><td>Hamaker 常数</td><td class="dim">J</td><td>10⁻²⁰–10⁻¹⁹ J（见 7.3）</td></tr>
+      </table>
+    </div>
+  </div>
 
-  <p>原因很根本：</p>
+  <h3 class="sub">7.2 三种几何的结果</h3>
+
+  <figure>
+    <svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="三种几何：板-板、球-板、球-球">
+      <g font-family="'Noto Sans CJK SC',sans-serif">
+        <!-- 板-板 -->
+        <g transform="translate(40,30)">
+          <text x="0" y="0" font-size="12" fill="#141414">① 板 — 板</text>
+          <rect x="0" y="20" width="150" height="26" fill="#e8e8e8" stroke="#141414" stroke-width="1.4"/>
+          <rect x="0" y="96" width="150" height="26" fill="#e8e8e8" stroke="#141414" stroke-width="1.4"/>
+          <line x1="160" y1="46" x2="160" y2="96" stroke="#c00000" stroke-width="1"/>
+          <text x="166" y="76" font-size="11.5" fill="#c00000">D</text>
+          <text x="0" y="150" font-size="11" fill="#6b6b6b">单位面积能量</text>
+          <text x="0" y="168" font-size="11" fill="#c00000">−A_H/(12πD²)</text>
+        </g>
+
+        <!-- 球-板 -->
+        <g transform="translate(270,30)">
+          <text x="0" y="0" font-size="12" fill="#141414">② 球 — 板</text>
+          <circle cx="70" cy="46" r="38" fill="none" stroke="#141414" stroke-width="1.6"/>
+          <line x1="32" y1="46" x2="108" y2="46" stroke="#9a9a9a" stroke-width="0.8" stroke-dasharray="3 2"/>
+          <text x="66" y="30" font-size="10.5" fill="#6b6b6b">R</text>
+          <rect x="0" y="104" width="150" height="20" fill="#e8e8e8" stroke="#141414" stroke-width="1.4"/>
+          <line x1="128" y1="84" x2="128" y2="104" stroke="#c00000" stroke-width="1"/>
+          <text x="134" y="98" font-size="11.5" fill="#c00000">D</text>
+          <text x="0" y="150" font-size="11" fill="#6b6b6b">总能量（D≪R）</text>
+          <text x="0" y="168" font-size="11" fill="#c00000">−A_H R/(6D)</text>
+        </g>
+
+        <!-- 球-球 -->
+        <g transform="translate(500,30)">
+          <text x="0" y="0" font-size="12" fill="#141414">③ 球 — 球</text>
+          <circle cx="42" cy="60" r="32" fill="none" stroke="#141414" stroke-width="1.6"/>
+          <circle cx="112" cy="60" r="20" fill="none" stroke="#141414" stroke-width="1.6"/>
+          <text x="38" y="34" font-size="10.5" fill="#6b6b6b">R₁</text>
+          <text x="108" y="34" font-size="10.5" fill="#6b6b6b">R₂</text>
+          <line x1="74" y1="60" x2="92" y2="60" stroke="#c00000" stroke-width="1.4"/>
+          <text x="72" y="80" font-size="11.5" fill="#c00000">D</text>
+          <text x="0" y="150" font-size="11" fill="#6b6b6b">总能量（D≪R）</text>
+          <text x="0" y="168" font-size="11" fill="#c00000">−(A_H/6D)·R₁R₂/(R₁+R₂)</text>
+        </g>
+
+        <line x1="40" y1="208" x2="660" y2="208" stroke="#e3e3e3"/>
+        <text x="40" y="230" font-size="11.5" fill="#6b6b6b">同一个 A_H，三种几何 → 三个不同的距离依赖。这就是"Hamaker 常数"好用的原因：材料与形状被彻底分开。</text>
+      </g>
+    </svg>
+    <figcaption><b>图 6</b>　三种几何：板—板、球—板、球—球。它们共用一个 Hamaker 常数 A<sub>H</sub>，但距离依赖完全不同。</figcaption>
+  </figure>
+
+  <h4 style="font-size:15.5px;margin:26px 0 8px;color:var(--ink)">① 板 — 板（两个半无限介质）</h4>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <mfrac><mi>E</mi><mi>A</mi></mfrac><mo>=</mo><mo>−</mo>
+        <mfrac><msub><mi>A</mi><mi>H</mi></msub><mrow><mn>12</mn><mi>π</mi><msup><mi>D</mi><mn>2</mn></msup></mrow></mfrac>
+        <mspace width="2em"/>
+        <mi>P</mi><mo>=</mo><mo>−</mo>
+        <mfrac><msub><mi>A</mi><mi>H</mi></msub><mrow><mn>6</mn><mi>π</mi><msup><mi>D</mi><mn>3</mn></msup></mrow></mfrac>
+      </math>
+    </div>
+    <div class="cap">式 (7.3)：板—板的单位面积能量与压强（Hamaker 的"基准"几何）</div>
+    <div class="vars-wrap">
+      <p class="lbl">符号 · 量纲</p>
+      <table class="vars">
+        <tr><th style="width:14%">符号</th><th style="width:34%">含义</th><th style="width:20%">量纲</th><th>备注</th></tr>
+        <tr><td class="sym">E/A</td><td>单位面积能量</td><td class="dim">J·m⁻²</td><td>负 = 吸引</td></tr>
+        <tr><td class="sym">P</td><td>压强</td><td class="dim">Pa</td><td>1/D³</td></tr>
+        <tr><td class="sym">D</td><td>板间距</td><td class="dim">m</td><td>—</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h4 style="font-size:15.5px;margin:26px 0 8px;color:var(--ink)">② 球 — 板（球半径 R，表面距板 D）</h4>
+
+  <p><strong>Derjaguin 近似</strong>（也叫 PFA，邻近力近似，D ≪ R）：把球切成一个个同心圆环，每环当成一小块"板—板"：</p>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <mi>E</mi><mo>=</mo><mo>−</mo>
+        <mfrac><mrow><msub><mi>A</mi><mi>H</mi></msub><mi>R</mi></mrow><mrow><mn>6</mn><mi>D</mi></mrow></mfrac>
+        <mspace width="2em"/>
+        <mi>F</mi><mo>=</mo><mo>−</mo>
+        <mfrac><mrow><msub><mi>A</mi><mi>H</mi></msub><mi>R</mi></mrow><mrow><mn>6</mn><msup><mi>D</mi><mn>2</mn></msup></mrow></mfrac>
+      </math>
+    </div>
+    <div class="cap">式 (7.4)：球—板的 Derjaguin 近似（D ≪ R）。推导：F = 2πR × 板—板能量密度</div>
+    <div class="vars-wrap">
+      <p class="lbl">符号 · 量纲 · 数值例</p>
+      <table class="vars">
+        <tr><th style="width:14%">符号</th><th style="width:32%">含义</th><th style="width:20%">量纲</th><th>数值（R=100 μm, D=10 nm, A_H=10⁻¹⁹ J）</th></tr>
+        <tr><td class="sym">R</td><td>球半径</td><td class="dim">m</td><td>10⁻⁴</td></tr>
+        <tr><td class="sym">F</td><td>球受到的力</td><td class="dim">N</td><td><b>−1.7×10⁻⁸ N ≈ −17 nN</b></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <mi>E</mi><mo>=</mo><mo>−</mo>
+        <mfrac><msub><mi>A</mi><mi>H</mi></msub><mn>6</mn></mfrac>
+        <mrow><mo>[</mo>
+          <mfrac><mi>R</mi><mi>D</mi></mfrac>
+          <mo>+</mo>
+          <mfrac><mi>R</mi><mrow><mi>D</mi><mo>+</mo><mn>2</mn><mi>R</mi></mrow></mfrac>
+          <mo>+</mo>
+          <mi>ln</mi><mfrac><mi>D</mi><mrow><mi>D</mi><mo>+</mo><mn>2</mn><mi>R</mi></mrow></mfrac>
+        <mo>]</mo></mrow>
+      </math>
+    </div>
+    <div class="cap">式 (7.5)：球—板的<b>精确式</b>（对任意 D 成立，不只 D ≪ R）</div>
+    <div class="vars-wrap">
+      <p class="lbl">符号 · 量纲</p>
+      <table class="vars">
+        <tr><th style="width:14%">符号</th><th style="width:34%">含义</th><th style="width:20%">量纲</th><th>备注</th></tr>
+        <tr><td class="sym">D</td><td>球面到板的最近距离</td><td class="dim">m</td><td>—</td></tr>
+        <tr><td class="sym">R</td><td>球半径</td><td class="dim">m</td><td>—</td></tr>
+      </table>
+      <p style="font-size:12.5px;color:var(--ink-3);margin:8px 0 0">
+        检验：D ≪ R 时，括号内 ≈ R/D + 1/2 + ln(D/2R) → <b>主导项 R/D</b>，退回式 (7.4) ✓
+      </p>
+    </div>
+  </div>
+
+  <h4 style="font-size:15.5px;margin:26px 0 8px;color:var(--ink)">③ 球 — 球（半径 R₁、R₂，表面间距 D）</h4>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <mi>E</mi><mo>=</mo><mo>−</mo>
+        <mfrac><msub><mi>A</mi><mi>H</mi></msub><mn>6</mn></mfrac>
+        <mfrac><mn>1</mn><mi>D</mi></mfrac>
+        <mo>·</mo>
+        <mfrac><mrow><msub><mi>R</mi><mn>1</mn></msub><msub><mi>R</mi><mn>2</mn></msub></mrow>
+              <mrow><msub><mi>R</mi><mn>1</mn></msub><mo>+</mo><msub><mi>R</mi><mn>2</mn></msub></mrow></mfrac>
+      </math>
+    </div>
+    <div class="cap">式 (7.6)：球—球的 Derjaguin 近似（D ≪ R₁, R₂）。注意出现"有效半径" R₁R₂/(R₁+R₂)</div>
+    <div class="vars-wrap">
+      <p class="lbl">符号 · 量纲</p>
+      <table class="vars">
+        <tr><th style="width:14%">符号</th><th style="width:34%">含义</th><th style="width:20%">量纲</th><th>备注</th></tr>
+        <tr><td class="sym">R₁, R₂</td><td>两球半径</td><td class="dim">m</td><td>—</td></tr>
+        <tr><td class="sym">D</td><td>两球面的最近距离</td><td class="dim">m</td><td>不是球心距！</td></tr>
+      </table>
+      <p style="font-size:12.5px;color:var(--ink-3);margin:8px 0 0">
+        特例：R₂ → ∞ 时 R₁R₂/(R₁+R₂) → R₁，退回式 (7.4) 的球—板情形 ✓（<b>球—板就是球—球的一个极限</b>）
+      </p>
+    </div>
+  </div>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <mi>E</mi><mo>=</mo><mo>−</mo>
+        <mfrac><msub><mi>A</mi><mi>H</mi></msub><mn>6</mn></mfrac>
+        <mrow><mo>[</mo>
+          <mfrac><mrow><mn>2</mn><msub><mi>R</mi><mn>1</mn></msub><msub><mi>R</mi><mn>2</mn></msub></mrow>
+                <mrow><msup><mi>r</mi><mn>2</mn></msup><mo>−</mo><msup><mrow><mo>(</mo><msub><mi>R</mi><mn>1</mn></msub><mo>+</mo><msub><mi>R</mi><mn>2</mn></msub><mo>)</mo></mrow><mn>2</mn></msup></mrow></mfrac>
+          <mo>+</mo>
+          <mfrac><mrow><mn>2</mn><msub><mi>R</mi><mn>1</mn></msub><msub><mi>R</mi><mn>2</mn></msub></mrow>
+                <mrow><msup><mi>r</mi><mn>2</mn></msup><mo>−</mo><msup><mrow><mo>(</mo><msub><mi>R</mi><mn>1</mn></msub><mo>−</mo><msub><mi>R</mi><mn>2</mn></msub><mo>)</mo></mrow><mn>2</mn></msup></mrow></mfrac>
+          <mo>+</mo>
+          <mi>ln</mi>
+          <mfrac>
+            <mrow><msup><mi>r</mi><mn>2</mn></msup><mo>−</mo><msup><mrow><mo>(</mo><msub><mi>R</mi><mn>1</mn></msub><mo>+</mo><msub><mi>R</mi><mn>2</mn></msub><mo>)</mo></mrow><mn>2</mn></msup></mrow>
+            <mrow><msup><mi>r</mi><mn>2</mn></msup><mo>−</mo><msup><mrow><mo>(</mo><msub><mi>R</mi><mn>1</mn></msub><mo>−</mo><msub><mi>R</mi><mn>2</mn></msub><mo>)</mo></mrow><mn>2</mn></msup></mrow>
+          </mfrac>
+        <mo>]</mo></mrow>
+      </math>
+    </div>
+    <div class="cap">式 (7.7)：球—球的<b>精确式</b>（Hamaker 1937 的核心结果，对任意 D 成立）</div>
+    <div class="vars-wrap">
+      <p class="lbl">符号 · 量纲</p>
+      <table class="vars">
+        <tr><th style="width:14%">符号</th><th style="width:34%">含义</th><th style="width:20%">量纲</th><th>备注</th></tr>
+        <tr><td class="sym">r</td><td><b>球心距</b> = R₁+R₂+D</td><td class="dim">m</td><td>注意与 D 区分</td></tr>
+        <tr><td class="sym">R₁, R₂</td><td>两球半径</td><td class="dim">m</td><td>—</td></tr>
+      </table>
+    </div>
+  </div>
 
   <table>
-    <thead><tr><th style="width:26%"></th><th style="width:34%">非推迟</th><th>推迟</th></tr></thead>
+    <caption>三种几何汇总（D = 表面最近距离；Derjaguin 近似要求 D ≪ R）</caption>
+    <thead><tr><th style="width:16%">几何</th><th style="width:28%">能量（Derjaguin）</th><th style="width:22%">力</th><th>距离依赖</th></tr></thead>
     <tbody>
-      <tr><td class="k">相互作用</td><td>瞬时、<b>两体</b></td><td>涉及<b>场在介质中传播</b></td></tr>
-      <tr><td class="k">能否配对</td><td>✅ 可以，一对一对加</td><td>❌ 不能——场是<b>全局</b>的</td></tr>
-      <tr><td class="k">"第 i 个原子对探针的作用"</td><td>定义明确</td><td><b>无法单独定义</b>（场已被其他原子改变）</td></tr>
+      <tr><td class="k">板—板</td><td>E/A = −A<sub>H</sub>/(12πD²)</td><td>P = −A<sub>H</sub>/(6πD³)</td><td>1/D²（能量）</td></tr>
+      <tr><td class="k">球—板</td><td>E = −A<sub>H</sub>R/(6D)</td><td>F = −A<sub>H</sub>R/(6D²)</td><td>1/D（能量）</td></tr>
+      <tr><td class="k">球—球</td><td>E = −(A<sub>H</sub>/6D)·R₁R₂/(R₁+R₂)</td><td>F = −(A<sub>H</sub>/6D²)·R₁R₂/(R₁+R₂)</td><td>1/D（能量）</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="sub">7.3 推导附录：板—板公式是怎么积出来的</h3>
+
+  <p>7.2 里那些结果不是猜的。这里把"板—板"那一条完整推一遍——其余两种几何用的是同一套积分，只是边界条件不同。</p>
+
+  <div class="card">
+    <div class="t">一句话概括</div>
+    <p style="margin:0">把"每对原子的 −C₆/r⁶"对**两块板里所有原子对**积分。分四步：写积分 → 积横向 → 积法向 → 代回 A<sub>H</sub>。</p>
+  </div>
+
+  <h4 style="font-size:15.5px;margin:26px 0 8px;color:var(--ink)">第一步：写出积分</h4>
+
+  <p>设板 1 占 <code>z &lt; 0</code>，板 2 占 <code>z &gt; D</code>。取柱坐标：横向距离 b，法向坐标 z₁、z₂。两点距离 r² = b² + s²，其中 <b>s = z₂ − z₁</b> 是"高度差"。</p>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <mfrac><mi>E</mi><mi>A</mi></mfrac><mo>=</mo><mo>−</mo>
+        <msub><mi>ρ</mi><mn>1</mn></msub><msub><mi>ρ</mi><mn>2</mn></msub><msub><mi>C</mi><mn>6</mn></msub>
+        <msubsup><mo>∫</mo><mrow><mo>−</mo><mi>∞</mi></mrow><mn>0</mn></msubsup>
+        <mi>d</mi><msub><mi>z</mi><mn>1</mn></msub>
+        <msubsup><mo>∫</mo><mi>D</mi><mi>∞</mi></msubsup>
+        <mi>d</mi><msub><mi>z</mi><mn>2</mn></msub>
+        <msubsup><mo>∫</mo><mn>0</mn><mi>∞</mi></msubsup>
+        <mfrac><mrow><mn>2</mn><mi>π</mi><mi>b</mi><mspace width=".2em"/><mi>d</mi><mi>b</mi></mrow>
+              <msup><mrow><mo>[</mo><msup><mi>b</mi><mn>2</mn></msup><mo>+</mo><msup><mi>s</mi><mn>2</mn></msup><mo>]</mo></mrow><mn>3</mn></msup></mfrac>
+      </math>
+    </div>
+    <div class="cap">式 (7.8)：单位面积能量的完整积分（柱坐标）</div>
+    <div class="vars-wrap">
+      <p class="lbl">符号 · 量纲</p>
+      <table class="vars">
+        <tr><th style="width:14%">符号</th><th style="width:34%">含义</th><th style="width:20%">量纲</th><th>备注</th></tr>
+        <tr><td class="sym">b</td><td>横向距离</td><td class="dim">m</td><td>积分变量</td></tr>
+        <tr><td class="sym">s</td><td>高度差 z₂ − z₁</td><td class="dim">m</td><td>s ≥ D</td></tr>
+        <tr><td class="sym">E/A</td><td>单位面积能量</td><td class="dim">J·m⁻²</td><td>结果 ∝ 1/D²</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h4 style="font-size:15.5px;margin:26px 0 8px;color:var(--ink)">第二步：先积横向（对 b）</h4>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <msubsup><mo>∫</mo><mn>0</mn><mi>∞</mi></msubsup>
+        <mfrac><mrow><mn>2</mn><mi>π</mi><mi>b</mi><mspace width=".2em"/><mi>d</mi><mi>b</mi></mrow>
+              <msup><mrow><mo>(</mo><msup><mi>b</mi><mn>2</mn></msup><mo>+</mo><msup><mi>s</mi><mn>2</mn></msup><mo>)</mo></mrow><mn>3</mn></msup></mfrac>
+        <mo>=</mo>
+        <mi>π</mi>
+        <msubsup><mrow><mo>[</mo><mfrac><mrow><mo>−</mo><mn>1</mn></mrow><mrow><mn>2</mn><msup><mi>u</mi><mn>2</mn></msup></mrow></mfrac><mo>]</mo></mrow>
+              <msup><mi>s</mi><mn>2</mn></msup><mi>∞</mi></msubsup>
+        <mo>=</mo>
+        <mfrac><mi>π</mi><mrow><mn>2</mn><msup><mi>s</mi><mn>4</mn></msup></mrow></mfrac>
+      </math>
+    </div>
+    <div class="cap">式 (7.9)：横向积分（换元 u = b² + s²）</div>
+    <div class="vars-wrap">
+      <p class="lbl">物理意义</p>
+      <table class="vars">
+        <tr><td style="border:none;padding:6px 0">固定"上下两点的高度差 s"，把所有横向位置的贡献加起来 → 结果只依赖 s。</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h4 style="font-size:15.5px;margin:26px 0 8px;color:var(--ink)">第三步：再积法向（对 z₁、z₂）</h4>
+
+  <p>两条半无限区间：z₁ ∈ (−∞, 0]，z₂ ∈ [D, ∞)。换成 s = z₂ − z₁ 后，<strong>对每个 s，满足条件的 (z₁, z₂) 组合有多少？</strong></p>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <msubsup><mo>∫</mo><mrow><mo>−</mo><mi>∞</mi></mrow><mn>0</mn></msubsup>
+        <mi>d</mi><msub><mi>z</mi><mn>1</mn></msub>
+        <msubsup><mo>∫</mo><mi>D</mi><mi>∞</mi></msubsup>
+        <mi>d</mi><msub><mi>z</mi><mn>2</mn></msub>
+        <mspace width=".3em"/><mi>f</mi><mo>(</mo><mi>s</mi><mo>)</mo>
+        <mo>=</mo>
+        <msubsup><mo>∫</mo><mi>D</mi><mi>∞</mi></msubsup>
+        <mi>d</mi><mi>s</mi>
+        <mo>(</mo><mi>s</mi><mo>−</mo><mi>D</mi><mo>)</mo><mi>f</mi><mo>(</mo><mi>s</mi><mo>)</mo>
+      </math>
+    </div>
+    <div class="cap">式 (7.10)：z₁ 可以从 D−s 滑到 0，可滑动长度正好是 s−D</div>
+    <div class="vars-wrap">
+      <p class="lbl">为什么出现 (s − D)</p>
+      <table class="vars">
+        <tr><td style="border:none;padding:6px 0">给定的高度差 s 越大，能提供这个差值的 (z₁, z₂) 组合就越多——正比于可滑动的长度 (s − D)。</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <msubsup><mo>∫</mo><mi>D</mi><mi>∞</mi></msubsup>
+        <mfrac><mrow><mi>s</mi><mo>−</mo><mi>D</mi></mrow><msup><mi>s</mi><mn>4</mn></msup></mfrac>
+        <mi>d</mi><mi>s</mi>
+        <mo>=</mo>
+        <mfrac><mn>1</mn><mrow><mn>2</mn><msup><mi>D</mi><mn>2</mn></msup></mrow></mfrac>
+        <mo>−</mo>
+        <mfrac><mi>D</mi><mrow><mn>3</mn><msup><mi>D</mi><mn>3</mn></msup></mrow></mfrac>
+        <mo>=</mo>
+        <mfrac><mn>1</mn><mrow><mn>6</mn><msup><mi>D</mi><mn>2</mn></msup></mrow></mfrac>
+      </math>
+    </div>
+    <div class="cap">式 (7.11)：法向积分（拆成 s⁻³ 与 D·s⁻⁴ 两项）</div>
+  </div>
+
+  <h4 style="font-size:15.5px;margin:26px 0 8px;color:var(--ink)">第四步：代回 A<sub>H</sub></h4>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <mfrac><mi>E</mi><mi>A</mi></mfrac>
+        <mo>=</mo><mo>−</mo>
+        <mfrac><mi>π</mi><mn>2</mn></mfrac>
+        <msub><mi>ρ</mi><mn>1</mn></msub><msub><mi>ρ</mi><mn>2</mn></msub><msub><mi>C</mi><mn>6</mn></msub>
+        <mo>·</mo><mfrac><mn>1</mn><mrow><mn>6</mn><msup><mi>D</mi><mn>2</mn></msup></mrow></mfrac>
+        <mo>=</mo><mo>−</mo>
+        <mfrac><mrow><mi>π</mi><msub><mi>ρ</mi><mn>1</mn></msub><msub><mi>ρ</mi><mn>2</mn></msub><msub><mi>C</mi><mn>6</mn></msub></mrow>
+              <mrow><mn>12</mn><msup><mi>D</mi><mn>2</mn></msup></mrow></mfrac>
+        <mspace width="1.5em"/>
+        <mover><mo>=</mo><mrow><msub><mi>A</mi><mi>H</mi></msub><mo>=</mo><msup><mi>π</mi><mn>2</mn></msup><msub><mi>ρ</mi><mn>1</mn></msub><msub><mi>ρ</mi><mn>2</mn></msub><msub><mi>C</mi><mn>6</mn></msub></mrow></mover>
+        <mspace width="1em"/>
+        <mo>−</mo>
+        <mfrac><msub><mi>A</mi><mi>H</mi></msub><mrow><mn>12</mn><mi>π</mi><msup><mi>D</mi><mn>2</mn></msup></mrow></mfrac>
+      </math>
+    </div>
+    <div class="cap">式 (7.12)：最终结果——与式 (7.3) 一致。对 D 求导即得 P = −A<sub>H</sub>/(6πD³)</div>
+  </div>
+
+  <h4 style="font-size:15.5px;margin:26px 0 8px;color:var(--ink)">数值检验：顺便看一个有意思的现象</h4>
+
+  <p>取 A<sub>H</sub> = 10⁻¹⁹ J，与理想导体的卡西米尔压强对比：</p>
+
+  <table>
+    <caption>vdW 公式（A<sub>H</sub>/(6πD³)）与卡西米尔公式（π²ħc/(240D⁴)）的对比</caption>
+    <thead><tr><th style="width:18%">间距 D</th><th style="width:24%">vdW 压强</th><th style="width:26%">Casimir（理想导体）</th><th>谁大</th></tr></thead>
+    <tbody>
+      <tr><td class="k">10 nm</td><td>5.3 kPa</td><td>130 kPa</td><td>Casimir 大 25 倍</td></tr>
+      <tr><td class="k">100 nm</td><td>5.3 Pa</td><td>13 Pa</td><td>Casimir 略大</td></tr>
+      <tr><td class="k">1 μm</td><td><b>5.3 mPa</b></td><td>1.3 mPa</td><td><b>vdW 反而大 4 倍</b></td></tr>
     </tbody>
   </table>
 
   <div class="card note">
-    <div class="t">一句话</div>
-    <p style="margin:0"><strong>推迟是"宏观"效应，它关心的是"场在这个介质里怎么传播"，而不是"这一对原子之间有多远"。</strong>所以 Hamaker 相加从原理上就得不到那个多出来的 1/d。</p>
+    <div class="t">最后一行是关键</div>
+    <p style="margin:0">到了微米量级，vdW 公式<strong>反而高估</strong>——因为它完全没考虑推迟效应。<br>
+    这正是第 4、5 章讲的那件事：<b>vdW 公式只在"近距离"可靠</b>。</p>
   </div>
 
-  <h3 class="sub">7.3 C-P 实际怎么做：用一个"像"，不是 N 个原子</h3>
+  <h4 style="font-size:15.5px;margin:26px 0 8px;color:var(--ink)">标度直觉：为什么是 1/D² 和 1/D³</h4>
 
-  <p>他们的做法是把板当成<strong>理想导体边界条件</strong>，不是"一堆原子"：</p>
+  <p>不用积分也能猜出标度。对照第 7.2 的三种几何：</p>
 
-  <ul class="tight">
-    <li>探针原子（偶极）在导体面前激发出一个<b>镜像偶极</b></li>
-    <li>这个像是<b>整个板</b>对偶极的<b>集体响应</b>——由边界条件唯一确定，不需要知道板有几个原子</li>
-    <li>而且这个像是<b>推迟</b>的（这正是 C-P 的贡献）</li>
-  </ul>
+  <table>
+    <thead><tr><th style="width:26%">几何</th><th style="width:20%">能量标度</th><th>原因</th></tr></thead>
+    <tbody>
+      <tr><td class="k">板 — 板</td><td>1/D²</td><td>两个"面"</td></tr>
+      <tr><td class="k">球 — 板</td><td>1/D</td><td>一个"点" + 一个"面"</td></tr>
+      <tr><td class="k">球 — 球</td><td>1/D</td><td>两个"点"</td></tr>
+    </tbody>
+  </table>
 
-  <p>还记得第 5 章那个 1/8 与 1/16 吗？<strong>那个各向异性只有"边界"才能产生，一堆原子相加绝不会给出这种几何依赖。</strong></p>
+  <p><strong>规律：每减少一维，就少一个 D 的负幂。</strong>这是几何积分的一般特征。求导得压强时再降一次幂（1/D² → 1/D³）。</p>
+
+  <h4 style="font-size:15.5px;margin:26px 0 8px;color:var(--ink)">一个容易担心的问题：积分凭什么收敛</h4>
+
+  <p>两个部分看起来都该发散，但都不会：</p>
+
+  <table>
+    <thead><tr><th style="width:22%">积分</th><th style="width:24%">远处渐近</th><th>结论</th></tr></thead>
+    <tbody>
+      <tr><td class="k">横向 ∫b db/(b²+s²)³</td><td>≈ b⁻⁵</td><td>收敛 ✓</td></tr>
+      <tr><td class="k">法向 ∫(s−D)/s⁴ ds</td><td>≈ s⁻³</td><td>收敛 ✓</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>1/r⁶ 衰减得足够快</strong>，所以对无限大物体积分仍然有限。这也是 vdW 力"短程"的数学体现——如果换成长程力（如 1/r²），对无限大板积分就会发散。</p>
+
+  <h3 class="sub">7.4 Hamaker 常数怎么测</h3>
+
+  <table>
+    <thead><tr><th style="width:5%">#</th><th style="width:24%">方法</th><th style="width:40%">怎么做</th><th>适用</th></tr></thead>
+    <tbody>
+      <tr><td>①</td><td class="k">表面力仪（SFA）</td><td>两片分子级光滑的云母面，测逼近/分离时的力曲线（Israelachvili 1970s）</td><td><b>最精确</b>；只能用于透明、可劈裂的材料</td></tr>
+      <tr><td>②</td><td class="k">AFM / 胶体探针</td><td>把微球粘在悬臂上，测力–距离曲线，从"跳触"点反推</td><td>通用；精度低于 SFA</td></tr>
+      <tr><td>③</td><td class="k">从 Lifshitz 理论算</td><td>测 ε(ω)（椭偏仪），用式 A<sub>H</sub> = f(ε(iξ)) 计算</td><td>不需要力测量；依赖光学数据质量</td></tr>
+      <tr><td>④</td><td class="k">从 C₆ 相加</td><td>A<sub>H</sub> = π²ρ₁ρ₂C₆（式 7.2）</td><td>最粗糙；只适合量级估算</td></tr>
+    </tbody>
+  </table>
+
+  <table>
+    <caption>常见材料的 Hamaker 常数（真空中间，量级参考）</caption>
+    <thead><tr><th style="width:34%">材料</th><th style="width:24%">A<sub>H</sub>（10⁻²⁰ J）</th><th>备注</th></tr></thead>
+    <tbody>
+      <tr><td class="k">金（Au）</td><td>30–45</td><td>金属中偏高</td></tr>
+      <tr><td class="k">银（Ag）</td><td>~40</td><td>—</td></tr>
+      <tr><td class="k">云母（mica）</td><td>~10</td><td>SFA 标准材料</td></tr>
+      <tr><td class="k">二氧化硅（SiO₂）</td><td>6.5</td><td>—</td></tr>
+      <tr><td class="k">聚苯乙烯</td><td>6.6</td><td>胶体球常用</td></tr>
+      <tr><td class="k">水（液）</td><td>3.7</td><td>作为介质时</td></tr>
+      <tr><td class="k">烃类（油）</td><td>~5</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <div class="card">
+    <div class="t">一个容易搞混的地方：A<sub>H</sub> 与"介质"有关</div>
+    <p style="margin:0">上表是"<b>真空中</b>两个同种材料之间"的值。若两个物体浸在同一种液体里，要用<b>有效 Hamaker 常数</b>：<br>
+    <code>A₁₃₁ = (√A₁₁ − √A₃₃)²</code>（下标 1=物体，3=介质）<br>
+    这正是 Hamaker 1937 论文的另一个结论：<b>同种材料浸在液体中仍然吸引，但强度被"削弱"了</b>；不同材料之间甚至可能变成<b>排斥</b>。</p>
+  </div>
+
+  <h3 class="sub">7.5 实例：1956 年怎么测一个 10⁻⁹ N 的力</h3>
+
+  <p>Hamaker 常数不是查表得来的，是测出来的。而"测一个比蚊子腿轻十亿倍的力"这件事，1956 年的 Derjaguin 和 Abrikosova 是怎么做到的？他们的装置图值得逐件看。</p>
+
+  <figure>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAggAAAEOCAMAAADbkx/RAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAkUExURf///wAAAMvLyy8vL2BgYBkZGZ2dnQUFBebm5vT09Pn5+QsLC6wSk0cAAAABYktHRACIBR1IAAAACXBIWXMAAB7BAAAewQHDaVRTAAAAB3RJTUUH6gsEDRAeO6yIYwAAHsFJREFUeNrtXYu2oyoMlYfU3v7//97KMyQB6UOkZ9hrzdRjrULYhBBCXJaJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJCQZiWaQQQl1djolrIYQWFlcXZOJaCKsN5CTCPw41x4SJHVMTTOxQkwcTO+bA8NPQ37qRFPLquky8Dy3WL93pRAvha2SdKEKKb0n5RAthGh8d8DUhn9htJxE64BeE/Atl/Hn8gpB/oYw/j18Q8i+U8ecxoJAlnocOWMa/h1zISg2wemjXrkz8U08i9EDwB2rlSfDEpfN2aUwoh1K+UFcL6V+AaIBuuehMXC2kfwFi2V2LOqmDAQR/E0JGpbBdX55/AnCpyKgheOC1VDQZ5eUF+heAl4oGGJPvKzJSJhE6QBhyah1tkWcSoQN+IIqgfWjQkzJv4weiCJqHKnP1oHYlVvHfR7//AdG1NK9EBua/h087wQ/IriEY8smBbUQe9LO8BWPsvXaDv2AjWAqMNzBo54vr8qyPH/MDRDgcvvyWmk/7xPfLLZZe233Ux5X/C0Rwsh4vnN6W60cUwkA2wlOJFgJp24gw3MjQs0RfIMK3opg/r0pxOD2opBlUIXRkwhceNIz43ieCVwij+UNT0a55zpACaapLcfpXl6afVOz/j1f1PkzgLcWLA0veRrnU9dHLyXqnw4CjQyci8KfVeGbTKfUM31pdMMT6eVasRyzc6Y+yDzG0J8mP3Uxj4YgIbr5hxuKBHed0F+3sXADsowbrHZ9W9OoCvFNmV+gePNDOX8FL6U8ND79YFRtm123OIMpOmFalcPuBQeQXidBzwem4JA3u41+YYgwiz9+FHHBh9h1MInyMv2EqHHkWry7fT+BX3UtZHQ5qeHX5fgN/IP9ltQIzYLUZVaNxmNXHWgXe/nIig64ohV8PTPkFIg+EcnbcHyfCyNvhhrTOikrhF1YlKo09sEIY0TaTKuQbkM8/tFRRDWxCbFeX7hBliQ6sEIYr2h9ITCDe+OZyjCK8AFVqY/kHiDBKAX+haNG3+Px8Dg7SH++wO0JSgZU9Y+eaqzRP22EYt2SpGAO7EMYrWtj/c9O7YeUtw10fPNt7Z4UM5oK2f2dtPzoRBl5JGXDGkBT8HZ6VXrwhGcJTA4hk4ZjN/fTqwsfCctBzxvACZNgl/Mh4EI8U9COIm/u82U8l7g0P6IDCHHE8YQeMNzDYocEbBPz3SizJkxCO/I6RUXgtXjg7BEYs2pMIdzwDEPn3OGOR+3v0WcOAo3As2iByy2Cdy2588P39LvLv0QC81+K/MLG4uvS+SMy5EbVvKO6QRVNx9iji7DFAPk2BG66FWvY4SPP8HGf6yBiLgxSNwXAuRYfU430Gy6RRn+28mlyk+zhhNcHdXzAEmIWxkQeGMSe1UPUHL6NTDLuHaTfH1+x7DaIXhiECWRgbtNfZwo7JA9yayONsrQFlUkJuBUePM4iwKvu48M9i24/tX4vzciXoZ3lUvnFLyt3CHXWpbFzbhbYmJEP4w23IOPzpN4rzOlbdujaS6mV95Rd0zmF5UGjNZz8zfm1BGP3STz8tjvVvPUmXJQK3m1jvpWa9uVWRepb4G0eh7tIe1tv5Sa6xM4ggmUnpU53qZBG6Dm1V/ybEQ/j9pLszXCxul59wVz3cb+TikpfB/q9cgvHuJuWwPPhoDniKsShgLK3wZVyACK1HM0x69xUQIVNO0d1YsBMf6xcR8TYr1cmmvx9k5LfhHhGh9vU5ghRg/5Vf+NqZocPChtqZEojwHEGWx7L5i93vbu4PnbvEY1n9yTMzHO5cNbvO2cdXl01xt4J3HbVJZwDbqZkaSEGEbQ3ZdMEI9JcbruPkwbgKnCRJkWYBIn2UiJCa++E+NhpluV8dfq5Xv3Z6mt1WtE43auTocfwdvjUFbnuM/JQCPz1Dkn50AA9QYUIoIRHsN3emYTM2QGmvq2PM7SweWJN1Z6vtPsr9JxetdRByMmojewdAIoKNXFW+P3rZBVvSBrWmn5ycudCV4SFZMf33nE5kRFgSEbbtDr/hRuSnTbkPh/fTorNV0y7zUMpxBodIBKSOQ7UU+5tTNYIVptynWpJNLY+JEFX9/qevRrGdV1fu86L0XzG/X+DM6YhECNo4LxuX1UOdTgSnRHez/848Y43dSN/NtpmbG/9NzuHMtxh0w1MdmJMTB/08EXwWOiQlNlWj8Fl5TnTkbstD3PeWvdHvJNCn27MIj3z6SA8TEdZg7r45j9PZHaXm1j1/kwjaF4VahyqetMLbnAHEYSt68wq3boDW1qrirSk0sLaEzPkWk87mfc0fHU2iVqjStSsvoRGQxSO8ibJrV8Y739p+gqcr/CQPnWsZ7z0RVt30WIctK0iLiHShXosIiR53X4JwVFnuYxEhZ4I91vv4LINzYVeIxhbe740zMdRRLWpfl5bSvzXaSKPc9GmfgtystrFyiD6+cHQTcQtF9PCY/BLbFi1EqDY9qa4Q6dHuwAQPlgmq+hYOdNCMsWD36O+6J2Xqz2ypmq4uz0bfQmRfuNgNp09JmnHGhQWsNTxLegObXcJB9DfJ/Ku7X+rJzuRSWNTDEWGN1+gQ9wKe4A/i+mwUz94hNTtred/kh6+trBzE6roXXngh5XNmHa5JJQ8WBAj2iTfEZ/Yu9HY1ToDfBp0lZQTrO8bVYKXNJXwuU4HFEHWMFJ4IQPb+cyUHkvBA7BP+L79/R4LuC1o0lhzXUkblsXhSUNJECFoXenHkynBJT/37ZNJ8UOY0vsGaLVnNdiIk9aaDFMAyof8AbZtLShJCxF61ivSggCNNQCX7Hw27gTVwZSiWKq+usnF6+OeVTv8o817o4d4xBV8w5dRCaLaV6SBZXRXT1+mwkq6JEwAi6CSgMCHwvgKdTbAYIqiDGWwecSmAuwRXbimzU3oiCKbVV3xxal+Db5ixZ5jY31jHrJckwXsJaUZUYKEKywPcyzy8sRjO4J6XWilQJLqKwjM3QVelM7ygJCAPFGl1yvZ4jV+wfmqEUIWV2Ae0sSMz4nCQ6ww9FhGUgKu+gBS+ZlKIoswAD9JwAA5URoTElQUdpC644q9A4xn9znph/ImEPADKrliqmE5Ii0CENMEJPyf6gCo5xjBa/QNer85pyAOCAA801XTlr9I1mWLIiJBM6qKAROqC4ExQoVqWiFDTCmDISrUDY7Yk18UDQBo75wNWMC45rUvqNXf8lZefGemFMnDYW2AXX1ObYFGtqcuEmjHjgvttIkLoebIsu6Suo1v5P18qux5a1Ag1z2JsO04fgIakMz9/xs4S7S8VWRwnXYPOO+LBA9P9MU52Kgl7iSujQRKS5V6QOnL6eah90H2RCGUe0CE5Dbf/hfvu5dJFR1KtZ/neBzdkUCN4YQgRCwzIbLJr1nRABEAnIKHZDRHb5bDy1TkRUM1WUewF8ZoH8Z6Eg0CErcU+oENQagvbmdc3ZXf3m7PK+oCxXpNiAOus9lgmOxEbnoq5IdanUQ2IUfwIMlpA6Zx3kQKNKX04Cjtx0LCvp/1GYFgJDiUqaHwt441JBuhmdj/m/qs7sTSqMEvMAJFMP/xooAawPkhbv2OJQtNSPinmzth5BaopxtAJwOMOT1IJ+VDQUHxY173mSXZkJuk99wLEvBTtDcqVfK6l/AKUfKDLDmq5BDuI8ACQErU6PLOCMqz7lpiyFqEOJZ0c1RJds4oLgqgZGMFY/LG+mYRsbDjuBdI7lDj/QTijRCBC7NpL6YC63fHM1LhIRUnGmBr+eyz3fa1DLaY4NtFWB7oonNn8xP8ezjCzg2RdxjuHtW9iTOzXdF5zkoJZtlGZ7yCdFzZXWvxLO4HJkjYE0Xmc61U/vLFdbgMsTaohsn0tInka2nrTuqyW8yFunNMHeJoACBG+CotOIukV3OqSuJgWtvn9DbHkz4fAMwPqO4DHD4F7SnI4keZi1EqmH5FDCbcB9SMxPACepX2dWhHtQnADk4h98yxYBZeMKqJDW2QGIJ1e0ooM1+qyrGAkYcai8if2gKFebZFvHi44lBbilOdXIGsHbg03OJRwG8jyjZkpqvImCUeEfHMAHGacyzy1Hy0D6f28xZCMxfya+EyJ7hPvTH2XMvaj1lb8AkKQEDxj0BXwmPgPKnMj6qhDhFBWBmAtnxMH554rOqj8uPpf7ltCg60A9pudu9KxKbYWbX5qKIT5kQqSS4smcYCgZhC+RmLXqjQdPUoShhk4qWPvC0sSRQZ/JgwjEEGUHAlKxP/LrtzEAzL9JIomPHJd60R4hFq48KJwXpIDcofCSCEgERidoco3jC2B1ZLqmfgeb0RhtBFnL5CYAvA+XVAPdHfqUHKxwmZpmS/cy3ZnYoYPIUsbG3Kph1s/fAnduEgejW2emj74TwM5Zq/WBTNJam9SpxidtvQcGnz8SJwi/Fe4JB7bK4GmE2hnWPTq7w2Yqxsaayasq1nVHErAxva3ptPxFfRAZ+iqPMcFPzSEYNHSo7lxgcyBs+Hc1TcOB5g9mrlPFAX1oPQlQhYQwF9CiKAzlScW3tpe3JIC023DwRYdSkEKN/Y2SECl+/nByXuH4HYHVMGw0FHnAQiGqPCAEIF4IVdmgKA6koZiqJ7GotkLcDAW5URQLiIL1AxqV97TXDwIRKCa039WeEADRoCdIKpDwxouY+2DhZyhJg4ZIIKO0YzOh6uUJVHQuYnuOWuQAsahFZATYQMOLz8kJmZQ/2olYE+JqBFA5bPGeEUf5KEqdsRLxc73N4m4YSuUqrqqVPaRpzw31KGUL0plk4KKUyz86pEX5mwwziTuInisiDyAZqcOoOROZqVwEKEULZYWV8USBB5qlQYHmIfk5pwH2XzhTnmQfkvHBeJhDFaOqOgMZlxYyFdRkA8s+QrWVanPQljarBHsUMITKbpUAFYX8T1QEGoWobSgG68N+kCxUnXLSGnfG9wLKeLgkYp3X8hd4kHFqRnqrfAODs77VCEEcUMtJr+iBiU+D3xv+zkiAtaYktQDOhLQGcQDCdYaCA8qHoWaPlBeOgLk1FwBEZTbdyjZrkkPQnULKi0cxNVH9HPW+1Q6g3RPW/Cqe3p/Imz4LOkF1KEUR+skTdfYwJ3FrOgs6KC2sBtXccMTsyEPLquJh3Y+9DStjV/F1XAaf3Bg/Ao3d1KoCi2uD6wqQDxLQ/vkm2reRFtWFviUtLENT4lolKdNe2gfU7S2tijEGg8wwcC4IHRI4uIfAF2M0eFLRrdn0dI2xlCD54kHbkhi4pSd5elWoqivQEFu5Jos9M2XtLF1HvL4ws+RS9EH5HALcL4e4Gf5ljfF6EB3gWCcsgu6mLMPjhBuBYN93De3yk8oKSuzl0hB+38+CYq/MvhM8peUJ5BrOxH6gHEx06dHNfuAV0o4U185HngiFFftKpvglkMeRCIogScV7Db3m3MtkCaJP04qFG9JSUSozQ4q4wsh36JbhobuXuh4rPnmonbi/v8qbmkkZqRwC0TAUijHrsmsRasFD/tNoEbQ1Q2FKlNOzGYaXJfchNxNHl3xGrUcRBo9FuwHYxvH9EvjTTQCYa8mEz6QXQPLLvOv5YsRZTuRsxw3fSgor3GW6Gg8es0UnBWRcaHSfu5IA24y5uF6fJ9cnRx3d7dUdQER1J4lJK7NYYVecful4ILMcszq28CDzGBUh0SwK1BbGhoOlQijnDiXKJEMdSiVD5ifk52dcDHzqG2k+Myb1AxsclPd5z8Zb4HCX6H5GCRCeSGuMIFsCO70GV1UTMZ90HnKq0pV57YQoDr5QS1mMwjnxn91TPQlC6s5G4gI1ENG/Qf+IFo7d3Kv6J6OJ5kl/2Js++oFdRy44fwJOxdkAw+Sckqmuz+Q9b5u/0hb3kjzqzJF1hJpGoxF3VCnrwENDeFssblAyJq/uuxIAOMD5UFxSimDoBp0ovMxCp/3trGu1FCgaiA/kxGB6fQNA0TNBBkCuUYIThoadIEFJMuqIle81jdGJ5CYaWQyT140yAJ4GxqMcKScGN/Fgkqj06BgSg4l09DYaVk997KMA8aPQEXFreNiIXI8CEM34cGtuOIAZnNNDrWUMrGxrhV/cDGe2nYQZR3w9OfMyFgRTizM8ayoLxiNQJzpqbcmxz0WGdPpqUPpuPmjkaya36/Sqg/8cE8GeLofmzDDfpgsFLaSYUWQWnE6Y6Csq6jUi19yJjzgIs/x5iduJSY4lCqORXoAXkPZOm9qNqkE5wmgvZaL3F+cBUWNSl0+U3dRtGx50x0jnXNjUS2VbRx4NxysMzUYVZgHl+ds5Alpr715wZZ6iQj4SQ36wKcOZWmkyz8/cFU1EEH2NCPQrOHO6HHc+/NZgf2KX8+1/p6i4ZHO3O9IdM6hhG0EmdabbZCt+41roab04IKx3Rhth8+AvLq4CpXNWWudB60OpW5ARCjzAAyKkQd4+7+C+iCM3gLdr6hxkt51r+fK1OLxGlRtZQqVEzTS8c6bNUR+CrLMWMkjo44Uw3r4DplGc/lLwESAbbHwy4L+My7wMFWFKd/dFpHjcSEpGh+HnPWYbxIBmHXFlH9gHKR7lPzBSobIStYMrBgO9X6D6/GbKDiU4gHtMSCjDboEzyBUzT4oTiWi5w0RgYiFuhDMQ8RlSwNomN+5Msvn9EEl6wnO3UtpVPYsHXoWO/sZiLGYl7q4638RPtMOQ57jHSPc0gOSKhkamKKL/4QGST/0U3vf00shbdJ8Re5RGemXhjOKOYNVOMiVQioOJpDNDdMDORF8fC0N1o+XwyVp3j9DYv5rUX4rNkXA/ZBGIEV3a7Q60fduT/hFnofc3wlJiaDLaqC6Ly48lLkmLr6Fz0SRYjb6o6lOd79jTgR3ivqBeQFli2PEd5a2lyh0hlto0PiEgFHqnGACFeNXOw9UmIIYl/yJIYL/Y23gQYU06UwKVsHJCXWdBzUToL//ueZQquwTi7XBYq3tFKA8YLNW+VvfMoVLnLRPXXB3L/t0Et1yuWpXBkQETQdvSkbZpDOK4ZfAciyaFzDvIwfZ3+1IHUoVfYAqX+MBs6u5NLlgecAODQI8wFop7lH2VOZJuEfLPCeCYHgQDyrpeIsXy7K4mG068KC61nDBghSaNRgyjHNpBMJn3AZRfndJhStkgMiseLQMvX+3rssN8sDjUfBFSzo0kIR3YB0MPBs9gOEKsYMexWG0YDDWZodXLEwWHUo4gRiIXWMrtmMt7xhZqVmA2yIftVHychd4alLaZSIrzi2fG/TV7OxU1bdoCLSNraYPECEqydkvWaCGvFSiZuhjHig6bNN9LIQQjMHIE2xDGsEOvUn/w+5UdsAZRAT0pLW8g6NhZOS4EotEJpBYMWxFjdAtTDFDwaFEm7SoD7Qh15Kb1wxG3EujQwnNGrJXgTa86tHdhPoROMufyYJUsZR1+SDeOXpFsNMpHBSHhgsMRSicrGw0joLRB/gGjJZ9YeKwUkGhcmbzm3qfAVNYSgRuVR1PlGS5aSuZemU6wCsrnGIotPdFkUtwZSNG5dH+0WASV5QI5UFxMyS4Fi867RJuWobZwK/KDiXB1I4WPVpIlSGtslBHkzBHuRWIcFUEG6MRHrRr4yyitQA1cucm5yO9liw6vVU7TATqIa5G1haZUUndrImWo84rU3IoXRbJSD2LjHFUCFWCK/TlraXMIIIfzkWTEyK8EaxD1hq0KK+icRUvOAkEqw/ohKuyhUPwi8zXvRWUeBZT7y/udWGSMVNv5At2oiQuOKkMJcLLtrQQRYcS0Ae4ELX03MI7LG9MrfACDd0qCKZOqsDs3ELuiZwIQic60ylgrAb+Zv2OnZhdQhxKL0+qnlVRW74MzXgCcLE4QqBJpuTS0hd3inIeBVVYhr4woBU7lOIb7WhVcciaKW6DeIkHfPIFkOyVlBOhkNTY3i5bueJeHVGxX4qJmrdyrUDy4vK+D/sVN328cqsDIkJl5POfKxEi40ig641UztgAjW9ncU84XoYOMPxXIitJXojwyNrGKxpbl/oGmWZHfRCfZ1D1CHm4SJvlOsC4T0EGPCo7GLIhYI2Z4ZLrb/FiPC7gnbR2fNd7OmdlTL7hvX2M2Pd3L2oPetUgEK/mI2pSbiTUqeiYpxEuQRP4oUEua8oQdQYRntJ7IsX9aimVDJNio4ySzzIoG8/1FJQyUoKVhlpeEP9p34uZy5CIpRafgx0tXPKFQvThC/Ji79HkP1jIGViHfLWAUXd4RTsuesRVPbFyIZb35mDMJmvilejOPFdRqfJsAKfg2/iFAxn0kaLfIDgP8/4a0CbDer05secwwLIBWntBDz88gMnOoq/JMBfH9x7gidbz8wFLBv7Yb2TMJpZ74QLUMcogQmzHkjnR8IFJnvObreYG2y1II72308cLuEyj+zU6v1gE4zScSK8ZYsom/Vl35a7HQkpS5REEEBMPb/gedwEKuh+s+zO3+Ejjm00kGj21p7JmtPEH6bZPrSpj74xFV+A+JjuzXyxVqOcN6gR7KqQNFPuQIe4GNGRBu9UBOjmbVuoQkX03Be5jj5mEZcf5z5oomP2lC1e5XofEQaSzV+HZaDJIQt5rcvhQRwPcXrpa61BmKgyD75UJpDXJ/3daphkdHxeyJT1HCOm6p/PwIJVgLw3FsvEo1gIqdAt3o/3n9kf2M6uXUm1VbOt1lOMva/A84WgFb8k4SE+lo8VY8ZpdgWqnj4070k5vqqfdCceklsK9BZPxAFSUvxxspT2pQJdO9dqhWz1U2weiesv9/ya88SDwWVKmXkWUv0GEdnzA7J6dwhMBNWuJBzGGRZ1XxB9RCS/U52193lUUXDlTOuYFHhi49HVe1NefI8LbyrMzEYplZ/wBxBncqUQ/jA9EJXqumSKxw79cTmgJz7lDGJV9RpF67lo/HZ+I6rKhAW0Ocfm2RXZ1dICcWaaO9T8dP2Is7sNAbNM9zhfFGZgFBa7bN7KZc1OXrZdFkZyA3yFCfJpC3d+GuuPoBc0sQ38bf2oK+cEEqzMRgg6wayFSw68EKosI73w6OYfdYBnyPsJXidAWbb7k7UgQ95nvboN9xcC+5cJtGDQhEzeIj/KeZOtGs2tR4AxOs9WS1tctZcn1WR39vKd1nj5vrW3tYtmk9cZpu6TxGZqldio+GhrQsPxtFO95a1tP2TovunTAeVbJBy6X04lQxvJouOjv0eBct8jbRDBoXG7KdXgCuDBQ08mA4eenmjmxL//IfWgzNi4/jX/uapc50q7s2a/UHqSn93FjdVdLXd4d9R0pfumnFzrauCebTsXpWuszZ8Nfmz4ORoReLbT2nTpNIlQLwp7sNLXrWe8zc7F+UI+hh4Z+XbUrEYa8t+LTkfSHeOHsCU/vV/FzifDB9PEieZCCNBTvzMd3cwidS4QPlqGBBLq+WwAXhD17YnQSlkO3ip5KhLf5nO1X1sMRod/g3ZEIQzqUBrcR+uUa6DcIjTl9zHTvgBqhZ0/t9ZxBPYtZ0NCAROhlxXVzY55qI3wpeHVAInQzF3tV/szIu49mDRfIgi1I4Xy/CKJOTzrXRvi7RDjKy/nNInSp/bB+hP6i4AvSVsJzy9DDHhmWCEM7lJau0aVd7JFhidCrkAcoW1B/ZEEoPWNQG4FNWTYSeiYynUQIf50viDfK2O9RHUg3LBGYt2sOhp47D04XwHYKEfb0ejYVlEsmsIfxo6hLuQBnvQwvhE9v7xL7NjSbqchvJVBGIQj3P0g+Ew5Cuhrhk9bEMyliF+SYUeCPLI+Nzo/CY8NzRXgIvreIF/mcO6GsKuXQCb9S9unhO6FYGCOyG8LrwBfhIel+AXKPSOQRinJCFHMpV9Vb+OrN/l3Ilh0B3ybCV2sQOtoxIRTabBA0iUtfRX6v4UVCgO4Bu5mAPS+7VG3galQS/+RdiwmkrXS6KOqWcPmZaGmWL/Mg5B3LlZvdLmbCf/HrfKfXr+HybB6v3qLc5+Vf2nzdH11t2CEN5gmLrjuWL3lR30QT+q1F7/hb6XT+FvoSYQ4Ow6JvNouOSUgnXkPfF6dNlTAu+jbNX0qn88fQ15SX014cFZ2Tn83BYVh07qNTJYyKzn10qoRR0Wv/ScCcQo6Kzp7fqRJGReeWuTKie6KG3kmTz8x1NPEJeq8KTpUwKHo3jJn24pjou96wTJUwLLoP2pMIY2L20AmLP/WylYkPMIkwMTGBsHY1GfV/yxyTRsQpO4XKkNaLNa3UAdGXCO719pMIA6Jvo9i3Ek4ejIiucaXG7Wq9us4TFL0Vwo655DAgepsIwnRf4phogE9u0GkG6U3Fqys9QWH1tOqXSH2ZRBgSxuoC00kjKP+O8qtrPUEgujZN36dNvABrwPeKHPIB9JMI46GvrhaTCKPCtsnayUKQ3nU1iTAcpB0TugWseQJ0e73YRCtsqsrZP/95KDE758Qytx5NTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTJwF4bE+/ymlZhD/vwufGEYvUs2cbv8yYOtPIvzDyNRA71fXTIyDnAhzh9c/g/8BeYthpe/YKPEAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjYtMTEtMDRUMTM6MTU6NTcrMDA6MDCS/GI9AAAAJXRFWHRkYXRlOm1vZGlmeQAyMDI2LTExLTA0VDEzOjE1OjU3KzAwOjAw46HagQAAACh0RVh0ZGF0ZTp0aW1lc3RhbXAAMjAyNi0xMS0wNFQxMzoxNjozMCswMDowMFxLd1QAAAAASUVORK5CYII=" alt="Derjaguin 1956 负反馈天平总图" style="max-width:100%;display:block;margin:0 auto;border:1px solid var(--line)">
+    <figcaption><b>图 7</b>　Derjaguin &amp; Abrikosova 1956, <b>FIG. 1, Plan of beam balance with feedback</b>（原文第 824 页）。
+      <b>L</b> 凸透镜（固定）；<b>P</b> 平板（装在天平梁末端）；<b>a</b> 玛瑙刀口；<b>b</b> 玛瑙支点；<b>K</b> 天平梁；<b>S</b> 小反射镜；<b>c</b> 玻璃游码；<b>r</b> 刀口到 P 的力臂。</figcaption>
+  </figure>
+
+  <h4 style="font-size:15.5px;margin:24px 0 8px;color:var(--ink)">硬件清单（原文参数）</h4>
+
+  <table>
+    <thead><tr><th style="width:36%">部件</th><th>原文给出的参数</th></tr></thead>
+    <tbody>
+      <tr><td class="k">天平梁 K</td><td>长 <b>35 mm</b>，重 <b>0.1 g</b></td></tr>
+      <tr><td class="k">玛瑙刀口 a / 支点 b</td><td>硬质支点，转动摩擦极小</td></tr>
+      <tr><td class="k">玻璃游码 c</td><td><b>10–50 mg</b>，可沿梁移动，用于粗调平衡</td></tr>
+      <tr><td class="k">线圈 R</td><td><b>15–20 匝</b>，置于永久磁铁气隙中</td></tr>
+      <tr><td class="k">磁场 B</td><td>≈ <b>850 高斯</b></td></tr>
+      <tr><td class="k">样品</td><td>凸透镜 L（曲率已知）+ 平板 P，间隙 H</td></tr>
+    </tbody>
+  </table>
+
+  <h4 style="font-size:15.5px;margin:24px 0 8px;color:var(--ink)">关键：怎么把"看不见的偏转"放大成"可读的电流"</h4>
+
+  <figure>
+    <img src="data:image/png;base64,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" alt="Derjaguin 1956 光栅光继电器" style="max-width:100%;display:block;margin:0 auto;border:1px solid var(--line)">
+    <figcaption><b>图 8</b>　<b>FIG. 3, Raster photorelay</b>（原文第 825 页）。光源 <b>L</b>（50 W 白炽灯）→ 聚光镜 <b>K</b> → 第一光栅 <b>R₁</b>（<b>60 线/cm</b>）→ 物镜 <b>O₁</b>（f = 7.5 cm）→ 反射镜 <b>S</b>（随天平梁转动）→ 物镜 <b>O₂</b> → 第二光栅 <b>R₂</b> → 光电管 <b>O</b>。</figcaption>
+  </figure>
+
+  <p><strong>原理</strong>：R₁ 的像被 O₂ 成像到 R₂ 上。两个光栅条纹的相对位置决定"透光多少"——<strong>镜 S 转动一个极小的角度，透光量就大幅变化</strong>。原文的表述是：</p>
+
+  <blockquote>
+    <p>"The slightest rotation of the mirror changed the position of the image of the first raster relative to the second, thus <b>increasing or decreasing the size of the openings</b>."</p>
+  </blockquote>
+
+  <p>透过的光打到 <b>锑铯真空光电管（ACV-3）</b>上，产生光电流 i₀ = kα（α 是梁的转角），经 <b>6AC7</b> 放大管（负载电阻 <b>11 MΩ</b>）放大。</p>
+
+  <h4 style="font-size:15.5px;margin:24px 0 8px;color:var(--ink)">六步测量流程</h4>
+
+  <table>
+    <thead><tr><th style="width:6%">步</th><th style="width:26%">动作</th><th>原理 / 原文依据</th></tr></thead>
+    <tbody>
+      <tr><td>①</td><td class="k">调零</td><td>移动玻璃游码 c 使梁平衡；零位时线圈电流 i₀ = 0</td></tr>
+      <tr><td>②</td><td class="k">逼近</td><td>用细牙螺杆把透镜 L 移向板 P，间隙 H 减小（L 装在<b>独立支架</b>上，不受梁影响）</td></tr>
+      <tr><td>③</td><td class="k">力出现 → 梁偏转</td><td>分子力 F 作用于力臂 r，产生力矩 Fr，梁绕刀口 a 转一个极小角度</td></tr>
+      <tr><td>④</td><td class="k">光杠杆放大</td><td>镜 S 同角度转动 → R₁ 的像相对 R₂ 移动 → 透光变化 → 光电流变化</td></tr>
+      <tr><td>⑤</td><td class="k">负反馈</td><td>光电流经放大后送入线圈 R，在磁场中产生磁力矩 <b>M = ni</b></td></tr>
+      <tr><td>⑥</td><td class="k">平衡 → 读数</td><td>磁力矩与分子力矩平衡：<b>M = Fr</b>，于是读微安表电流 i 就得力</td></tr>
+    </tbody>
+  </table>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <mi>F</mi><mo>=</mo>
+        <mfrac><mrow><mi>n</mi><mi>i</mi></mrow><mi>r</mi></mfrac>
+      </math>
+    </div>
+    <div class="cap">式 (7.13)：原文式 (10)——力的读数公式</div>
+    <div class="vars-wrap">
+      <p class="lbl">符号 · 量纲 · 典型值</p>
+      <table class="vars">
+        <tr><th style="width:14%">符号</th><th style="width:32%">含义</th><th style="width:22%">量纲</th><th>原文数值</th></tr>
+        <tr><td class="sym">n</td><td>线圈匝数</td><td class="dim">—</td><td>15–20</td></tr>
+        <tr><td class="sym">i</td><td>线圈电流（微安表读）</td><td class="dim">A</td><td>微安级</td></tr>
+        <tr><td class="sym">r</td><td>刀口 a 到板 P 的力臂</td><td class="dim">m</td><td>毫米级</td></tr>
+        <tr><td class="sym">F</td><td>待测分子力</td><td class="dim">N</td><td>10⁻⁹–10⁻⁸ N 量级</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card note">
+    <div class="t">为什么"负反馈"是关键——原文自己的解释</div>
+    <p style="margin:0">普通天平的灵敏度由<b>重力恢复力矩</b>决定：m = l₀α。偏转越大才能读出越大的力，但梁一偏就会"跳接触"。<br>
+    这里改用<b>电磁恢复力矩</b> M = lα，且 <b>l ≫ l₀</b>。原文给出的结论是：<br>
+    · 同样的过载，<b>偏转角缩小 l₀/l 倍</b><br>
+    · <b>振动周期缩短 √(l/l₀) 倍</b>（几乎瞬时建立平衡）<br>
+    · <b>读数不再依赖"偏转多少"，而是依赖"电流多大"</b> —— 而电流可以用微安表精确读<br>
+    <strong>这就是"把几何量换成电学量"的胜利。</strong></p>
+  </div>
+
+  <h4 style="font-size:15.5px;margin:24px 0 8px;color:var(--ink)">这一套与今天的对应</h4>
+
+  <table>
+    <thead><tr><th style="width:30%">1956（Derjaguin）</th><th style="width:26%">原理</th><th>今天（D1 / 现代 AFM）</th></tr></thead>
+    <tbody>
+      <tr><td class="k">天平梁 + 玛瑙刀口</td><td>小偏转型弹性体</td><td>qPlus 音叉（k ≈ 500–600 N/m）</td></tr>
+      <tr><td class="k">光栅光继电器</td><td>把位移变成光强</td><td>锁相放大器 + 频移读出</td></tr>
+      <tr><td class="k">负反馈线圈</td><td>电学平衡</td><td>频率跟踪 / 反馈回路</td></tr>
+      <tr><td class="k">牛顿环测间距</td><td>光学干涉</td><td>光纤干涉 / 静电标定（<b>&lt;0.1 nm</b>）</td></tr>
+    </tbody>
+  </table>
+
+  <p class="lead" style="font-size:15px">七十年前的"光栅 + 光电管 + 负反馈"，换成今天的"激光 + 锁相 + 音叉"——<strong>思路一模一样，只是每一环的精度都提高了两三个数量级</strong>。</p>
+
+  <h3 class="sub">7.6 相加性在什么时候失效</h3>
+
+  <p>第 7.1 节整章的推导都建立在一个假设上：<strong>原子对的力可以两两相加</strong>。这个假设在三种情况下会崩：</p>
+
+  <table>
+    <thead><tr><th style="width:26%">失效原因</th><th>说明</th><th>后果</th></tr></thead>
+    <tbody>
+      <tr><td class="k">多体屏蔽</td><td>第三个原子会改变前两个之间的相互作用</td><td>致密介质中 A<sub>H</sub> 被高估</td></tr>
+      <tr><td class="k">推迟效应</td><td>相互作用涉及场的传播，不再是"两体配对"</td><td><b>得不到 1/D⁴ 项</b></td></tr>
+      <tr><td class="k">介质中的传播</td><td>中间的介质也会被极化，改变有效耦合</td><td>需要 Lifshitz 的连续介质处理</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>因此</strong>：Hamaker 的公式在"近距离 + 稀薄 + 非推迟"时是好的近似；一旦进入纳米—亚微米、且涉及金属，就必须用 Lifshitz。</p>
+
+  <h3 class="sub">7.7 C-P 的做法：用一个"像"，不是 N 个原子</h3>
+
+  <p>回到 Casimir–Polder：他们处理"原子—板"时<strong>完全没有</strong>对板上原子求和，而是把板当成<strong>理想导体边界条件</strong>——探针原子（偶极）在导体面前激发出一个<b>镜像偶极</b>，这个像是<b>整个板</b>的集体响应。</p>
 
   <figure>
     <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="相加法与镜像法对比">
       <g font-family="'Noto Sans CJK SC',sans-serif">
-        <!-- 左：相加 -->
         <g transform="translate(30,30)">
           <text x="0" y="0" font-size="12.5" fill="#6b6b6b">Hamaker 相加：N 个原子逐个算</text>
           <rect x="0" y="40" width="240" height="120" fill="#f8f8f8" stroke="#cfcfcf"/>
@@ -996,11 +1611,10 @@
             <line x1="120" y1="15" x2="24" y2="62"/><line x1="120" y1="15" x2="96" y2="62"/>
             <line x1="120" y1="15" x2="168" y2="62"/><line x1="120" y1="15" x2="132" y2="92"/>
           </g>
-          <text x="0" y="186" font-size="11" fill="#6b6b6b">→ 只能得到 1/d³</text>
-          <text x="0" y="204" font-size="11" fill="#c00000">推迟项（1/d⁴）根本出不来</text>
+          <text x="0" y="186" font-size="11" fill="#6b6b6b">→ 只能得到 1/D³（能量）</text>
+          <text x="0" y="204" font-size="11" fill="#c00000">推迟项根本出不来</text>
         </g>
 
-        <!-- 右：镜像 -->
         <g transform="translate(380,30)">
           <text x="0" y="0" font-size="12.5" fill="#141414">C-P：一个像，代表整个板</text>
           <line x1="120" y1="35" x2="120" y2="165" stroke="#141414" stroke-width="3"/>
@@ -1010,32 +1624,31 @@
           <text x="172" y="130" font-size="11" fill="#6b6b6b">镜像</text>
           <line x1="55" y1="100" x2="120" y2="100" stroke="#c00000" stroke-width="1" stroke-dasharray="2 2"/>
           <line x1="120" y1="100" x2="185" y2="100" stroke="#9a9a9a" stroke-width="1" stroke-dasharray="2 2"/>
-          <text x="80" y="94" font-size="10.5" fill="#6b6b6b">d</text>
-          <text x="140" y="94" font-size="10.5" fill="#6b6b6b">d</text>
-          <text x="0" y="186" font-size="11" fill="#3d3d3d">→ 得到 1/d³ <b>和</b> 1/d⁴</text>
-          <text x="0" y="204" font-size="11" fill="#c00000">各向异性（1/8 vs 1/16）也自然出现</text>
+          <text x="80" y="94" font-size="10.5" fill="#6b6b6b">D</text>
+          <text x="140" y="94" font-size="10.5" fill="#6b6b6b">D</text>
+          <text x="0" y="186" font-size="11" fill="#3d3d3d">→ 1/D³ <b>和</b> 1/D⁴ 都有</text>
+          <text x="0" y="204" font-size="11" fill="#c00000">各向异性（1/8 vs 1/16）也出现</text>
         </g>
       </g>
     </svg>
-    <figcaption><b>图 6</b>　两种处理板的方式。左边：把板拆成一堆原子逐个相加，只能得到非推迟结果；右边：把板当成边界，用一个"像"代表整块板，推迟项自然出现。</figcaption>
+    <figcaption><b>图 9</b>　两种处理"板"的方式：左边逐个原子相加（只能得到非推迟结果），右边用一个镜像代表整块板（推迟项自然出现）。</figcaption>
   </figure>
 
-  <h3 class="sub">7.4 三种做法的对照</h3>
+  <h3 class="sub">7.8 三种做法的对照</h3>
 
   <table>
-    <caption>处理"宏观物体"的三条路线</caption>
-    <thead><tr><th style="width:18%">方法</th><th style="width:22%">板被当成什么</th><th style="width:20%">是否逐个原子相加</th><th style="width:16%">能得到推迟项</th><th>适用</th></tr></thead>
+    <thead><tr><th style="width:18%">方法</th><th style="width:22%">板被当成什么</th><th style="width:16%">是否逐个相加</th><th style="width:14%">能得到推迟项</th><th>适用</th></tr></thead>
     <tbody>
-      <tr><td class="k">Hamaker（1930s）</td><td>一堆原子</td><td><b>是</b></td><td>❌ 不能</td><td>稀薄、近距离</td></tr>
-      <tr><td class="k">Casimir–Polder（1948）</td><td>理想导体边界</td><td>否（用镜像）</td><td>✅ 能</td><td>理想导体</td></tr>
-      <tr><td class="k">Lifshitz（1956）</td><td>连续介质 ε(ω)</td><td>否（用涨落电流）</td><td>✅ 能</td><td><b>任意材料</b></td></tr>
+      <tr><td class="k">Hamaker（1937）</td><td>一堆原子</td><td><b>是</b></td><td>❌</td><td>近距离、胶体</td></tr>
+      <tr><td class="k">Casimir–Polder（1948）</td><td>理想导体边界</td><td>否（镜像）</td><td>✅</td><td>理想导体</td></tr>
+      <tr><td class="k">Lifshitz（1956）</td><td>连续介质 ε(ω)</td><td>否（涨落电流）</td><td>✅</td><td><b>任意材料</b></td></tr>
     </tbody>
   </table>
 
   <div class="card">
     <div class="t">为什么这件事对今天的实验很重要</div>
-    <p style="margin:0">你集子里 D1（秦莉兰）用的公式里<strong>根本没有"原子"</strong>——只有 ε(iξ)。原因就是这条链：<br>
-    C₆ 只描述"一对原子"；把它变成 Hamaker 常数需要相加性假设；而相加性在致密介质里失效。<strong>Lifshitz 直接从 ε(iξ) 出发，跳过了整整一条链。</strong></p>
+    <p style="margin:0">D1（秦莉兰）用的公式里<strong>根本没有"原子"</strong>——只有 ε(iξ)。原因就是这条链：<br>
+    C₆ 只描述"一对原子"；变成 Hamaker 常数需要相加性；相加性在致密介质里失效。<strong>Lifshitz 直接从 ε(iξ) 出发，跳过了整整一条链。</strong></p>
   </div>
 </section>
 
@@ -1103,7 +1716,7 @@
         <text x="560" y="140" font-size="11.5" fill="#c00000">= 搬动板做的功</text>
       </g>
     </svg>
-    <figcaption><b>图 7</b>　Casimir 的比较方式：不是"有板 vs 无板"，而是<b>同一块板放在两个位置</b>——这是让两个发散和相减、得到有限值的关键设计。</figcaption>
+    <figcaption><b>图 10</b>　Casimir 的比较方式：不是"有板 vs 无板"，而是<b>同一块板放在两个位置</b>——这是让两个发散和相减、得到有限值的关键设计。</figcaption>
   </figure>
 
   <h3 class="sub">8.3 三个关键步骤</h3>
@@ -1137,7 +1750,7 @@
               <mrow><mn>240</mn><msup><mi>a</mi><mn>4</mn></msup></mrow></mfrac>
       </math>
     </div>
-    <div class="cap">式 (16)：Casimir 1948 的两个结果（原文 24×30 = 720；求导后 720÷3 = 240）</div>
+    <div class="cap">式 (17)：Casimir 1948 的两个结果（原文 24×30 = 720；求导后 720÷3 = 240）</div>
     <div class="vars-wrap">
       <p class="lbl">符号 · 量纲 · 数值</p>
       <table class="vars">
@@ -1172,7 +1785,7 @@
         <text x="150" y="230" font-size="11" fill="#6b6b6b">斜率 = −4（每远 10 倍，力降 10⁴ 倍）</text>
       </g>
     </svg>
-    <figcaption><b>图 8</b>　<code>P = π²ħc/240a⁴</code> 的量级。10 nm 处约一个大气压——这就是微纳器件"粘附失效"（stiction）的物理原因。</figcaption>
+    <figcaption><b>图 11</b>　<code>P = π²ħc/240a⁴</code> 的量级。10 nm 处约一个大气压——这就是微纳器件"粘附失效"（stiction）的物理原因。</figcaption>
   </figure>
 
   <h3 class="sub">8.5 与 C-P 的关系：不是推广，是换路</h3>
@@ -1248,7 +1861,7 @@
         <text x="50" y="292" font-size="11.5" fill="#c00000">D1（秦莉兰 2015）用的公式，就是 Lifshitz 的 Matsubara 形式。</text>
       </g>
     </svg>
-    <figcaption><b>图 9</b>　从 vdW 到 Casimir 的演进。注意有两个"外来输入"：Overbeek 的实验反常（化学家）和 Bohr 的一句提示（量子场论直觉）。</figcaption>
+    <figcaption><b>图 12</b>　从 vdW 到 Casimir 的演进。注意有两个"外来输入"：Overbeek 的实验反常（化学家）和 Bohr 的一句提示（量子场论直觉）。</figcaption>
   </figure>
 </section>
 
