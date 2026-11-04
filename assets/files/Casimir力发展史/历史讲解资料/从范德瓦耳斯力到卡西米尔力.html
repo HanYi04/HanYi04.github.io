@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>从范德瓦耳斯力到卡西米尔力</title>
+<style>
+  :root{
+    --ink:#141414; --ink-2:#3d3d3d; --ink-3:#6b6b6b; --ink-4:#9a9a9a;
+    --line:#e3e3e3; --line-2:#cfcfcf; --panel:#f8f8f8; --panel-2:#fcfcfc;
+    --red:#c00000; --red-soft:#fdf4f4;
+    --serif:"Noto Serif CJK SC","Songti SC","Source Han Serif SC",serif;
+    --sans:"Noto Sans CJK SC","Source Han Sans SC","Microsoft YaHei",sans-serif;
+    --mono:"DejaVu Sans Mono","Liberation Mono",monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:#fff;color:var(--ink);font-family:var(--sans);
+       font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:920px;margin:0 auto;padding:56px 28px 120px}
+
+  header.top{border-bottom:2px solid var(--ink);padding-bottom:24px;margin-bottom:8px}
+  .kicker{font-size:12.5px;letter-spacing:.22em;color:var(--ink-3);text-transform:uppercase;margin-bottom:16px}
+  h1{font-family:var(--serif);font-size:37px;line-height:1.28;margin:0 0 16px;font-weight:700;letter-spacing:-.012em}
+  h1 em{font-style:normal;color:var(--red)}
+  .sub{font-size:17px;color:var(--ink-2);margin:0 0 20px;font-family:var(--serif);line-height:1.7}
+  .meta{font-size:13px;color:var(--ink-3);line-height:1.8}
+  .meta b{color:var(--ink);font-weight:600}
+
+  nav.toc{background:var(--panel);border:1px solid var(--line);padding:20px 24px;margin:34px 0 8px}
+  nav.toc h2{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);
+             margin:0 0 12px;font-weight:600}
+  nav.toc ol{margin:0;padding-left:22px;columns:2;column-gap:36px;font-size:14px}
+  nav.toc li{margin:5px 0;break-inside:avoid}
+  nav.toc a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid transparent}
+  nav.toc a:hover{color:var(--red);border-bottom-color:var(--red)}
+
+  section{margin:60px 0 0;scroll-margin-top:24px}
+  h2.sec{font-family:var(--serif);font-size:25px;margin:0 0 22px;font-weight:700;
+          display:flex;align-items:baseline;gap:16px;letter-spacing:-.01em}
+  h2.sec .num{font-family:var(--mono);font-size:12px;color:var(--red);letter-spacing:.14em;
+              font-weight:500;flex:0 0 auto;padding-top:6px}
+  h3.sub{font-size:17.5px;margin:32px 0 12px;font-weight:600;color:var(--ink)}
+  h3.sub::before{content:"";display:inline-block;width:14px;height:2px;background:var(--red);
+                 vertical-align:middle;margin-right:10px}
+  p{margin:12px 0}
+  strong{font-weight:600}
+  em{font-style:normal;color:var(--red)}
+  code{font-family:var(--mono);font-size:.9em;background:var(--panel);
+       padding:1px 5px;border:1px solid var(--line)}
+
+  blockquote{margin:20px 0;padding:14px 20px;border-left:2px solid var(--line-2);
+             background:var(--panel-2);color:var(--ink-2);font-family:var(--serif);
+             font-size:15px;line-height:1.8}
+  blockquote p{margin:6px 0}
+
+  table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14.5px}
+  caption{caption-side:top;text-align:left;font-size:12.5px;color:var(--ink-3);
+          padding-bottom:8px;letter-spacing:.02em}
+  th{text-align:left;font-weight:600;font-size:13px;letter-spacing:.04em;color:var(--ink-2);
+     border-bottom:1.5px solid var(--ink);padding:9px 10px}
+  td{border-bottom:1px solid var(--line);padding:9px 10px;vertical-align:top}
+  tr:last-child td{border-bottom:1px solid var(--line-2)}
+  td.k{font-weight:600;color:var(--ink)}
+  tbody tr:hover{background:var(--panel-2)}
+
+  /* 符号 / 量纲表 */
+  table.vars{font-size:13.5px;margin:0;border-top:1px solid var(--line)}
+  table.vars th{font-size:11.5px;letter-spacing:.08em;color:var(--ink-3);
+                border-bottom:1px solid var(--line-2);padding:6px 8px;font-weight:600}
+  table.vars td{border-bottom:1px solid #f0f0f0;padding:5px 8px;vertical-align:top}
+  table.vars td.sym{font-family:var(--mono);font-size:12.5px;color:var(--red);font-weight:600;white-space:nowrap}
+  table.vars td.dim{font-family:var(--mono);font-size:12px;color:var(--ink-2);white-space:nowrap}
+  table.vars td.typ{font-family:var(--mono);font-size:12px;color:var(--ink-3);white-space:nowrap}
+
+  figure{margin:30px 0;text-align:center}
+  figure svg{max-width:100%;height:auto;display:block;margin:0 auto}
+  figcaption{font-size:13px;color:var(--ink-3);margin-top:12px;line-height:1.7;
+             text-align:left;padding-left:12px;border-left:2px solid var(--line)}
+  figcaption b{color:var(--ink-2);font-weight:600}
+
+  .eq{margin:22px 0;padding:18px 16px 0;background:var(--panel-2);border:1px solid var(--line)}
+  .eq .body{padding-bottom:16px}
+  .eq math{font-size:19px}
+  .eq .cap{font-size:12.5px;color:var(--ink-3);margin:0 0 6px;text-align:left;letter-spacing:.02em}
+  .eq .vars-wrap{border-top:1px solid var(--line);margin:0 -16px;padding:8px 16px 12px;background:#fff}
+  .eq .vars-wrap .lbl{font-size:11px;letter-spacing:.1em;color:var(--ink-4);text-transform:uppercase;margin:0 0 4px}
+  math{font-family:"Latin Modern Math","STIX Two Math","Cambria Math","DejaVu Serif",
+       "Noto Serif CJK SC",serif}
+  math .vec,math [mathvariant="bold"]{font-weight:700}
+
+  .card{border:1px solid var(--line);background:#fff;padding:18px 22px;margin:20px 0}
+  .card .t{font-size:13px;letter-spacing:.06em;color:var(--red);font-weight:600;margin-bottom:8px}
+  .card p:last-child{margin-bottom:0}
+  .card.note{background:var(--red-soft);border-color:#f0d6d6}
+
+  ol.tight,ul.tight{padding-left:22px;margin:14px 0}
+  ol.tight li,ul.tight li{margin:8px 0}
+
+  footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--line);
+         font-size:12.5px;color:var(--ink-4);line-height:1.8}
+  @media (max-width:640px){
+    .wrap{padding:36px 18px 80px}
+    h1{font-size:28px}
+    nav.toc ol{columns:1}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="kicker">概念演进 · 从分子到板块</div>
+  <h1>从范德瓦耳斯力<br>到<em>卡西米尔力</em></h1>
+  <p class="sub">一个力，两个极限，七十五年</p>
+  <div class="meta">
+    主线文献：London 1930 · Casimir–Polder 1948 · Casimir 1948 · Lifshitz 1956<br>
+    配图 9 张 | 公式 16 个 | 全部标注符号、量纲与典型值
+  </div>
+</header>
+
+<nav class="toc">
+  <h2>目录</h2>
+  <ol>
+    <li><a href="#s1">范德瓦耳斯力：一个从"气体不听话"开始的力</a></li>
+    <li><a href="#s2">London 1930：它原来来自量子抖动</a></li>
+    <li><a href="#s3">1940 年代：一个胶体化学家的疑问</a></li>
+    <li><a href="#s4">推迟：光速有限带来的折扣</a></li>
+    <li><a href="#s5">Casimir–Polder 1948：把"瞬时"换成"推迟"</a></li>
+    <li><a href="#s6">能量的频率分布是如何被改写的</a></li>
+    <li><a href="#s7">为什么不能"把板上的原子加起来"</a></li>
+    <li><a href="#s8">Casimir 1948：换一条路——数模式</a></li>
+    <li><a href="#s9">两篇论文的分工</a></li>
+    <li><a href="#s10">局限，以及接下来的一步</a></li>
+    <li><a href="#s11">附录：原文与量纲总表</a></li>
+  </ol>
+</nav>
+
+<!-- ================= 1 ================= -->
+<section id="s1">
+  <h2 class="sec"><span class="num">01</span>范德瓦耳斯力：一个从"气体不听话"开始的力</h2>
+
+  <p>故事不是从量子力学开始的，而是从<strong>气体不听话</strong>开始的。</p>
+
+  <p>1873 年，荷兰人 <b>van der Waals</b> 在研究真实气体时发现：理想气体定律 <code>pV = nRT</code> 总是对不上。压强偏低、体积偏小。他推断：分子之间既占地方，又互相吸引。于是在方程里硬塞进两个修正项：</p>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <mrow><mo>(</mo><mi>p</mi><mo>+</mo><mfrac><mi>a</mi><msup><mi>V</mi><mn>2</mn></msup></mfrac><mo>)</mo></mrow>
+        <mo>(</mo><mi>V</mi><mo>−</mo><mi>b</mi><mo>)</mo>
+        <mo>=</mo><mi>n</mi><mi>R</mi><mi>T</mi>
+      </math>
+    </div>
+    <div class="cap">式 (1)：van der Waals 方程。a 修正"吸引"，b 修正"占位"</div>
+    <div class="vars-wrap">
+      <p class="lbl">符号 · 量纲</p>
+      <table class="vars">
+        <tr><th style="width:16%">符号</th><th style="width:30%">含义</th><th style="width:22%">量纲</th><th>备注</th></tr>
+        <tr><td class="sym">a</td><td>吸引项系数</td><td class="dim">Pa·m⁶·mol⁻²</td><td>由实验拟合</td></tr>
+        <tr><td class="sym">b</td><td>分子体积修正</td><td class="dim">m³·mol⁻¹</td><td>约 4 倍分子体积</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <p><strong>关键在于：van der Waals 只是"发现"了吸引力，他不知道它从哪来。</strong>这个问题悬了半个世纪。</p>
+
+  <h3 class="sub">1.1 三种成分：Keesom、Debye、London</h3>
+
+  <p>1920 年代，三个人分别给出了三种机制，都给出同一个 1/r⁶ 的标度：</p>
+
+  <table>
+    <caption>范德瓦耳斯力的三种成分（都 ∝ 1/r⁶）</caption>
+    <thead><tr><th style="width:16%">成分</th><th style="width:22%">机制</th><th style="width:26%">物理图像</th><th>是否量子涨落</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Keesom（1921）</td><td>永久偶极 ↔ 永久偶极</td><td>两个有固定偶极矩的分子互相取向</td><td>❌ 经典静电</td></tr>
+      <tr><td class="k">Debye（1920）</td><td>永久偶极 ↔ 诱导偶极</td><td>一个的偶极把另一个极化</td><td>❌ 经典极化</td></tr>
+      <tr><td class="k">London（1930）</td><td><strong>瞬时偶极 ↔ 诱导偶极</strong></td><td>电子云随机抖动，瞬间产生偶极</td><td>✅ <em>量子涨落</em></td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>只有第三种（London 色散力）跟真空涨落有关</strong>——它是后面整条故事线的主角。对金属、惰性气体这类没有永久偶极的体系，vdW 力几乎全部来自它。</p>
+
+  <figure>
+    <svg viewBox="0 0 700 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="范德瓦耳斯力三种成分示意">
+      <g font-family="'Noto Sans CJK SC',sans-serif">
+        <!-- Keesom -->
+        <g transform="translate(40,40)">
+          <text x="0" y="0" font-size="12.5" fill="#141414">Keesom：永久 ↔ 永久</text>
+          <circle cx="30" cy="55" r="18" fill="none" stroke="#141414" stroke-width="1.8"/>
+          <circle cx="100" cy="55" r="18" fill="none" stroke="#141414" stroke-width="1.8"/>
+          <line x1="18" y1="55" x2="42" y2="55" stroke="#c00000" stroke-width="2.6"/>
+          <line x1="88" y1="55" x2="112" y2="55" stroke="#c00000" stroke-width="2.6"/>
+          <text x="8" y="95" font-size="11" fill="#6b6b6b">两个都有固定偶极</text>
+        </g>
+
+        <!-- Debye -->
+        <g transform="translate(260,40)">
+          <text x="0" y="0" font-size="12.5" fill="#141414">Debye：永久 ↔ 诱导</text>
+          <circle cx="30" cy="55" r="18" fill="none" stroke="#141414" stroke-width="1.8"/>
+          <circle cx="100" cy="55" r="18" fill="none" stroke="#141414" stroke-width="1.8"/>
+          <line x1="18" y1="55" x2="42" y2="55" stroke="#c00000" stroke-width="2.6"/>
+          <line x1="92" y1="55" x2="108" y2="55" stroke="#c00000" stroke-width="1.6" stroke-dasharray="3 2"/>
+          <text x="8" y="95" font-size="11" fill="#6b6b6b">第二个被"拉"出偶极</text>
+        </g>
+
+        <!-- London -->
+        <g transform="translate(480,40)">
+          <text x="0" y="0" font-size="12.5" fill="#c00000">London：瞬时 ↔ 诱导</text>
+          <circle cx="30" cy="55" r="18" fill="none" stroke="#141414" stroke-width="1.8"/>
+          <circle cx="100" cy="55" r="18" fill="none" stroke="#141414" stroke-width="1.8"/>
+          <line x1="16" y1="55" x2="44" y2="55" stroke="#c00000" stroke-width="2.6"/>
+          <line x1="92" y1="55" x2="108" y2="55" stroke="#c00000" stroke-width="1.6" stroke-dasharray="3 2"/>
+          <!-- 抖动 -->
+          <path d="M20,25 q5,-8 10,0 q5,8 10,0" fill="none" stroke="#c00000" stroke-width="1.2" opacity="0.7"/>
+          <text x="8" y="95" font-size="11" fill="#6b6b6b">电子随机抖动，瞬间成偶极</text>
+        </g>
+
+        <text x="40" y="180" font-size="11.5" fill="#6b6b6b">三者都给出能量 ∝ 1/r⁶、力 ∝ 1/r⁷；只有 London 项与真空涨落同源，是卡西米尔力的"祖先"。</text>
+      </g>
+    </svg>
+    <figcaption><b>图 1</b>　范德瓦耳斯力的三种成分。教科书把三者合称 vdW 力，但它们物理来源不同——只有 London 色散力属于量子涨落。</figcaption>
+  </figure>
+
+  <h3 class="sub">1.2 公式与量纲</h3>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <mi>E</mi><mo>=</mo><mo>−</mo>
+        <mfrac><msub><mi>C</mi><mn>6</mn></msub><msup><mi>R</mi><mn>6</mn></msup></mfrac>
+        <mspace width="2em"/>
+        <mo>⇒</mo>
+        <mspace width="2em"/>
+        <mi>F</mi><mo>=</mo><mo>−</mo>
+        <mfrac><mrow><mi>d</mi><mi>E</mi></mrow><mrow><mi>d</mi><mi>R</mi></mrow></mfrac>
+        <mo>=</mo><mo>−</mo>
+        <mfrac><mrow><mn>6</mn><msub><mi>C</mi><mn>6</mn></msub></mrow><msup><mi>R</mi><mn>7</mn></msup></mfrac>
+      </math>
+    </div>
+    <div class="cap">式 (2)：London 色散力（非推迟）。C₆ 是"色散系数"，下标 6 指它前面的幂次</div>
+    <div class="vars-wrap">
+      <p class="lbl">符号 · 量纲 · 典型值</p>
+      <table class="vars">
+        <tr><th style="width:12%">符号</th><th style="width:34%">含义</th><th style="width:20%">量纲</th><th>典型值 / 备注</th></tr>
+        <tr><td class="sym">E</td><td>两原子相互作用能</td><td class="dim">J</td><td>负值 = 吸引</td></tr>
+        <tr><td class="sym">F</td><td>相互作用力</td><td class="dim">N</td><td>负号表示指向对方</td></tr>
+        <tr><td class="sym">R</td><td>两原子间距</td><td class="dim">m</td><td>—</td></tr>
+        <tr><td class="sym">C₆</td><td><b>London 色散系数</b></td><td class="dim">J·m⁶</td><td>H–H：<b>6.499 a.u.</b> = 6.1×10⁻⁷⁹ J·m⁶ ≈ 3.8 eV·Å⁶</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="t">C₆ 到底是什么</div>
+    <p style="margin:0">它把"这一对原子有多容易被极化"<strong>打包成一个数</strong>：里面包含了两个原子的能级结构、跃迁偶极矩、跃迁频率。<strong>它不是一个普适常数，而是每对原子各有一个值</strong>（H–H 是 6.5 a.u.，Ne–Ne 是 6.4 a.u.，分子对常在 10²–10³ a.u.）。</p>
+  </div>
+
+  <h3 class="sub">1.3 量纲速查：从原子到宏观</h3>
+
+  <p>这一串量经常一起出现，量纲是理解它们关系的钥匙：</p>
+
+  <table>
+    <caption>范德瓦耳斯家族的物理量</caption>
+    <thead><tr><th style="width:12%">量</th><th style="width:26%">公式</th><th style="width:14%">量纲</th><th style="width:20%">典型值</th><th>几何</th></tr></thead>
+    <tbody>
+      <tr><td class="k">C₃</td><td>E = −C₃/d³</td><td class="dim">J·m³</td><td>~10⁻⁴⁹</td><td>原子 ↔ 平面</td></tr>
+      <tr><td class="k">C₆</td><td>E = −C₆/R⁶</td><td class="dim">J·m⁶</td><td>6×10⁻⁷⁹（H–H）</td><td>原子 ↔ 原子</td></tr>
+      <tr><td class="k">A_H</td><td>E/A = −A_H/(12πd²)</td><td class="dim">J</td><td>10⁻²⁰–10⁻¹⁹</td><td>板 ↔ 板（Hamaker）</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>它们之间的关系</strong>：把 C₆ 乘上两侧的数密度再积分，就得到 Hamaker 常数</p>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <msub><mi>A</mi><mi>H</mi></msub><mo>=</mo>
+        <msup><mi>π</mi><mn>2</mn></msup>
+        <msub><mi>ρ</mi><mn>1</mn></msub><msub><mi>ρ</mi><mn>2</mn></msub>
+        <msub><mi>C</mi><mn>6</mn></msub>
+      </math>
+    </div>
+    <div class="cap">式 (3)：Hamaker 常数与 C₆ 的关系（相加性近似）</div>
+    <div class="vars-wrap">
+      <p class="lbl">符号 · 量纲</p>
+      <table class="vars">
+        <tr><th style="width:12%">符号</th><th style="width:34%">含义</th><th style="width:20%">量纲</th><th>备注</th></tr>
+        <tr><td class="sym">A_H</td><td>Hamaker 常数</td><td class="dim">J</td><td>10⁻²⁰–10⁻¹⁹ J</td></tr>
+        <tr><td class="sym">ρ</td><td>数密度</td><td class="dim">m⁻³</td><td>约 10²⁹（固体）</td></tr>
+        <tr><td class="sym">C₆</td><td>两原子色散系数</td><td class="dim">J·m⁶</td><td>—</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card note">
+    <div class="t">这条链条后面会断裂</div>
+    <p style="margin:0">式 (3) 依赖"<strong>原子两两相加</strong>"这个假设。它在稀薄气体里成立，在致密介质里会失效——第 7 章会详细讲这件事，那也是 Lifshitz 理论存在的理由。</p>
+  </div>
+</section>
+
+<!-- ================= 2 ================= -->
+<section id="s2">
+  <h2 class="sec"><span class="num">02</span>London 1930：它原来来自量子抖动</h2>
+
+  <p><b>Fritz London</b> 在 1930 年给出了色散力的量子力学解释，图像非常朴素：</p>
+
+  <p><strong>原子里的电子云在不停地随机抖动。</strong>在任何一个瞬间，电子分布都不严格对称，于是产生一个<em>瞬时偶极</em>。这个瞬时偶极的电场会让旁边的原子也极化（诱导出偶极），两个偶极之间就产生了吸引力。抖动结束后，新的抖动又产生新的偶极——平均下来，就是持续不断的吸引。</p>
+
+  <figure>
+    <svg viewBox="0 0 680 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="瞬时偶极产生色散力的过程">
+      <g font-family="'Noto Sans CJK SC',sans-serif">
+        <!-- 三个时刻 -->
+        <g transform="translate(50,50)">
+          <text x="0" y="0" font-size="12" fill="#6b6b6b">时刻 ①</text>
+          <circle cx="40" cy="60" r="20" fill="none" stroke="#141414" stroke-width="1.6"/>
+          <ellipse cx="40" cy="60" rx="26" ry="14" fill="none" stroke="#c00000" stroke-width="1.8"/>
+          <circle cx="180" cy="60" r="20" fill="none" stroke="#141414" stroke-width="1.6"/>
+          <circle cx="180" cy="60" r="20" fill="none" stroke="#9a9a9a" stroke-width="1.2" stroke-dasharray="3 3"/>
+          <text x="60" y="120" font-size="11" fill="#c00000">← 电子偏左</text>
+          <text x="150" y="120" font-size="11" fill="#6b6b6b">对方被拉出反向偶极</text>
+        </g>
+
+        <g transform="translate(360,50)">
+          <text x="0" y="0" font-size="12" fill="#6b6b6b">时刻 ②</text>
+          <circle cx="40" cy="60" r="20" fill="none" stroke="#141414" stroke-width="1.6"/>
+          <ellipse cx="40" cy="60" rx="14" ry="26" fill="none" stroke="#c00000" stroke-width="1.8"/>
+          <circle cx="180" cy="60" r="20" fill="none" stroke="#141414" stroke-width="1.6"/>
+          <ellipse cx="180" cy="60" rx="20" ry="14" fill="none" stroke="#9a9a9a" stroke-width="1.2" stroke-dasharray="3 3"/>
+          <text x="30" y="120" font-size="11" fill="#c00000">抖动方向变了</text>
+          <text x="150" y="120" font-size="11" fill="#6b6b6b">对方随之改变</text>
+        </g>
+
+        <!-- 结论 -->
+        <line x1="50" y1="200" x2="640" y2="200" stroke="#e3e3e3"/>
+        <text x="50" y="224" font-size="12" fill="#3d3d3d">单个瞬间的偶极随机、平均为零；但"一个抖动诱导另一个抖动"这件事，平均下来不为零 → 净吸引。</text>
+        <text x="50" y="246" font-size="11.5" fill="#6b6b6b">这就是 London 色散力，能量 ∝ 1/R⁶。</text>
+      </g>
+    </svg>
+    <figcaption><b>图 2</b>　色散力的机制：两个原子的电子云各自随机抖动，但"A 的瞬时偶极会诱导 B 的偶极"，这个关联平均下来不为零，于是产生净吸引。</figcaption>
+  </figure>
+
+  <h3 class="sub">2.1 C₆ 的两种算法</h3>
+
+  <p><strong>第一种：从能级结构算</strong>（London 原始形式，二阶微扰论）</p>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <msub><mi>C</mi><mn>6</mn></msub><mo>=</mo>
+        <mfrac><mn>3</mn><mn>2</mn></mfrac>
+        <munder><mo>∑</mo><mrow><mi>n</mi><mo>,</mo><mi>m</mi></mrow></munder>
+        <mfrac>
+          <mrow><msup><mrow><mo>|</mo><mo>⟨</mo><mn>0</mn><mo>|</mo><msub><mi>𝐝</mi><mn>1</mn></msub><mo>|</mo><mi>n</mi><mo>⟩</mo><mo>|</mo></mrow><mn>2</mn></msup>
+                <msup><mrow><mo>|</mo><mo>⟨</mo><mn>0</mn><mo>|</mo><msub><mi>𝐝</mi><mn>2</mn></msub><mo>|</mo><mi>m</mi><mo>⟩</mo><mo>|</mo></mrow><mn>2</mn></msup></mrow>
+          <mrow><msub><mi>E</mi><mi>n</mi></msub><mo>+</mo><msub><mi>E</mi><mi>m</mi></msub><mo>−</mo><mn>2</mn><msub><mi>E</mi><mn>0</mn></msub></mrow>
+        </mfrac>
+      </math>
+    </div>
+    <div class="cap">式 (4)：从能级与跃迁偶极矩算 C₆（London 1930）</div>
+    <div class="vars-wrap">
+      <p class="lbl">符号 · 量纲</p>
+      <table class="vars">
+        <tr><th style="width:14%">符号</th><th style="width:36%">含义</th><th style="width:20%">量纲</th><th>备注</th></tr>
+        <tr><td class="sym">𝐝</td><td>偶极矩算符</td><td class="dim">C·m（SI）</td><td>—</td></tr>
+        <tr><td class="sym">E_n</td><td>第 n 个能级</td><td class="dim">J</td><td>—</td></tr>
+        <tr><td class="sym">⟨0|𝐝|n⟩</td><td>跃迁偶极矩</td><td class="dim">C·m</td><td>决定"多容易被极化"</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <p><strong>第二种：从极化率算</strong>（McLachlan 1963，现在更常用——因为它只需要光学数据）</p>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <msub><mi>C</mi><mn>6</mn></msub><mo>=</mo>
+        <mfrac><mrow><mn>3</mn><mi>ħ</mi></mrow><mi>π</mi></mfrac>
+        <msubsup><mo>∫</mo><mn>0</mn><mi>∞</mi></msubsup>
+        <msub><mi>α</mi><mn>1</mn></msub><mo>(</mo><mi>i</mi><mi>ξ</mi><mo>)</mo>
+        <msub><mi>α</mi><mn>2</mn></msub><mo>(</mo><mi>i</mi><mi>ξ</mi><mo>)</mo>
+        <mi>d</mi><mi>ξ</mi>
+      </math>
+    </div>
+    <div class="cap">式 (5)：C₆ 的极化率积分形式</div>
+    <div class="vars-wrap">
+      <p class="lbl">符号 · 量纲</p>
+      <table class="vars">
+        <tr><th style="width:14%">符号</th><th style="width:36%">含义</th><th style="width:20%">量纲</th><th>备注</th></tr>
+        <tr><td class="sym">α(iξ)</td><td>原子在虚频 ξ 的极化率</td><td class="dim">C·m²/V</td><td>H 原子 ≈ 0.667 Å³（×4πε₀）</td></tr>
+        <tr><td class="sym">ξ</td><td>虚频</td><td class="dim">s⁻¹</td><td>由 iω → iξ 变换得到</td></tr>
+        <tr><td class="sym">ħ</td><td>约化普朗克常数</td><td class="dim">J·s</td><td>1.055×10⁻³⁴</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <p><strong>量纲验算</strong>：ħ·[α]²·[ξ] = (J·s)(C·m²/V)²(s⁻¹) = J·(F·m²)² = <strong>J·m⁶</strong> ✓</p>
+
+  <div class="card note">
+    <div class="t">London 的推导藏着一个假设</div>
+    <p style="margin:0">他用的是<strong>瞬时的</strong>偶极—偶极相互作用（∝ 1/R³）。也就是说，他默认了"<b>A 的偶极一变，B 立刻感受到</b>"。<br>这个假设在近距离没问题（光跑一趟的时间可以忽略），<strong>但在远距离会出问题——这就是下一章。</strong></p>
+  </div>
+</section>
+
+<!-- ================= 3 ================= -->
+<section id="s3">
+  <h2 class="sec"><span class="num">03</span>1940 年代：一个胶体化学家的疑问</h2>
+
+  <p>故事的下一个转折点不在物理系，而在<strong>胶体化学</strong>。</p>
+
+  <p>荷兰乌得勒支的 <b>Verwey</b> 和 <b>Overbeek</b> 正在建立后来称为 <b>DLVO 理论</b>的胶体稳定性理论（他们的专著因战争延迟到 1948 年才出版）。他们用 London 的 vdW 公式去算较大颗粒之间的吸引，然后和实验比——结果对不上。</p>
+
+  <blockquote>
+    <p>原文（Casimir–Polder 1948 第 361 页）：</p>
+    <p>"…they found a <b>discrepancy between their theory and the experimental results</b> which could be removed only by assuming that at large distances the attractive force between two atoms <b>decreases more rapidly than R⁻⁶</b>."</p>
+  </blockquote>
+
+  <p><strong>翻译</strong>：他们发现理论与实验有偏差，只有假设"大距离时吸引力比 R⁻⁶ 下降得更快"，才能消除这个矛盾。</p>
+
+  <h3 class="sub">3.1 一句荷兰语的问题</h3>
+
+  <p>Overbeek 没有绕过去。他提出一个猜想，并去问了同一家公司里的理论物理学家 <b>Casimir</b>。原话（荷兰语）是：</p>
+
+  <blockquote>
+    <p><b>"Is wellicht een retardatie van de wisselwerking hiervoor verantwoordelijk?"</b></p>
+    <p style="font-size:13.5px;color:var(--ink-3)">（"是不是相互作用的<b>推迟</b>导致了这一点？"）</p>
+  </blockquote>
+
+  <p><strong>"推迟（retardation）"这个概念，是化学家先提出来的。</strong>他的理由很素朴：</p>
+
+  <blockquote>
+    <p>"it takes a <b>finite time</b> for the fluctuation of one atom to influence the other."</p>
+  </blockquote>
+
+  <p>——一个原子的涨落要影响另一个，<strong>需要有限的时间</strong>。</p>
+
+  <div class="card">
+    <div class="t">为什么 London 的假设会出问题</div>
+    <p style="margin:0">London 假设"瞬时"。但如果距离远，<strong>光跑一趟需要时间 R/c</strong>。在这段时间里，源头那个原子已经抖了好几轮。于是第二个原子"追不上"第一个——这就是推迟，下一章细讲。</p>
+  </div>
+</section>
+
+<!-- ================= 4 ================= -->
+<section id="s4">
+  <h2 class="sec"><span class="num">04</span>推迟：光速有限带来的折扣</h2>
+
+  <p>这一章把"推迟"讲透。它是理解后面所有公式的钥匙。</p>
+
+  <h3 class="sub">4.1 一个数：相位积累</h3>
+
+  <p>设一个原子以频率 ω 抖动，它产生的场传到距离 R 处的另一个原子。传播过程中，"波"转过的角度（相位）是：</p>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <mi>φ</mi><mo>=</mo>
+        <mi>ω</mi><mo>⋅</mo>
+        <mfrac><mi>R</mi><mi>c</mi></mfrac>
+        <mspace width="2em"/>
+        <mo>=</mo>
+        <mspace width="1em"/>
+        <mfrac><mrow><mn>2</mn><mi>π</mi><mi>R</mi></mrow><mi>λ</mi></mfrac>
+      </math>
+    </div>
+    <div class="cap">式 (6)：推迟的判据——相位积累。它等于"传播时间 ÷ 抖动周期 × 2π"</div>
+    <div class="vars-wrap">
+      <p class="lbl">符号 · 量纲</p>
+      <table class="vars">
+        <tr><th style="width:14%">符号</th><th style="width:38%">含义</th><th style="width:18%">量纲</th><th>备注</th></tr>
+        <tr><td class="sym">φ</td><td>传播积累的相位</td><td class="dim">rad（无量纲）</td><td>判据核心</td></tr>
+        <tr><td class="sym">ω</td><td>抖动角频率</td><td class="dim">rad·s⁻¹</td><td>原子特征频率 ~10¹⁶</td></tr>
+        <tr><td class="sym">R</td><td>两原子间距</td><td class="dim">m</td><td>—</td></tr>
+        <tr><td class="sym">c</td><td>光速</td><td class="dim">m·s⁻¹</td><td>2.998×10⁸</td></tr>
+        <tr><td class="sym">λ</td><td>该频率对应的波长</td><td class="dim">m</td><td>λ = 2πc/ω</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <table>
+    <caption>相位积累决定了"能不能同步"</caption>
+    <thead><tr><th style="width:22%">φ</th><th style="width:30%">物理含义</th><th>关联强度</th></tr></thead>
+    <tbody>
+      <tr><td class="k">φ ≪ 1</td><td>传播时间远小于抖动周期</td><td><b>强</b>（几乎同步）✅</td></tr>
+      <tr><td class="k">φ ≈ 1</td><td>两者可比</td><td>开始减弱</td></tr>
+      <tr><td class="k">φ ≫ 1</td><td>转了好几圈，方向随机</td><td><b>平均为零</b> ❌</td></tr>
+    </tbody>
+  </table>
+
+  <figure>
+    <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="相位错位的时间线示意">
+      <g font-family="'Noto Sans CJK SC',sans-serif">
+        <!-- 时间轴 -->
+        <line x1="60" y1="40" x2="60" y2="230" stroke="#141414" stroke-width="1.4"/>
+        <text x="30" y="36" font-size="11" fill="#3d3d3d">t</text>
+
+        <!-- A 的抖动 -->
+        <text x="70" y="30" font-size="12" fill="#141414">原子 A 的抖动</text>
+        <path d="M80,60 q15,-16 30,0 q15,16 30,0 q15,-16 30,0 q15,16 30,0 q15,-16 30,0"
+              fill="none" stroke="#c00000" stroke-width="2"/>
+        <line x1="80" y1="60" x2="230" y2="60" stroke="#e3e3e3" stroke-width="1"/>
+
+        <!-- B 收到的 -->
+        <text x="70" y="130" font-size="12" fill="#141414">原子 B 收到的</text>
+        <path d="M140,160 q15,-16 30,0 q15,16 30,0 q15,-16 30,0 q15,16 30,0 q15,-16 30,0"
+              fill="none" stroke="#9a9a9a" stroke-width="2" stroke-dasharray="5 3"/>
+        <line x1="140" y1="160" x2="290" y2="160" stroke="#e3e3e3" stroke-width="1"/>
+
+        <!-- 延迟标注 -->
+        <line x1="80" y1="60" x2="140" y2="160" stroke="#c00000" stroke-width="1" stroke-dasharray="2 2"/>
+        <text x="96" y="112" font-size="11" fill="#c00000">延迟 R/c</text>
+
+        <!-- 说明 -->
+        <line x1="60" y1="210" x2="660" y2="210" stroke="#e3e3e3"/>
+        <text x="60" y="232" font-size="12" fill="#3d3d3d">距离近：延迟小，B 的波形几乎与 A 重合 → 同步 → 强关联</text>
+        <text x="60" y="252" font-size="12" fill="#3d3d3d">距离远：延迟大，B 的波形被"拖后"很多个周期 → 错位 → 平均抵消</text>
+        <text x="60" y="278" font-size="11.5" fill="#c00000">注意：错位不是"力变弱了"，而是"这个频率的抖动不再参与关联"。</text>
+      </g>
+    </svg>
+    <figcaption><b>图 3</b>　推迟的时间图像。A 的抖动传到 B 需要 R/c；当这段延迟与抖动周期可比时，B 收到的是"过时且错位"的信号，该频率的贡献就被平均掉了。</figcaption>
+  </figure>
+
+  <h3 class="sub">4.2 三种等价的说法</h3>
+
+  <table>
+    <caption>同一个判据（ω &lt; c/R）的三种表述</caption>
+    <thead><tr><th style="width:20%">视角</th><th>说法</th></tr></thead>
+    <tbody>
+      <tr><td class="k">模式视角</td><td>只有波长比距离长的模式（λ &gt; R）才能"跨过"这段距离建立关联</td></tr>
+      <tr><td class="k">时间视角</td><td>抖得比传播时间还快的模式，还没传到，源头就变了</td></tr>
+      <tr><td class="k">相位视角</td><td>相位积累超过一整圈，涨落互相抵消</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="sub">4.3 一个反事实检验</h3>
+
+  <div class="card note">
+    <div class="t">如果光速是无穷大呢？</div>
+    <p style="margin:0">代入 φ = ωR/c：c → ∞ 则 φ → 0，<strong>永远同步</strong>，没有截断，所有频率都参与——推迟效应消失，回到 London 的 1/R⁶。<br><b>所以"推迟"完全是"光速有限"的产物。</b>这个反事实检验能帮你把整件事钉死。</p>
+  </div>
+
+  <h3 class="sub">4.4 多远算远？</h3>
+
+  <p>判据的分子分母都是可算的：</p>
+
+  <table>
+    <thead><tr><th style="width:26%">对象</th><th style="width:26%">特征频率 ω₀</th><th>推迟长度 c/ω₀</th></tr></thead>
+    <tbody>
+      <tr><td class="k">典型原子/分子</td><td>~3×10¹⁵ s⁻¹</td><td><b>~100 nm</b>（≈137 玻尔半径）</td></tr>
+      <tr><td class="k">金属（电子等离子体）</td><td>ω_p ≈ 1.4×10¹⁶ s⁻¹</td><td><b>~137 nm</b>（金）</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>所以"一百纳米"这个数字不是随便来的</strong>：它正是"光跑一趟的时间 ≈ 电子抖一轮的时间"的临界尺度。</p>
+</section>
+
+<!-- ================= 5 ================= -->
+<section id="s5">
+  <h2 class="sec"><span class="num">05</span>Casimir–Polder 1948：把"瞬时"换成"推迟"</h2>
+
+  <div class="eq" style="background:#fff;border-left:3px solid var(--red);border-top:none;border-right:none;border-bottom:none;padding-left:18px">
+    <div class="body">
+      <p style="margin:0;font-size:14.5px">
+      <b>题录</b>　H. B. G. Casimir &amp; D. Polder, <i>The Influence of Retardation on the London–van der Waals Forces</i>,
+      <b>Phys. Rev. 73, 360–372 (1948)</b>（13 页，1947 年 5 月投稿）<br>
+      <b>任务</b>　把 London 的"瞬时偶极"换成"推迟偶极"，重算一遍。
+      </p>
+    </div>
+  </div>
+
+  <h3 class="sub">5.1 两个结果</h3>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <mi>E</mi><mo>=</mo><mo>−</mo>
+        <mfrac><mrow><mn>23</mn><mi>ħ</mi><mi>c</mi></mrow><mrow><mn>4</mn><mi>π</mi></mrow></mfrac>
+        <mfrac><mrow><msub><mi>α</mi><mn>1</mn></msub><msub><mi>α</mi><mn>2</mn></msub></mrow><msup><mi>R</mi><mn>7</mn></msup></mfrac>
+      </math>
+    </div>
+    <div class="cap">式 (7)：两个原子的推迟极限（R ≫ c/ω₀）。换成力就是 ∝ R⁻⁸</div>
+    <div class="vars-wrap">
+      <p class="lbl">符号 · 量纲 · 典型值</p>
+      <table class="vars">
+        <tr><th style="width:14%">符号</th><th style="width:36%">含义</th><th style="width:20%">量纲</th><th>备注</th></tr>
+        <tr><td class="sym">α₁, α₂</td><td>两个原子的<b>静态</b>极化率</td><td class="dim">C·m²/V</td><td>注意：这里只用到零频值</td></tr>
+        <tr><td class="sym">R</td><td>间距</td><td class="dim">m</td><td>R ≫ c/ω₀ ≈ 100 nm</td></tr>
+        <tr><td class="sym">ħc</td><td>—</td><td class="dim">J·m</td><td>3.16×10⁻²⁶</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <mi>E</mi><mo>=</mo><mo>−</mo>
+        <mfrac><mrow><mn>3</mn><mi>ħ</mi><mi>c</mi></mrow><mrow><mn>8</mn><mi>π</mi></mrow></mfrac>
+        <mfrac><mi>α</mi><msup><mi>d</mi><mn>4</mn></msup></mfrac>
+      </math>
+    </div>
+    <div class="cap">式 (8)：一个原子与理想导体板的推迟极限（d ≫ c/ω₀）</div>
+    <div class="vars-wrap">
+      <p class="lbl">符号 · 量纲</p>
+      <table class="vars">
+        <tr><th style="width:14%">符号</th><th style="width:36%">含义</th><th style="width:20%">量纲</th><th>备注</th></tr>
+        <tr><td class="sym">d</td><td>原子到板的距离</td><td class="dim">m</td><td>d ≫ 100 nm</td></tr>
+        <tr><td class="sym">α</td><td>原子静态极化率</td><td class="dim">C·m²/V</td><td>—</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <p><strong>对比非推迟的情形</strong>：</p>
+
+  <table>
+    <caption>推迟的效果就是"多一个 R"</caption>
+    <thead><tr><th style="width:26%">几何</th><th style="width:28%">非推迟（London）</th><th>推迟（Casimir–Polder）</th></tr></thead>
+    <tbody>
+      <tr><td class="k">原子 ↔ 原子</td><td>−C₆/R⁶</td><td><b>−(23/4π)ħcα₁α₂/R⁷</b></td></tr>
+      <tr><td class="k">原子 ↔ 板</td><td>−C₃/d³</td><td><b>−(3/8π)ħcα/d⁴</b></td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="sub">5.2 怎么理解：一个"修正因子"</h3>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <mi>E</mi><mo>=</mo>
+        <msub><mi>E</mi><mrow><mi>L</mi><mi>o</mi><mi>n</mi><mi>d</mi><mi>o</mi><mi>n</mi></mrow></msub>
+        <mo>×</mo><mi>f</mi><mo>(</mo><mi>R</mi><mo>)</mo>
+        <mspace width="2em"/>
+        <mi>f</mi><mo>→</mo>
+        <mn>1</mn>
+        <mspace width=".5em"/><mo>(</mo><mi>R</mi><mo>≪</mo><mi>c</mi><mo>/</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo>
+        <mo>,</mo>
+        <mspace width=".8em"/>
+        <mi>f</mi><mo>∝</mo>
+        <mfrac><mn>1</mn><mi>R</mi></mfrac>
+        <mspace width=".5em"/><mo>(</mo><mi>R</mi><mo>≫</mo><mi>c</mi><mo>/</mo><msub><mi>ω</mi><mn>0</mn></msub><mo>)</mo>
+      </math>
+    </div>
+    <div class="cap">式 (9)：推迟的"修正因子"结构。原文用的词就是 correction factor</div>
+    <div class="vars-wrap">
+      <p class="lbl">符号 · 量纲</p>
+      <table class="vars">
+        <tr><th style="width:14%">符号</th><th style="width:38%">含义</th><th style="width:18%">量纲</th><th>备注</th></tr>
+        <tr><td class="sym">f(R)</td><td>推迟修正因子</td><td class="dim">无量纲</td><td>R 小→1；R 大→∝1/R</td></tr>
+        <tr><td class="sym">E_London</td><td>非推迟结果</td><td class="dim">J</td><td>即 −C₆/R⁶</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card note">
+    <div class="t">"先有 vdW，后修正推迟"到底什么意思</div>
+    <p style="margin:0">这句话说的是<strong>计算策略</strong>，不是物理过程。<br>
+    <b>物理上</b>只有一个力；<b>计算上</b>分两步：先算"假设作用瞬时"的答案（London，1/R⁶），再乘上"光速有限"带来的修正因子 f(R)。<br>
+    这跟牛顿力学与相对论的关系完全一样：<strong>牛顿是相对论在低速下的极限，London 是 C-P 在近距离下的极限。</strong></p>
+  </div>
+
+  <h3 class="sub">5.3 第一篇（Part I）：原子与理想导体板——推迟的镜像</h3>
+
+  <p>这一部分的物理图像非常漂亮。原文自己写出来了（第 364 页，用"对应原理"解释）：</p>
+
+  <blockquote>
+    <p>"…the first term in the expression equals the energy of a <b>complex dipole</b> q²e^{−ikct} in the <b>retarded electric field</b> of a dipole q²e^{+ikct} at a distance 2R, and this second dipole might be interpreted as the <b>'electrical image'</b> of the complex conjugate of the first dipole, with regard to a <b>perfectly conducting plane</b> at a distance R from the first dipole."</p>
+  </blockquote>
+
+  <figure>
+    <svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="原子与导体板的镜像示意">
+      <g font-family="'Noto Sans CJK SC',sans-serif">
+        <!-- 板 -->
+        <line x1="340" y1="40" x2="340" y2="260" stroke="#141414" stroke-width="3"/>
+        <text x="300" y="30" font-size="12" fill="#141414">理想导体板</text>
+
+        <!-- 真实原子 -->
+        <circle cx="190" cy="150" r="26" fill="none" stroke="#c00000" stroke-width="2"/>
+        <line x1="172" y1="150" x2="208" y2="150" stroke="#c00000" stroke-width="3"/>
+        <text x="160" y="112" font-size="12" fill="#c00000">真实原子（偶极）</text>
+        <text x="168" y="196" font-size="11.5" fill="#6b6b6b">d</text>
+
+        <!-- 镜像 -->
+        <circle cx="490" cy="150" r="26" fill="none" stroke="#9a9a9a" stroke-width="1.6" stroke-dasharray="5 4"/>
+        <line x1="472" y1="150" x2="508" y2="150" stroke="#9a9a9a" stroke-width="2.4" stroke-dasharray="5 4"/>
+        <text x="432" y="112" font-size="12" fill="#6b6b6b">镜像（在板"另一侧"）</text>
+        <text x="468" y="196" font-size="11.5" fill="#6b6b6b">d</text>
+
+        <!-- 距离标注 -->
+        <line x1="190" y1="238" x2="340" y2="238" stroke="#c00000" stroke-width="1" marker-start="url(#a1)" marker-end="url(#a1)"/>
+        <line x1="340" y1="238" x2="490" y2="238" stroke="#9a9a9a" stroke-width="1"/>
+        <text x="240" y="256" font-size="12" fill="#c00000">d</text>
+        <text x="400" y="256" font-size="12" fill="#6b6b6b">d</text>
+        <text x="190" y="282" font-size="12" fill="#3d3d3d">两者相距 2d；推迟修正 = 这个"像"的场不是瞬时到达的</text>
+
+        <defs>
+          <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#c00000"/>
+          </marker>
+        </defs>
+      </g>
+    </svg>
+    <figcaption><b>图 4</b>　推迟的镜像图像：板的响应可以等效成"镜子另一侧的一个像偶极"，但像的场要花时间才传到原子上——这一延迟就是全部修正的来源。</figcaption>
+  </figure>
+
+  <p><strong>非推迟部分</strong>（原文给出的静电结果，注意各向异性）：</p>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <msub><mi>ε</mi><mrow><mi>z</mi><mo>,</mo><mi>s</mi></mrow></msub><mo>=</mo>
+        <mo>−</mo><mfrac><msup><mrow><mo>(</mo><msup><mi>q</mi><mi>z</mi></msup><mo>)</mo></mrow><mn>2</mn></msup><mrow><mn>8</mn><msup><mi>R</mi><mn>3</mn></msup></mrow></mfrac>
+        <mspace width="2em"/>
+        <msub><mi>ε</mi><mrow><mi>x</mi><mo>,</mo><mi>y</mi><mo>,</mo><mi>s</mi></mrow></msub><mo>=</mo>
+        <mo>−</mo><mfrac><msup><mrow><mo>(</mo><msup><mi>q</mi><mrow><mi>x</mi><mo>,</mo><mi>y</mi></mrow></msup><mo>)</mo></mrow><mn>2</mn></msup><mrow><mn>16</mn><msup><mi>R</mi><mn>3</mn></msup></mrow></mfrac>
+      </math>
+    </div>
+    <div class="cap">式 (10)：偶极与导体板的静电相互作用（非推迟）。垂直分量系数 1/8，平行分量 1/16</div>
+    <div class="vars-wrap">
+      <p class="lbl">符号 · 量纲</p>
+      <table class="vars">
+        <tr><th style="width:16%">符号</th><th style="width:38%">含义</th><th style="width:18%">量纲</th><th>备注</th></tr>
+        <tr><td class="sym">q^z</td><td>垂直板方向的偶极分量</td><td class="dim">C·m</td><td>像偶极<b>同向</b></td></tr>
+        <tr><td class="sym">q^{x,y}</td><td>平行板方向的偶极分量</td><td class="dim">C·m</td><td>像偶极<b>反向</b></td></tr>
+        <tr><td class="sym">R</td><td>原子到板的距离</td><td class="dim">m</td><td>—</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="t">为什么这个 1/8 与 1/16 很关键</div>
+    <p style="margin:0">这个各向异性完全来自"<b>像偶极的取向</b>"：垂直板的像同向（作用强一倍），平行板的像反向。<br>
+    <strong>如果是对板上原子逐个求和，绝不会出现这种"由几何决定"的系数。</strong>这从数学上证明了：C-P 处理的是<b>边界</b>，不是<b>一堆原子</b>。</p>
+  </div>
+
+  <h3 class="sub">5.4 第二篇（Part II）：两个原子——为什么必须四阶</h3>
+
+  <p>原子—原子没有"板"可当边界，只能老老实实做微扰论。原文解释得很清楚（第 370 页）：</p>
+
+  <blockquote>
+    <p>"…there is <b>no first-order perturbation</b> between an atom and the electromagnetic field that is proportional to <b>e</b>. The terms in G that are proportional to e only give rise to a <b>second-order</b> perturbation, while the terms with e² are responsible for the first-order perturbation. As we are interested only in terms with <b>e⁴</b>…"</p>
+  </blockquote>
+
+  <table>
+    <thead><tr><th style="width:26%">相互作用项</th><th style="width:18%">正比于</th><th style="width:22%">可进入的阶</th><th>物理</th></tr></thead>
+    <tbody>
+      <tr><td class="k">p·A</td><td>e</td><td>二阶</td><td>一个光子被吸收/发射</td></tr>
+      <tr><td class="k">A²</td><td>e²</td><td>一阶</td><td>两个光子同时作用</td></tr>
+      <tr><td class="k">合起来</td><td><b>e⁴</b></td><td><b>四阶</b></td><td><b>两原子交换两个光子</b></td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>论文的技术技巧：不对称处理</strong>（原文自述）：</p>
+
+  <blockquote>
+    <p>"…we have to take recourse to an <b>unsymmetrical</b> attack on the situation… in the final stage of the calculation the <b>asymmetry vanishes</b>."</p>
+  </blockquote>
+
+  <p>做法：先把"原子 B + 辐射场"当成一个整体，算出它产生的矢势（到 e² 阶）；再算"原子 A"在这个扰动场中的响应。最后结果自然对称。</p>
+
+  <h3 class="sub">5.5 论文自己承认的困难</h3>
+
+  <blockquote>
+    <p>"A similar interpretation can be given to the second term…, but we have <b>not been able to find a general consideration</b>, based on the correspondence idea, by means of which at least the form of Eq. (17) could be foretold."</p>
+  </blockquote>
+
+  <p>——镜像图像只能"事后解释"，不能"事前推导"。所以他们还是得做完整的微扰论。</p>
+</section>
+
+<!-- ================= 6 ================= -->
+<section id="s6">
+  <h2 class="sec"><span class="num">06</span>能量的频率分布是如何被改写的</h2>
+
+  <p>这一章回答一个更细的问题：<strong>推迟到底怎么改变了"能量的分布"？</strong></p>
+
+  <h3 class="sub">6.1 相互作用能是一个积分</h3>
+
+  <p>C-P 的最终结果可以写成对所有频率的积分（虚频形式，原文式 22）：</p>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <mi>E</mi><mo>=</mo>
+        <mo>−</mo>
+        <mfrac><mn>1</mn><mi>π</mi></mfrac>
+        <munder><mo>∑</mo><mi>n</mi></munder>
+        <msubsup><mo>∫</mo><mn>0</mn><mi>∞</mi></msubsup>
+        <mi>d</mi><mi>u</mi>
+        <mfrac>
+          <mrow><msub><mi>k</mi><mi>n</mi></msub><msup><mi>u</mi><mn>2</mn></msup></mrow>
+          <mrow><msup><mi>u</mi><mn>2</mn></msup><mo>+</mo><msubsup><mi>k</mi><mi>n</mi><mn>2</mn></msubsup></mrow>
+        </mfrac>
+        <mo>⋅</mo>
+        <mfrac><msup><mi>e</mi><mrow><mo>−</mo><mn>2</mn><mi>u</mi><mi>R</mi></mrow></msup><mrow><mn>2</mn><mi>R</mi></mrow></mfrac>
+        <mo>{</mo><mo>…</mo><mo>}</mo>
+      </math>
+    </div>
+    <div class="cap">式 (11)：C-P 的虚频积分（原文式 22 的结构）。推迟的全部作用浓缩在指数因子 e^(−2uR) 里</div>
+    <div class="vars-wrap">
+      <p class="lbl">符号 · 量纲</p>
+      <table class="vars">
+        <tr><th style="width:16%">符号</th><th style="width:38%">含义</th><th style="width:18%">量纲</th><th>备注</th></tr>
+        <tr><td class="sym">u</td><td>虚频（=ξ/c）</td><td class="dim">m⁻¹</td><td>u 越大 = 频率越高</td></tr>
+        <tr><td class="sym">k_n</td><td>原子第 n 个跃迁的波数</td><td class="dim">m⁻¹</td><td>k_n = ω_n/c</td></tr>
+        <tr><td class="sym">e^(−2uR)</td><td><b>推迟的"筛子"</b></td><td class="dim">无量纲</td><td>u ≫ 1/R 时急剧衰减</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <p><strong>对比非推迟的情形</strong>（McLachlan）：</p>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <mi>E</mi><mo>=</mo>
+        <mo>−</mo>
+        <mfrac><mrow><mn>3</mn><mi>ħ</mi></mrow><mrow><mi>π</mi><msup><mi>R</mi><mn>6</mn></msup></mrow></mfrac>
+        <msubsup><mo>∫</mo><mn>0</mn><mi>∞</mi></msubsup>
+        <msub><mi>α</mi><mn>1</mn></msub><mo>(</mo><mi>i</mi><mi>ξ</mi><mo>)</mo>
+        <msub><mi>α</mi><mn>2</mn></msub><mo>(</mo><mi>i</mi><mi>ξ</mi><mo>)</mo>
+        <mi>d</mi><mi>ξ</mi>
+      </math>
+    </div>
+    <div class="cap">式 (12)：非推迟的情形——<b>积分号外面没有指数因子</b>，所有频率"平等"贡献</div>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="非推迟与推迟的频率权重对比">
+      <g font-family="'Noto Sans CJK SC',sans-serif">
+        <!-- 上：非推迟 -->
+        <g transform="translate(70,50)">
+          <text x="0" y="0" font-size="12.5" fill="#141414">非推迟（London）</text>
+          <line x1="0" y1="80" x2="540" y2="80" stroke="#141414" stroke-width="1.4"/>
+          <line x1="0" y1="80" x2="0" y2="10" stroke="#141414" stroke-width="1.4"/>
+          <line x1="0" y1="34" x2="540" y2="34" stroke="#c00000" stroke-width="2.6"/>
+          <text x="480" y="26" font-size="11.5" fill="#c00000">权重 = 常数</text>
+          <text x="2" y="28" font-size="11" fill="#6b6b6b">1</text>
+        </g>
+
+        <!-- 下：推迟 -->
+        <g transform="translate(70,170)">
+          <text x="0" y="0" font-size="12.5" fill="#141414">推迟（Casimir–Polder）</text>
+          <line x1="0" y1="80" x2="540" y2="80" stroke="#141414" stroke-width="1.4"/>
+          <line x1="0" y1="80" x2="0" y2="10" stroke="#141414" stroke-width="1.4"/>
+          <path d="M0,34 L180,34 C250,34 300,44 350,66 C400,86 470,80 540,80"
+                fill="none" stroke="#c00000" stroke-width="2.6"/>
+          <line x1="250" y1="34" x2="250" y2="80" stroke="#9a9a9a" stroke-width="1" stroke-dasharray="3 3"/>
+          <text x="196" y="96" font-size="11.5" fill="#c00000">u ≈ 1/R</text>
+          <text x="330" y="52" font-size="11.5" fill="#6b6b6b">高频被 e^(−2uR) 压掉</text>
+        </g>
+
+        <text x="70" y="268" font-size="11.5" fill="#6b6b6b">横轴：虚频 u（越高越"快"的抖动）；纵轴：该频率对相互作用能的权重</text>
+      </g>
+    </svg>
+    <figcaption><b>图 5</b>　推迟的实质是<b>频率筛选</b>：非推迟时所有频率"平等"贡献；推迟时高频被指数因子压掉，只剩 u ≲ 1/R 的慢抖动还参与。</figcaption>
+  </figure>
+
+  <h3 class="sub">6.2 为什么"多一个 R"是必然的</h3>
+
+  <p>关键在这个指数因子与 R 的<strong>绑定</strong>：</p>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <msup><mi>e</mi><mrow><mo>−</mo><mn>2</mn><mi>u</mi><mi>R</mi></mrow></msup>
+        <mspace width="1em"/><mo>→</mo><mspace width="1em"/>
+        <mi>x</mi><mo>=</mo><mn>2</mn><mi>u</mi><mi>R</mi>
+        <mspace width="1em"/><mo>⇒</mo><mspace width="1em"/>
+        <mi>d</mi><mi>u</mi><mo>=</mo>
+        <mfrac><mrow><mi>d</mi><mi>x</mi></mrow><mrow><mn>2</mn><mi>R</mi></mrow></mfrac>
+      </math>
+    </div>
+    <div class="cap">式 (13)：换元后，R 从积分里"干净地"提出一次</div>
+  </div>
+
+  <p>换元之后，积分变成</p>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <mi>E</mi><mo>∝</mo>
+        <mo>−</mo>
+        <mfrac><mn>1</mn><mi>R</mi></mfrac>
+        <msubsup><mo>∫</mo><mn>0</mn><mi>∞</mi></msubsup>
+        <mi>d</mi><mi>x</mi><mspace width=".4em"/>
+        <msup><mi>x</mi><mn>3</mn></msup>
+        <msup><mi>e</mi><mrow><mo>−</mo><mi>x</mi></mrow></msup>
+        <mo>⋅</mo><mo>(</mo><mi>…</mi><mo>)</mo>
+      </math>
+    </div>
+    <div class="cap">式 (14)：R 提到积分外，剩下的积分与 R 无关 → 原来 1/R⁶ 上再乘 1/R，成为 1/R⁷</div>
+  </div>
+
+  <div class="card note">
+    <div class="t">一句话</div>
+    <p style="margin:0"><strong>推迟不是"把能量整体乘一个小于 1 的数"，而是"把能量从高频搬到低频，让高频不再贡献"。</strong><br>
+    而"多一个 1/R"是这个筛子<b>与 R 绑定</b>的必然结果——换元时 R 被提出一次。</p>
+  </div>
+
+  <h3 class="sub">6.3 力的标度也跟着变</h3>
+
+  <table>
+    <thead><tr><th style="width:26%">量</th><th style="width:26%">非推迟</th><th>推迟</th></tr></thead>
+    <tbody>
+      <tr><td class="k">能量（原子—原子）</td><td>1/R⁶</td><td>1/R⁷</td></tr>
+      <tr><td class="k">力（原子—原子）</td><td>1/R⁷</td><td><b>1/R⁸</b></td></tr>
+      <tr><td class="k">能量（原子—板）</td><td>1/d³</td><td>1/d⁴</td></tr>
+    </tbody>
+  </table>
+
+  <p>注意：<strong>"能量更低"和"力更大"是两件不同的事</strong>。力是能量的<b>梯度</b>（坡度），不是能量的高度。近距离时能量既低又陡，所以力大；远距离时能量浅且变化慢，所以力小。</p>
+</section>
+
+<!-- ================= 7 ================= -->
+<section id="s7">
+  <h2 class="sec"><span class="num">07</span>为什么不能"把板上的原子加起来"</h2>
+
+  <p>这里有个很自然的想法：既然原子—原子有了，原子—板不就是"原子对板上所有原子求和"吗？</p>
+
+  <p><strong>答案是：不是。而且这条路从原理上就走不通。</strong></p>
+
+  <h3 class="sub">7.1 相加能算出的部分</h3>
+
+  <p>先承认：<strong>在非推迟（近距离）情形，相加恰好给出正确答案。</strong>这就是 Hamaker 在 1930 年代用的办法。把板看成密度 ρ 的原子集合，对半空间积分：</p>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <mi>E</mi><mo>=</mo>
+        <msub><mo>∫</mo><mtext>板</mtext></msub>
+        <mfrac><mrow><mo>−</mo><mi>ρ</mi><msub><mi>C</mi><mn>6</mn></msub></mrow><msup><mi>r</mi><mn>6</mn></msup></mfrac>
+        <mi>d</mi><mi>V</mi>
+        <mspace width="1em"/><mo>=</mo><mspace width="1em"/>
+        <mo>−</mo><mfrac><mrow><mi>π</mi><mi>ρ</mi><msub><mi>C</mi><mn>6</mn></msub></mrow><mrow><mn>6</mn><msup><mi>d</mi><mn>3</mn></msup></mrow></mfrac>
+      </math>
+    </div>
+    <div class="cap">式 (15)：Hamaker 相加给出的原子—板能量。结果 ∝ 1/d³，与非推迟的 C-P 结果一致</div>
+    <div class="vars-wrap">
+      <p class="lbl">符号 · 量纲</p>
+      <table class="vars">
+        <tr><th style="width:14%">符号</th><th style="width:36%">含义</th><th style="width:20%">量纲</th><th>备注</th></tr>
+        <tr><td class="sym">ρ</td><td>板的数密度</td><td class="dim">m⁻³</td><td>~10²⁹</td></tr>
+        <tr><td class="sym">C₆</td><td>原子—板原子的色散系数</td><td class="dim">J·m⁶</td><td>—</td></tr>
+        <tr><td class="sym">d</td><td>原子到板的距离</td><td class="dim">m</td><td>—</td></tr>
+        <tr><td class="sym">E</td><td>相互作用能</td><td class="dim">J</td><td>结果 ∝ 1/d³</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <p><strong>所以"相加"在近距离是对的</strong>——这也是为什么 Hamaker 的方法在胶体化学里用了几十年。</p>
+
+  <h3 class="sub">7.2 但推迟的情形下，相加必然失效</h3>
+
+  <p>原因很根本：</p>
+
+  <table>
+    <thead><tr><th style="width:26%"></th><th style="width:34%">非推迟</th><th>推迟</th></tr></thead>
+    <tbody>
+      <tr><td class="k">相互作用</td><td>瞬时、<b>两体</b></td><td>涉及<b>场在介质中传播</b></td></tr>
+      <tr><td class="k">能否配对</td><td>✅ 可以，一对一对加</td><td>❌ 不能——场是<b>全局</b>的</td></tr>
+      <tr><td class="k">"第 i 个原子对探针的作用"</td><td>定义明确</td><td><b>无法单独定义</b>（场已被其他原子改变）</td></tr>
+    </tbody>
+  </table>
+
+  <div class="card note">
+    <div class="t">一句话</div>
+    <p style="margin:0"><strong>推迟是"宏观"效应，它关心的是"场在这个介质里怎么传播"，而不是"这一对原子之间有多远"。</strong>所以 Hamaker 相加从原理上就得不到那个多出来的 1/d。</p>
+  </div>
+
+  <h3 class="sub">7.3 C-P 实际怎么做：用一个"像"，不是 N 个原子</h3>
+
+  <p>他们的做法是把板当成<strong>理想导体边界条件</strong>，不是"一堆原子"：</p>
+
+  <ul class="tight">
+    <li>探针原子（偶极）在导体面前激发出一个<b>镜像偶极</b></li>
+    <li>这个像是<b>整个板</b>对偶极的<b>集体响应</b>——由边界条件唯一确定，不需要知道板有几个原子</li>
+    <li>而且这个像是<b>推迟</b>的（这正是 C-P 的贡献）</li>
+  </ul>
+
+  <p>还记得第 5 章那个 1/8 与 1/16 吗？<strong>那个各向异性只有"边界"才能产生，一堆原子相加绝不会给出这种几何依赖。</strong></p>
+
+  <figure>
+    <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="相加法与镜像法对比">
+      <g font-family="'Noto Sans CJK SC',sans-serif">
+        <!-- 左：相加 -->
+        <g transform="translate(30,30)">
+          <text x="0" y="0" font-size="12.5" fill="#6b6b6b">Hamaker 相加：N 个原子逐个算</text>
+          <rect x="0" y="40" width="240" height="120" fill="#f8f8f8" stroke="#cfcfcf"/>
+          <g fill="#9a9a9a">
+            <circle cx="24" cy="62" r="3"/><circle cx="60" cy="62" r="3"/><circle cx="96" cy="62" r="3"/>
+            <circle cx="132" cy="62" r="3"/><circle cx="168" cy="62" r="3"/><circle cx="204" cy="62" r="3"/>
+            <circle cx="24" cy="92" r="3"/><circle cx="60" cy="92" r="3"/><circle cx="96" cy="92" r="3"/>
+            <circle cx="132" cy="92" r="3"/><circle cx="168" cy="92" r="3"/><circle cx="204" cy="92" r="3"/>
+            <circle cx="24" cy="122" r="3"/><circle cx="60" cy="122" r="3"/><circle cx="96" cy="122" r="3"/>
+            <circle cx="132" cy="122" r="3"/><circle cx="168" cy="122" r="3"/><circle cx="204" cy="122" r="3"/>
+          </g>
+          <circle cx="120" cy="15" r="8" fill="none" stroke="#c00000" stroke-width="2"/>
+          <g stroke="#c00000" stroke-width="0.8" opacity="0.55">
+            <line x1="120" y1="15" x2="24" y2="62"/><line x1="120" y1="15" x2="96" y2="62"/>
+            <line x1="120" y1="15" x2="168" y2="62"/><line x1="120" y1="15" x2="132" y2="92"/>
+          </g>
+          <text x="0" y="186" font-size="11" fill="#6b6b6b">→ 只能得到 1/d³</text>
+          <text x="0" y="204" font-size="11" fill="#c00000">推迟项（1/d⁴）根本出不来</text>
+        </g>
+
+        <!-- 右：镜像 -->
+        <g transform="translate(380,30)">
+          <text x="0" y="0" font-size="12.5" fill="#141414">C-P：一个像，代表整个板</text>
+          <line x1="120" y1="35" x2="120" y2="165" stroke="#141414" stroke-width="3"/>
+          <circle cx="55" cy="100" r="10" fill="none" stroke="#c00000" stroke-width="2"/>
+          <circle cx="185" cy="100" r="10" fill="none" stroke="#9a9a9a" stroke-width="1.6" stroke-dasharray="4 3"/>
+          <text x="26" y="130" font-size="11" fill="#c00000">原子</text>
+          <text x="172" y="130" font-size="11" fill="#6b6b6b">镜像</text>
+          <line x1="55" y1="100" x2="120" y2="100" stroke="#c00000" stroke-width="1" stroke-dasharray="2 2"/>
+          <line x1="120" y1="100" x2="185" y2="100" stroke="#9a9a9a" stroke-width="1" stroke-dasharray="2 2"/>
+          <text x="80" y="94" font-size="10.5" fill="#6b6b6b">d</text>
+          <text x="140" y="94" font-size="10.5" fill="#6b6b6b">d</text>
+          <text x="0" y="186" font-size="11" fill="#3d3d3d">→ 得到 1/d³ <b>和</b> 1/d⁴</text>
+          <text x="0" y="204" font-size="11" fill="#c00000">各向异性（1/8 vs 1/16）也自然出现</text>
+        </g>
+      </g>
+    </svg>
+    <figcaption><b>图 6</b>　两种处理板的方式。左边：把板拆成一堆原子逐个相加，只能得到非推迟结果；右边：把板当成边界，用一个"像"代表整块板，推迟项自然出现。</figcaption>
+  </figure>
+
+  <h3 class="sub">7.4 三种做法的对照</h3>
+
+  <table>
+    <caption>处理"宏观物体"的三条路线</caption>
+    <thead><tr><th style="width:18%">方法</th><th style="width:22%">板被当成什么</th><th style="width:20%">是否逐个原子相加</th><th style="width:16%">能得到推迟项</th><th>适用</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Hamaker（1930s）</td><td>一堆原子</td><td><b>是</b></td><td>❌ 不能</td><td>稀薄、近距离</td></tr>
+      <tr><td class="k">Casimir–Polder（1948）</td><td>理想导体边界</td><td>否（用镜像）</td><td>✅ 能</td><td>理想导体</td></tr>
+      <tr><td class="k">Lifshitz（1956）</td><td>连续介质 ε(ω)</td><td>否（用涨落电流）</td><td>✅ 能</td><td><b>任意材料</b></td></tr>
+    </tbody>
+  </table>
+
+  <div class="card">
+    <div class="t">为什么这件事对今天的实验很重要</div>
+    <p style="margin:0">你集子里 D1（秦莉兰）用的公式里<strong>根本没有"原子"</strong>——只有 ε(iξ)。原因就是这条链：<br>
+    C₆ 只描述"一对原子"；把它变成 Hamaker 常数需要相加性假设；而相加性在致密介质里失效。<strong>Lifshitz 直接从 ε(iξ) 出发，跳过了整整一条链。</strong></p>
+  </div>
+</section>
+
+<!-- ================= 8 ================= -->
+<section id="s8">
+  <h2 class="sec"><span class="num">08</span>Casimir 1948：换一条路——数模式</h2>
+
+  <h3 class="sub">8.1 为什么要另找路</h3>
+
+  <p>C-P 已经算出了答案，但那套方法有两个毛病：</p>
+
+  <ul class="tight">
+    <li><b>太难</b>——四阶微扰、围道积分，13 页</li>
+    <li><b>只能处理原子</b>——一旦是致密物体，微扰论（对 α 展开）就失效</li>
+  </ul>
+
+  <p>于是 Casimir 去找一条更本质的路。据他本人回忆，灵感来自 <b>Bohr</b> 的一句嘟囔（1946 或 1947 年在哥本哈根）：</p>
+
+  <blockquote>
+    <p>"Bohr thought this over, then <b>mumbled something like 'must have something to do with the zero-point energy'</b>. That was all, but in retrospect I have to admit that I owe much to this remark."</p>
+  </blockquote>
+
+  <p>后来他把这套方法叫做 "<b>poor man's QED</b>"（穷人的量子电动力学）——因为它不需要任何场论技巧，只需要数模式。</p>
+
+  <h3 class="sub">8.2 思想实验：一块板的两个位置</h3>
+
+  <p>边长为 L 的立方导体腔，里面放一块 L×L 的导体板，比较它在两个位置时的零点能：</p>
+
+  <ul class="tight">
+    <li><b>位置 I</b>：板贴得很近，间距 a</li>
+    <li><b>位置 II</b>：板退到 L/2，几乎不影响腔</li>
+  </ul>
+
+  <figure>
+    <svg viewBox="0 0 720 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="立方腔中一块板的两个位置">
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#141414"/>
+        </marker>
+      </defs>
+      <g font-family="'Noto Sans CJK SC',sans-serif">
+        <!-- 位置 I -->
+        <rect x="40" y="60" width="190" height="140" fill="none" stroke="#141414" stroke-width="2"/>
+        <line x1="84" y1="60" x2="84" y2="200" stroke="#c00000" stroke-width="4"/>
+        <text x="94" y="80" font-size="11.5" fill="#c00000">板（位置 I）</text>
+        <line x1="40" y1="220" x2="84" y2="220" stroke="#c00000" stroke-width="1"/>
+        <text x="54" y="238" font-size="11.5" fill="#c00000">a</text>
+        <text x="40" y="46" font-size="12" fill="#3d3d3d">位置 I：板贴得很近</text>
+
+        <!-- 箭头 -->
+        <line x1="252" y1="130" x2="316" y2="130" stroke="#9a9a9a" stroke-width="1.4" marker-end="url(#arr)"/>
+        <text x="256" y="116" font-size="11" fill="#6b6b6b">同一块板</text>
+
+        <!-- 位置 II -->
+        <rect x="350" y="60" width="190" height="140" fill="none" stroke="#141414" stroke-width="2"/>
+        <line x1="445" y1="60" x2="445" y2="200" stroke="#c00000" stroke-width="4"/>
+        <text x="455" y="80" font-size="11.5" fill="#c00000">板（位置 II）</text>
+        <line x1="350" y1="220" x2="445" y2="220" stroke="#c00000" stroke-width="1"/>
+        <text x="390" y="238" font-size="11.5" fill="#c00000">≈ L/2</text>
+        <text x="350" y="46" font-size="12" fill="#3d3d3d">位置 II：板几乎不影响腔</text>
+
+        <!-- 说明 -->
+        <line x1="40" y1="222" x2="540" y2="222" stroke="#e3e3e3" stroke-width="0"/>
+        <text x="560" y="120" font-size="11.5" fill="#3d3d3d">两者零点能之差</text>
+        <text x="560" y="140" font-size="11.5" fill="#c00000">= 搬动板做的功</text>
+      </g>
+    </svg>
+    <figcaption><b>图 7</b>　Casimir 的比较方式：不是"有板 vs 无板"，而是<b>同一块板放在两个位置</b>——这是让两个发散和相减、得到有限值的关键设计。</figcaption>
+  </figure>
+
+  <h3 class="sub">8.3 三个关键步骤</h3>
+
+  <table>
+    <thead><tr><th style="width:8%">步骤</th><th style="width:26%">做什么</th><th>为什么</th></tr></thead>
+    <tbody>
+      <tr><td class="k">①</td><td>数模式、求和</td><td>每个模式贡献 ½ħω；间距 a 决定 <code>k_z = nπ/a</code></td></tr>
+      <tr><td class="k">②</td><td>引入截断函数 f(k/k_m)</td><td>求和发散；物理解释是"<b>X 射线波长太短，板不构成障碍</b>"</td></tr>
+      <tr><td class="k">③</td><td>Euler–Maclaurin 求和→积分</td><td>得到有限结果；关键导数 <b>F′(0) = 0、F‴(0) = −4</b></td></tr>
+    </tbody>
+  </table>
+
+  <div class="card note">
+    <div class="t">为什么结果不依赖截断方式</div>
+    <p style="margin:0">因为展开后只有 <b>F‴(0)</b> 这一项贡献，而它只依赖 <code>f(0) = 1</code>——因为 f 的自变量里带着 <code>a·k_m ≫ 1</code>，只有零点值起作用。<br><strong>这就是"物理唯一性"的数学保证。</strong></p>
+  </div>
+
+  <h3 class="sub">8.4 结果</h3>
+
+  <div class="eq">
+    <div class="body" style="text-align:center">
+      <math display="block">
+        <mfrac><mrow><mi>δ</mi><mi>E</mi></mrow><msup><mi>L</mi><mn>2</mn></msup></mfrac>
+        <mo>=</mo><mo>−</mo><mi>ħ</mi><mi>c</mi>
+        <mfrac><msup><mi>π</mi><mn>2</mn></msup><mrow><mn>24</mn><mo>×</mo><mn>30</mn></mrow></mfrac>
+        <mfrac><mn>1</mn><msup><mi>a</mi><mn>3</mn></msup></mfrac>
+        <mspace width="1.6em"/>
+        <mi>F</mi><mo>=</mo>
+        <mfrac><mrow><msup><mi>π</mi><mn>2</mn></msup><mi>ħ</mi><mi>c</mi></mrow>
+              <mrow><mn>240</mn><msup><mi>a</mi><mn>4</mn></msup></mrow></mfrac>
+      </math>
+    </div>
+    <div class="cap">式 (16)：Casimir 1948 的两个结果（原文 24×30 = 720；求导后 720÷3 = 240）</div>
+    <div class="vars-wrap">
+      <p class="lbl">符号 · 量纲 · 数值</p>
+      <table class="vars">
+        <tr><th style="width:14%">符号</th><th style="width:34%">含义</th><th style="width:20%">量纲</th><th>备注</th></tr>
+        <tr><td class="sym">E/L²</td><td>单位面积能量</td><td class="dim">J·m⁻²</td><td>−π²ħc/(720a³)</td></tr>
+        <tr><td class="sym">F</td><td>单位面积压力</td><td class="dim">Pa</td><td><b>−π²ħc/(240a⁴)</b></td></tr>
+        <tr><td class="sym">a</td><td>板间距</td><td class="dim">m</td><td>—</td></tr>
+        <tr><td class="sym">π²ħc/240</td><td>系数</td><td class="dim">Pa·m⁴</td><td>1.30×10⁻²⁷</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 660 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="卡西米尔压强随间距的变化">
+      <g font-family="'Noto Sans CJK SC',sans-serif">
+        <line x1="80" y1="250" x2="580" y2="250" stroke="#141414" stroke-width="1.4"/>
+        <line x1="80" y1="250" x2="80" y2="40" stroke="#141414" stroke-width="1.4"/>
+        <text x="520" y="274" font-size="12" fill="#3d3d3d">间距 a（nm，对数）</text>
+        <text x="36" y="46" font-size="12" fill="#3d3d3d">P</text>
+        <text x="30" y="62" font-size="12" fill="#3d3d3d">(Pa)</text>
+        <g font-size="11" fill="#6b6b6b">
+          <text x="70" y="268">10</text><text x="170" y="268">100</text>
+          <text x="290" y="268">1000</text><text x="430" y="268">10⁴</text>
+        </g>
+        <path d="M120,60 L250,116 L380,172 L500,222" fill="none" stroke="#c00000" stroke-width="2.6"/>
+        <circle cx="120" cy="60" r="4.5" fill="#c00000"/>
+        <text x="132" y="54" font-size="11.5" fill="#c00000">10 nm → 1.3×10⁵ Pa ≈ 1 atm</text>
+        <circle cx="250" cy="116" r="4.5" fill="#c00000"/>
+        <text x="262" y="110" font-size="11.5" fill="#c00000">100 nm → 13 Pa</text>
+        <circle cx="420" cy="190" r="4.5" fill="#c00000"/>
+        <text x="432" y="184" font-size="11.5" fill="#c00000">1 μm → 1.3×10⁻³ Pa</text>
+        <text x="150" y="230" font-size="11" fill="#6b6b6b">斜率 = −4（每远 10 倍，力降 10⁴ 倍）</text>
+      </g>
+    </svg>
+    <figcaption><b>图 8</b>　<code>P = π²ħc/240a⁴</code> 的量级。10 nm 处约一个大气压——这就是微纳器件"粘附失效"（stiction）的物理原因。</figcaption>
+  </figure>
+
+  <h3 class="sub">8.5 与 C-P 的关系：不是推广，是换路</h3>
+
+  <table>
+    <thead><tr><th style="width:26%"></th><th style="width:34%">C-P 1948</th><th>Casimir 1948</th></tr></thead>
+    <tbody>
+      <tr><td class="k">起点</td><td>London 的 vdW 力</td><td>腔里的零点能</td></tr>
+      <tr><td class="k">方法</td><td>四阶微扰论</td><td>模式计数 + 正则化</td></tr>
+      <tr><td class="k">数学</td><td>围道积分</td><td>Euler–Maclaurin</td></tr>
+      <tr><td class="k">对象</td><td>原子、原子—板</td><td>两块理想导体板</td></tr>
+      <tr><td class="k">能否推广</td><td>差（只对稀薄系统）</td><td><b>好</b>（可到任意几何）</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>两篇的关系</strong>：Casimir 那篇不是"C-P 的推广"，而是"同一物理的另一条推导路径"——而且这条路后来被证明<strong>更有生命力</strong>（散射理论、任意几何、数值计算都从它发展出来）。</p>
+</section>
+
+<!-- ================= 9 ================= -->
+<section id="s9">
+  <h2 class="sec"><span class="num">09</span>两篇论文的分工</h2>
+
+  <p>把整条线摆在一起看：</p>
+
+  <figure>
+    <svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="从 London 到 Lifshitz 的演进">
+      <defs>
+        <marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#9a9a9a"/>
+        </marker>
+      </defs>
+      <g font-family="'Noto Sans CJK SC',sans-serif" font-size="11.5">
+        <!-- 时间轴 -->
+        <line x1="50" y1="150" x2="680" y2="150" stroke="#cfcfcf" stroke-width="1.4"/>
+
+        <!-- London -->
+        <circle cx="110" cy="150" r="5" fill="#141414"/>
+        <text x="60" y="120" font-size="12" fill="#141414">London 1930</text>
+        <text x="52" y="180" fill="#6b6b6b">两原子 1/R⁶</text>
+        <text x="52" y="198" fill="#6b6b6b">瞬时假设</text>
+
+        <!-- Overbeek -->
+        <circle cx="255" cy="150" r="5" fill="#c00000"/>
+        <text x="196" y="120" font-size="12" fill="#c00000">Overbeek 1940s</text>
+        <text x="186" y="180" fill="#6b6b6b">胶体反常</text>
+        <text x="186" y="198" fill="#6b6b6b">"是不是推迟？"</text>
+
+        <!-- C-P -->
+        <circle cx="400" cy="150" r="5" fill="#141414"/>
+        <text x="360" y="120" font-size="12" fill="#141414">Casimir–Polder 1948</text>
+        <text x="352" y="180" fill="#6b6b6b">1/R⁶ → 1/R⁷</text>
+        <text x="352" y="198" fill="#6b6b6b">原子/原子—板</text>
+
+        <!-- Casimir -->
+        <circle cx="545" cy="150" r="5" fill="#141414"/>
+        <text x="498" y="120" font-size="12" fill="#141414">Casimir 1948</text>
+        <text x="490" y="180" fill="#6b6b6b">两块板 1/d⁴</text>
+        <text x="490" y="198" fill="#6b6b6b">模式计数</text>
+
+        <!-- Lifshitz -->
+        <circle cx="660" cy="150" r="5" fill="#c00000"/>
+        <text x="606" y="120" font-size="12" fill="#c00000">Lifshitz 1956</text>
+        <text x="600" y="180" fill="#6b6b6b">任意材料 ε(ω)</text>
+        <text x="600" y="198" fill="#6b6b6b">+ 任意温度</text>
+
+        <!-- 箭头 -->
+        <line x1="120" y1="150" x2="243" y2="150" stroke="#9a9a9a" stroke-width="1.2" marker-end="url(#ar3)"/>
+        <line x1="265" y1="150" x2="388" y2="150" stroke="#9a9a9a" stroke-width="1.2" marker-end="url(#ar3)"/>
+        <line x1="410" y1="150" x2="533" y2="150" stroke="#9a9a9a" stroke-width="1.2" marker-end="url(#ar3)"/>
+        <line x1="555" y1="150" x2="648" y2="150" stroke="#9a9a9a" stroke-width="1.2" marker-end="url(#ar3)"/>
+
+        <text x="50" y="270" font-size="11.5" fill="#6b6b6b">Lifshitz 那一篇同时解决了三件事：① 真实材料 ② 有限温度 ③ 板间介质。</text>
+        <text x="50" y="292" font-size="11.5" fill="#c00000">D1（秦莉兰 2015）用的公式，就是 Lifshitz 的 Matsubara 形式。</text>
+      </g>
+    </svg>
+    <figcaption><b>图 9</b>　从 vdW 到 Casimir 的演进。注意有两个"外来输入"：Overbeek 的实验反常（化学家）和 Bohr 的一句提示（量子场论直觉）。</figcaption>
+  </figure>
+</section>
+
+<!-- ================= 10 ================= -->
+<section id="s10">
+  <h2 class="sec"><span class="num">10</span>局限，以及接下来的一步</h2>
+
+  <h3 class="sub">10.1 这两篇的共同局限</h3>
+
+  <table>
+    <thead><tr><th style="width:24%">局限</th><th style="width:34%">具体表现</th><th>谁来补</th></tr></thead>
+    <tbody>
+      <tr><td class="k">理想导体</td><td>板假设 ε → ∞；原子的镜像是完美导体</td><td><b>Lifshitz</b>：用 ε(ω)</td></tr>
+      <tr><td class="k">T = 0</td><td>只算零点涨落，没有热涨落</td><td>Lifshitz：Matsubara 求和</td></tr>
+      <tr><td class="k">真空</td><td>没有中间介质</td><td>Lifshitz：多层介质</td></tr>
+      <tr><td class="k">稀薄 / 平面</td><td>C-P 只能算单个原子；Casimir 只能算无限大平行板</td><td>散射理论 / PFA</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="sub">10.2 为什么"理想导体"这条对今天的实验最致命</h3>
+
+  <div class="card note">
+    <div class="t">一个具体的数字</div>
+    <p style="margin:0">金的"穿透深度"尺度 λ_p = 2πc/ω_p ≈ <b>137 nm</b>。<br>
+    而 D1（秦莉兰）的测量区间是 <b>20–64 nm</b>——<strong>穿透深度比间距还大</strong>。<br>
+    这意味着"理想导体"假设彻底失效，必须用真实的 ε(ω)。<strong>而一旦用真实的 ε(ω)，就出现了"Drude 还是 plasma"的选择问题</strong>——这正是 D1 整篇论文的核心矛盾。</p>
+  </div>
+
+  <h3 class="sub">10.3 一句话回顾整条线</h3>
+
+  <p style="font-size:17px;font-family:var(--serif);line-height:1.9;border-left:3px solid var(--red);padding-left:18px">
+    <strong>London 算出了"假设瞬间传递"的答案（1/R⁶）。</strong><br>
+    <strong>Overbeek 的实验说这个答案在远处不对。</strong><br>
+    <strong>Casimir–Polder 把"瞬间"换成"光速有限"，得到 1/R⁷——这是同一个力，只是精度更高。</strong><br>
+    <strong>Casimir 换了一条路，数腔里的模式，得到两块板的 1/d⁴——这条路更强，因为它不依赖"原子"。</strong><br>
+    <strong>Lifshitz 最后把"理想导体"换成"任意材料"，于是你实验里的金样品终于能算了。</strong>
+  </p>
+</section>
+
+<!-- ================= 附录 ================= -->
+<section id="s11">
+  <h2 class="sec"><span class="num">附</span>原文与量纲总表</h2>
+
+  <h3 class="sub">A.1 四篇原始文献</h3>
+
+  <table>
+    <thead><tr><th style="width:12%">简称</th><th style="width:48%">题录</th><th>本地文件</th></tr></thead>
+    <tbody>
+      <tr><td class="k">L0a</td><td>Casimir &amp; Polder, <i>The Influence of Retardation on the London–van der Waals Forces</i>, <b>Phys. Rev. 73, 360–372 (1948)</b></td><td><code>07_理论奠基/L0a_…pdf</code></td></tr>
+      <tr><td class="k">L0</td><td>Casimir, <i>On the attraction between two perfectly conducting plates</i>, <b>Proc. Kon. Ned. Akad. Wetensch. 51, 793–795 (1948)</b></td><td><code>07_理论奠基/L0_…pdf</code></td></tr>
+      <tr><td class="k">L1</td><td>Lifshitz, <i>The Theory of Molecular Attractive Forces between Solids</i>, <b>Sov. Phys. JETP 2, 73–83 (1956)</b></td><td><code>07_理论奠基/L1_…pdf</code></td></tr>
+      <tr><td class="k">D1</td><td>秦莉兰，《纳米间距 Casimir 效应的研究》，华中科技大学硕士论文，2015</td><td><code>D1_2015_秦莉兰_…pdf</code></td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="sub">A.2 量纲总表（一张纸查完）</h3>
+
+  <table>
+    <caption>本文出现的全部物理量</caption>
+    <thead><tr><th style="width:14%">量</th><th style="width:30%">含义</th><th style="width:18%">量纲</th><th style="width:18%">典型值</th><th>出现章节</th></tr></thead>
+    <tbody>
+      <tr><td class="k">E</td><td>相互作用能</td><td class="dim">J</td><td>10⁻²¹–10⁻¹⁹</td><td>全文</td></tr>
+      <tr><td class="k">F</td><td>力</td><td class="dim">N</td><td>10⁻¹²–10⁻¹⁰（球板）</td><td>1、5、8</td></tr>
+      <tr><td class="k">P</td><td>单位面积压力</td><td class="dim">Pa</td><td>13（100 nm）</td><td>8</td></tr>
+      <tr><td class="k">R, d, a</td><td>间距</td><td class="dim">m</td><td>10⁻⁹–10⁻⁶</td><td>全文</td></tr>
+      <tr><td class="k">C₆</td><td>色散系数（原子—原子）</td><td class="dim">J·m⁶</td><td>6×10⁻⁷⁹</td><td>1、2</td></tr>
+      <tr><td class="k">C₃</td><td>色散系数（原子—板）</td><td class="dim">J·m³</td><td>~10⁻⁴⁹</td><td>1</td></tr>
+      <tr><td class="k">A<sub>H</sub></td><td>Hamaker 常数</td><td class="dim">J</td><td>10⁻²⁰–10⁻¹⁹</td><td>1、7</td></tr>
+      <tr><td class="k">α</td><td>极化率</td><td class="dim">C·m²/V</td><td>H: 4πε₀×0.667 Å³</td><td>2、5</td></tr>
+      <tr><td class="k">ω, ω₀</td><td>角频率</td><td class="dim">rad·s⁻¹</td><td>~10¹⁶</td><td>4</td></tr>
+      <tr><td class="k">ξ, u</td><td>虚频</td><td class="dim">s⁻¹ / m⁻¹</td><td>—</td><td>5、6</td></tr>
+      <tr><td class="k">φ</td><td>相位积累</td><td class="dim">rad</td><td>—</td><td>4</td></tr>
+      <tr><td class="k">ε(ω)</td><td>介电函数</td><td class="dim">无量纲</td><td>Au: ε(0) → −∞</td><td>10</td></tr>
+      <tr><td class="k">π²ħc/240</td><td>Casimir 系数</td><td class="dim">Pa·m⁴</td><td>1.30×10⁻²⁷</td><td>8</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="sub">A.3 三个容易记错的点</h3>
+
+  <ol class="tight">
+    <li><strong>"推迟"不改变场的存在，只改变"物体间的关联"</strong>——力只来自关联。</li>
+    <li><strong>"能量低"和"力大"是两件事</strong>——力是能量的<b>梯度</b>（坡度），不是高度。</li>
+    <li><strong>vdW 与 Casimir 不是两种力</strong>——是同一个 Lifshitz 公式的两个距离极限。</li>
+  </ol>
+</section>
+
+<footer>
+  <p>本文档基于原始文献撰写：Casimir 1948（3 页）、Casimir–Polder 1948（13 页）、Lifshitz 1956（11 页）。引文均出自原文。</p>
+  <p>图 1–9 为自绘 SVG；公式 16 个，全部标注符号、量纲与典型值。全文无外部依赖，可离线阅读。</p>
+</footer>
+
+</div>
+</body>
+</html>
