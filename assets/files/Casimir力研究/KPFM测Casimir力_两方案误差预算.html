@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MEMS-KPFM 测 Casimir 力：两方案误差预算（逐项计算）</title>
+<style>
+:root{
+  --ink:#111; --ink2:#2b2b2b; --muted:#6b7280; --soft:#9aa1ab;
+  --line:#e3e5e8; --line2:#eef0f2; --panel:#f6f7f9; --panel2:#fbfbfc;
+  --red:#d0021b; --red-soft:#fdf2f3;
+  --serif:"Noto Serif CJK SC","Source Han Serif SC","Songti SC",Georgia,serif;
+  --sans:-apple-system,"Noto Sans CJK SC","Source Han Sans SC","PingFang SC","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--ink2);font-family:var(--sans);font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px 110px}
+h1{font-family:var(--serif);font-size:36px;line-height:1.28;color:var(--ink);margin:0 0 16px;letter-spacing:-.01em}
+h2{font-family:var(--serif);font-size:26px;line-height:1.35;color:var(--ink);margin:62px 0 8px;scroll-margin-top:20px}
+h2 .num{display:block;font-family:var(--sans);font-size:11.5px;letter-spacing:.2em;color:var(--red);font-weight:600;margin-bottom:9px}
+h3{font-size:19px;font-weight:700;color:var(--ink);margin:40px 0 10px;scroll-margin-top:20px}
+h4{font-size:15.5px;font-weight:700;color:var(--ink);margin:26px 0 8px}
+p{margin:0 0 14px}
+strong{color:var(--ink);font-weight:700}
+em{font-style:normal;color:var(--red);font-weight:600}
+a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+a:hover{border-bottom-color:var(--red);color:var(--red)}
+.small{font-size:13.5px;color:var(--muted);line-height:1.7}
+.lead{font-size:17px;color:var(--muted);border-left:2px solid var(--line);padding-left:18px;margin:0 0 24px;line-height:1.75}
+header.cover{border-bottom:1px solid var(--line);margin-bottom:44px;padding:56px 0 34px}
+.kicker{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
+.kicker b{color:var(--red)}
+.sub{font-size:17px;color:var(--muted);max-width:680px;margin:0 0 24px;line-height:1.7}
+.meta{display:flex;flex-wrap:wrap;gap:8px 24px;font-size:13px;color:var(--soft);border-top:1px solid var(--line2);padding-top:16px}
+.meta b{color:var(--ink2)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0}
+.card{border:1px solid var(--line);padding:16px 18px;background:#fff}
+.card .n{font-size:25px;font-weight:700;color:var(--ink);line-height:1.2;letter-spacing:-.02em}
+.card .n em{color:var(--red)}
+.card .l{font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.55}
+.box{border:1px solid var(--line);background:var(--panel2);padding:20px 24px;margin:24px 0}
+.box h5{margin:0 0 10px;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.key{border-left:3px solid var(--red);background:var(--red-soft);padding:18px 24px;margin:26px 0}
+.eq{margin:20px 0;padding:14px 18px;background:var(--panel);border-left:2px solid var(--ink);overflow-x:auto}
+.eq .fx{font-family:var(--serif);font-size:16.5px;white-space:nowrap}
+.eq .fx i{font-style:italic;color:var(--ink)}
+.eq .frac{display:inline-flex;flex-direction:column;vertical-align:-.55em;text-align:center;margin:0 .16em}
+.eq .frac .num{border-bottom:1px solid var(--ink2);padding:0 .2em;line-height:1.25}
+.eq .frac .den{padding:0 .2em;line-height:1.25}
+.eq .tag{float:right;font-size:12px;color:var(--soft);font-family:var(--mono);padding-top:5px}
+figure{margin:26px 0;overflow-x:auto}
+figcaption{font-size:12.6px;color:var(--muted);margin-top:9px;line-height:1.65}
+figcaption b{color:var(--ink)}
+table{border-collapse:collapse;width:100%;font-size:13.3px;line-height:1.5;background:#fff}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line2);vertical-align:top}
+th{font-weight:600;color:var(--ink);background:var(--panel);border-bottom:1px solid var(--line);font-size:12.6px}
+tbody tr:hover{background:#fcfcfd}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+td .r{color:var(--red);font-weight:600}
+table.small{font-size:12.7px}
+code{font-family:var(--mono);font-size:.9em;background:var(--panel);padding:1px 5px}
+
+/* calculator */
+.calc{border:1px solid var(--line);background:#fff;margin:28px 0;padding:0;overflow:hidden}
+.calc-head{background:var(--ink);color:#fff;padding:14px 22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.calc-head .t{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase}
+.calc-head .btns{display:flex;gap:8px}
+.calc-head button{background:transparent;border:1px solid rgba(255,255,255,.35);color:#fff;font-size:12px;padding:4px 12px;cursor:pointer;font-family:var(--sans)}
+.calc-head button:hover{border-color:#fff}
+.calc-head button.on{background:var(--red);border-color:var(--red)}
+.calc-body{display:grid;grid-template-columns:300px 1fr;gap:0}
+.calc-ctrl{padding:18px 20px;border-right:1px solid var(--line)}
+.sl{margin:13px 0}
+.sl label{display:flex;justify-content:space-between;font-size:12.3px;color:var(--muted);margin-bottom:3px}
+.sl label b{color:var(--ink);font-variant-numeric:tabular-nums;font-weight:600}
+.sl input[type=range]{width:100%;-webkit-appearance:none;height:3px;background:var(--line);outline:none;margin:6px 0}
+.sl input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:var(--ink);cursor:pointer}
+.sl input[type=range]::-moz-range-thumb{width:12px;height:12px;border:none;border-radius:50%;background:var(--ink);cursor:pointer}
+.calc-out{padding:18px 22px}
+.ohead{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:12px}
+.ohead .big{font-size:30px;font-weight:700;color:var(--red);font-variant-numeric:tabular-nums;line-height:1.1}
+.ohead .cap{font-size:12px;color:var(--muted);text-align:right}
+.row{display:grid;grid-template-columns:112px 1fr 62px;gap:10px;align-items:center;font-size:12.5px;margin:5px 0}
+.row .nm{color:var(--muted)}
+.track{height:13px;background:var(--panel);display:flex;overflow:hidden}
+.seg{height:100%;background:#c9ced5}
+.seg.dom{background:var(--red)}
+.row .vv{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink)}
+.verdict{margin-top:14px;padding:11px 14px;background:var(--panel);font-size:12.8px;line-height:1.65;color:var(--ink2)}
+.verdict b{color:var(--red)}
+.legend{font-size:12px;color:var(--muted);margin-top:10px;display:flex;gap:16px;flex-wrap:wrap}
+.sw{display:inline-block;width:9px;height:9px;background:#c9ced5;vertical-align:0;margin-right:5px}
+.sw.d{background:var(--red)}
+ol.clean,ul.clean{list-style:none;padding-left:0;margin:0 0 14px}
+ol.clean li{position:relative;padding-left:26px;margin:9px 0;counter-increment:c}
+ol.clean{counter-reset:c}
+ol.clean li:before{content:counter(c);position:absolute;left:0;top:.05em;font-size:12px;font-weight:700;color:var(--red);font-family:var(--mono)}
+ul.clean li{position:relative;padding-left:18px;margin:8px 0}
+ul.clean li:before{content:"";position:absolute;left:3px;top:.72em;width:5px;height:5px;background:var(--ink);border-radius:50%}
+footer{border-top:1px solid var(--line);margin-top:70px;padding-top:22px;font-size:12.8px;color:var(--muted);line-height:1.75}
+@media (max-width:820px){
+  .calc-body{grid-template-columns:1fr}
+  .calc-ctrl{border-right:none;border-bottom:1px solid var(--line)}
+  .grid3{grid-template-columns:1fr}
+  h1{font-size:28px}
+  .wrap{padding:0 16px 80px}
+}
+@media print{
+  .calc-head button{display:none}
+  figure,table{page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="cover">
+  <div class="kicker">MEMS-KPFM · Casimir 力测量 · <b>误差预算</b></div>
+  <h1>两个方案的精度与误差：逐项计算</h1>
+  <p class="sub">方案 A（微米窗口，R=150 μm）与方案 B（纳米窗口，R=10 μm）的七项误差来源、代入过程、合成结果与敏感性分析。所有数字可复算，并附一个可拖动参数的计算器。</p>
+  <div class="meta">
+    <span>误差项 <b>7</b> 类</span>
+    <span>表格 <b>9</b> 张</span>
+    <span>可交互计算器 <b>1</b> 个</span>
+    <span>常数：ℏc=3.16×10⁻²⁶ J·m，ε₀=8.854×10⁻¹² F/m</span>
+  </div>
+</header>
+
+<div class="grid3">
+  <div class="card">
+    <div class="n"><em>1.3–1.5</em>%</div>
+    <div class="l"><b>方案 A</b> 在 0.4–0.5 μm 的合成不确定度；主导项是统计（∝z³）与标定 1%</div>
+  </div>
+  <div class="card">
+    <div class="n"><em>2.3–3.0</em>%</div>
+    <div class="l"><b>方案 B</b> 在 50–100 nm（δd₀≤0.1 nm）；主导项是球径 2% 与间距标定</div>
+  </div>
+  <div class="card">
+    <div class="n"><em>10</em>%</div>
+    <div class="l"><b>方案 B</b> 若硬上 20 nm 且绝对间距只能定到 0.5 nm：间距项变成主导</div>
+  </div>
+</div>
+
+<div class="key">
+<b>一句话结论。</b>两套方案的误差结构完全不同：<b>方案 A 由统计项支配</b>（力按 1/z³ 衰减，噪声不随间距变），<b>方案 B 由绝对间距标定支配</b>（δP/P=4δd/d，20 nm 处 0.5 nm 就是 10%）。这决定了它们的优化杠杆也不同——A 要"多积分"，B 要"把零点定准"。
+</div>
+
+<!-- ============ 1 ============ -->
+<h2><span class="num">SECTION 01</span>误差传播框架</h2>
+<p class="lead">七项独立误差按方差合成。每一项都给出公式与参数来源，便于逐行复核。</p>
+
+<div class="eq">
+  <span class="fx">(δ<i>P</i>/<i>P</i>)<sub>tot</sub> = √[ (①)<sub>stat</sub>² + (②)<sub>sp</sub>² + (③)<sub>patch</sub>² + (④)<sub>PFA</sub>² + (⑤)<sub>rough</sub>² + (⑥)<sub>ball</sub>² + (⑦)<sub>cal</sub>² ]</span>
+  <span class="tag">(1)</span>
+</div>
+
+<figure>
+<table>
+<thead><tr><th style="width:38px">#</th><th style="width:110px">误差源</th><th>公式</th><th style="width:230px">参数与来源</th></tr></thead>
+<tbody>
+<tr><td>①</td><td><b>统计</b></td><td>(δF/√T) / F<sub>C</sub>，　F<sub>C</sub> = π³ℏcR/(360z³)</td><td>δF=0.3 pN/√Hz（实测等效，由 20 μV/√Hz 与 H<sub>F-V</sub> 反算）；T=100 s（A）/10 s（B）</td></tr>
+<tr><td>②</td><td><b>间距</b></td><td>4·δd<sub>eff</sub>/z</td><td>δd<sub>eff</sub>=√(0.1²+0.5²)=0.51 nm：干涉 0.1 nm（D4，3σ）+ 零点定义 0.5 nm</td></tr>
+<tr><td>③</td><td><b>patch 残差</b></td><td>2·(1.022×10¹⁶)·V·δV·z²</td><td>V=11.6 mV（E1 拟合值）；δV = z·δF/(2π²ε₀RV<sub>AC</sub>)</td></tr>
+<tr><td>④</td><td><b>PFA</b></td><td>0.4·z/R</td><td>球—板邻近力近似的相对误差</td></tr>
+<tr><td>⑤</td><td><b>粗糙度残差</b></td><td>3%×(σ/2.37)²×(20 nm/z)²，取 40%</td><td>以 D1 实测（2.37 nm @20 nm → 3%）为标定点，按 (σ/z)² 外推</td></tr>
+<tr><td>⑥</td><td><b>球半径</b></td><td>δR/R</td><td>A：0.5%（150 μm，SEM 内/外切球）；B：2%（10 μm，小尺寸更难测）</td></tr>
+<tr><td>⑦</td><td><b>标定</b></td><td>V<sub>AC</sub>、H<sub>F-V</sub>、PLL 增益</td><td>取 1%（保守估计）</td></tr>
+</tbody>
+</table>
+<figcaption><b>表 1</b>　七项误差的公式与参数。注意第 ③ 项里的 1.022×10¹⁶ 来自 patch/Casimir 比值判据：F<sub>patch</sub>/F<sub>C</sub> = ε₀V²z²/(2×(π²ℏc/720)) ≈ 1.022×10¹⁶·V²·z²。</figcaption>
+</figure>
+
+<div class="box">
+<h5>为什么不用"1/z"而用"π³ℏcR/360z³"</h5>
+<p class="small" style="margin:0">球—板 Casimir 力由 PFA 给出：F<sub>C</sub> = 2πR·E<sub>c</sub>(z)，而 E<sub>c</sub> = π²ℏc/(720z³)。合并即 F<sub>C</sub> = π³ℏcR/(360z³)。在 20 nm、R=150 μm 时给出 51 nN，在 100 nm 时 0.41 nN，与文献量级一致（本文为理想导体基准，真实金属按 Lifshitz 修正后绝对值有差，但<b>误差项的相对结构不变</b>）。</p>
+</div>
+
+<!-- ============ 2 ============ -->
+<h2><span class="num">SECTION 02</span>方案 A：微米窗口（R=150 μm，0.4–1.25 μm）</h2>
+
+<h3>2.1 逐项代入（以 z = 0.5 μm 为例）</h3>
+
+<h4>① 统计项</h4>
+<div class="eq">
+  <span class="fx"><i>F</i><sub>C</sub> = π³ℏ<i>cR</i>/(360<i>z</i>³) = 31.006×3.16×10<sup>−26</sup>×1.5×10<sup>−4</sup> / (360×(5×10<sup>−7</sup>)³) = <b>3.27 pN</b></span>
+</div>
+<div class="eq">
+  <span class="fx">δ<i>F</i>/√<i>T</i> = 0.3 pN/√100 = 0.03 pN　⇒　① = 0.03/3.27 = <b>0.92%</b></span>
+</div>
+
+<h4>② 间距项</h4>
+<div class="eq">
+  <span class="fx">② = 4×0.51 nm / 500 nm = <b>0.41%</b></span>
+</div>
+
+<h4>③ patch 项</h4>
+<div class="eq">
+  <span class="fx">δ<i>V</i> = <i>z</i>·δ<i>F</i>/(2π²ε<sub>0</sub><i>RV</i><sub>AC</sub>) = 5×10<sup>−7</sup>×3×10<sup>−13</sup> / (19.74×8.854×10<sup>−12</sup>×1.5×10<sup>−4</sup>×0.2) = <b>28.6 μV</b></span>
+</div>
+<div class="eq">
+  <span class="fx">占比 = 1.022×10<sup>16</sup>×(0.0116)²×(5×10<sup>−7</sup>)² = <b>34.4%</b>　⇒　残差 = 2×1.022×10<sup>16</sup>×0.0116×2.86×10<sup>−5</sup>×(5×10<sup>−7</sup>)² = <b>0.17%</b></span>
+</div>
+<p class="small">注意：patch 力占 34%，但扣掉之后只剩 0.17%——这就是"可测即可扣"的量化含义。</p>
+
+<h4>④–⑦</h4>
+<ul class="clean">
+  <li><b>④ PFA</b> = 0.4×500/150000 = <b>0.13%</b></li>
+  <li><b>⑤ 粗糙度</b> = 3%×(1/2.37)²×(20/500)² = 0.0013%，残差取 40% → <b>0.0005%</b>（微米尺度可忽略）</li>
+  <li><b>⑥ 球半径</b> = 0.93/259.7（SEM 直径误差 / 直径）= <b>0.5%</b></li>
+  <li><b>⑦ 标定</b> = <b>1%</b>（保守）</li>
+</ul>
+
+<h4>合成</h4>
+<div class="eq">
+  <span class="fx">√(0.92² + 0.41² + 0.17² + 0.13² + 0.0005² + 0.5² + 1²) = √2.31 = <b>1.52%</b></span>
+</div>
+
+<h3>2.2 全窗口逐点结果</h3>
+<figure>
+<table>
+<thead><tr>
+  <th>z</th><th class="n">F<sub>C</sub></th><th class="n">① 统计</th><th class="n">② 间距</th><th class="n">③ patch 残差</th><th class="n">④ PFA</th><th class="n">⑥ 球径</th><th class="n">⑦ 标定</th><th class="n">合计</th>
+</tr></thead>
+<tbody>
+<tr><td>0.40 μm</td><td class="n">6.38 pN</td><td class="n">0.47%</td><td class="n">0.51%</td><td class="n">0.09%</td><td class="n">0.11%</td><td class="n">0.5%</td><td class="n">1%</td><td class="n"><span class="r">1.32%</span></td></tr>
+<tr><td>0.50 μm</td><td class="n">3.27 pN</td><td class="n">0.92%</td><td class="n">0.41%</td><td class="n">0.17%</td><td class="n">0.13%</td><td class="n">0.5%</td><td class="n">1%</td><td class="n"><span class="r">1.52%</span></td></tr>
+<tr><td>0.63 μm</td><td class="n">1.63 pN</td><td class="n">1.84%</td><td class="n">0.32%</td><td class="n">0.34%</td><td class="n">0.17%</td><td class="n">0.5%</td><td class="n">1%</td><td class="n">2.21%</td></tr>
+<tr><td>0.80 μm</td><td class="n">0.80 pN</td><td class="n">3.76%</td><td class="n">0.26%</td><td class="n">0.69%</td><td class="n">0.21%</td><td class="n">0.5%</td><td class="n">1%</td><td class="n">4.00%</td></tr>
+<tr><td>1.00 μm</td><td class="n">0.41 pN</td><td class="n"><span class="r">7.35%</span></td><td class="n">0.20%</td><td class="n">1.36%</td><td class="n">0.27%</td><td class="n">0.5%</td><td class="n">1%</td><td class="n">7.56%</td></tr>
+<tr><td>1.25 μm</td><td class="n">0.21 pN</td><td class="n"><span class="r">14.4%</span></td><td class="n">0.16%</td><td class="n">2.65%</td><td class="n">0.33%</td><td class="n">0.5%</td><td class="n">1%</td><td class="n">14.6%</td></tr>
+</tbody>
+</table>
+<figcaption><b>表 2</b>　方案 A 的精度随间距迅速恶化，因为 F<sub>C</sub>∝z⁻³ 而噪声不随 z 变。（⑤ 粗糙度残差在全区间 &lt;0.01%，未单列。）<b>甜点在 0.4–0.5 μm</b>；到 1 μm 统计项已占 7.35%，需要把积分时间从 100 s 提到约 5400 s 才能压回 1%。</figcaption>
+</figure>
+
+<div class="box">
+<h5>方案 A 的优化杠杆</h5>
+<ul class="clean" style="margin:0">
+  <li><b>延长积分</b>：统计项 ∝ 1/√T。T 从 100 s 到 1000 s，统计项降 3.2 倍。</li>
+  <li><b>改进标定</b>：1% 的标定项在甜点区已成为第二大项，需把 V<sub>AC</sub> 与 H<sub>F-V</sub> 做到 0.3% 才能让总误差进 1%。</li>
+  <li><b>球径测量</b>：0.5% 已接近 SEM 极限，可改用光学谐振/多角度拟合。</li>
+</ul>
+</div>
+
+<!-- ============ 3 ============ -->
+<h2><span class="num">SECTION 03</span>方案 B：纳米窗口（R=10 μm，20–100 nm）</h2>
+
+<h3>3.1 逐项代入（以 z = 20 nm、δd₀ = 0.5 nm 为例）</h3>
+
+<h4>① 统计项</h4>
+<div class="eq">
+  <span class="fx"><i>F</i><sub>C</sub> = π³ℏ<i>cR</i>/(360<i>z</i>³) = 31.006×3.16×10<sup>−26</sup>×1×10<sup>−5</sup> / (360×(2×10<sup>−8</sup>)³) = <b>3.4 nN</b></span>
+</div>
+<div class="eq">
+  <span class="fx">① = (0.3 pN/√10) / 3.4 nN = <b>0.003%</b>　（完全可忽略）</span>
+</div>
+
+<h4>② 间距项 —— 主项</h4>
+<div class="eq">
+  <span class="fx">② = 4×0.5 nm / 20 nm = <b>10.0%</b></span>
+</div>
+
+<h4>③ patch 项</h4>
+<div class="eq">
+  <span class="fx">δ<i>V</i> = 2×10<sup>−8</sup>×3×10<sup>−13</sup> / (19.74×8.854×10<sup>−12</sup>×1×10<sup>−5</sup>×0.2) = <b>17.2 μV</b></span>
+</div>
+<div class="eq">
+  <span class="fx">占比 = 1.022×10<sup>16</sup>×(0.0116)²×(2×10<sup>−8</sup>)² = <b>0.055%</b>　⇒　残差 = <b>0.00016%</b></span>
+</div>
+<p class="small">在 20 nm 处 patch 占比只有 0.055%（因为 ∝z²），但若 CPD 未补偿到 mV 级（0.41 V），占比会跳到约 69%——所以"先补偿再测"是硬前提。</p>
+
+<h4>④–⑦</h4>
+<ul class="clean">
+  <li><b>④ PFA</b> = 0.4×20/10000 = <b>0.08%</b></li>
+  <li><b>⑤ 粗糙度</b> = 3%×(1/2.37)²×(20/20)² = 0.53%，残差 40% → <b>0.21%</b></li>
+  <li><b>⑥ 球半径</b> = 0.2/10（SEM 误差 / 直径）= <b>2.0%</b> ← 第二大项</li>
+  <li><b>⑦ 标定</b> = <b>1%</b></li>
+</ul>
+
+<h4>合成</h4>
+<div class="eq">
+  <span class="fx">√(0.003² + 10² + 0.0002² + 0.08² + 0.21² + 2² + 1²) = √109 = <b>10.25%</b></span>
+</div>
+
+<h3>3.2 δd₀ 敏感性：方案 B 的命门</h3>
+<figure>
+<table>
+<thead><tr>
+  <th>z</th><th class="n">F<sub>C</sub></th><th class="n">② δd₀=0.1 nm</th><th class="n">0.2 nm</th><th class="n">0.5 nm</th><th class="n">其余项合成</th><th class="n">合计（0.1 / 0.2 / 0.5）</th>
+</tr></thead>
+<tbody>
+<tr><td>20 nm</td><td class="n">3.4 nN</td><td class="n">2.0%</td><td class="n">4.0%</td><td class="n"><span class="r">10.0%</span></td><td class="n">2.24%</td><td class="n"><span class="r">3.0 / 4.6 / 10.3%</span></td></tr>
+<tr><td>30 nm</td><td class="n">1.01 nN</td><td class="n">1.33%</td><td class="n">2.67%</td><td class="n">6.67%</td><td class="n">2.24%</td><td class="n">2.6 / 3.5 / 7.0%</td></tr>
+<tr><td>50 nm</td><td class="n">218 pN</td><td class="n">0.80%</td><td class="n">1.60%</td><td class="n">4.00%</td><td class="n">2.24%</td><td class="n">2.38 / 2.76 / 4.59%</td></tr>
+<tr><td>80 nm</td><td class="n">53.2 pN</td><td class="n">0.50%</td><td class="n">1.00%</td><td class="n">2.50%</td><td class="n">2.24%</td><td class="n">2.32 / 2.48 / 3.37%</td></tr>
+<tr><td>100 nm</td><td class="n">27.2 pN</td><td class="n">0.40%</td><td class="n">0.80%</td><td class="n">2.00%</td><td class="n">2.24%</td><td class="n">2.33 / 2.43 / 3.05%</td></tr>
+</tbody>
+</table>
+<figcaption><b>表 3</b>　δd₀ 敏感性。"其余项合成" = √(0.003²+0.08²+0.21²+2²+1²) ≈ 2.24%，其中球径 2% 是地板。<b>三条读数</b>：① 间距项 ∝1/z；② δd₀ 从 0.5→0.1 nm，20 nm 处精度 10.3%→3.0%；③ 球径 2% 决定了"无论怎么改都停不住在 2.2% 以下"。</figcaption>
+</figure>
+
+<h3>3.3 与模型差异的对比（判别力）</h3>
+<figure>
+<table>
+<thead><tr><th>z</th><th class="n">实验误差（δd₀=0.1 nm）</th><th class="n">Drude–Plasma 差异</th><th class="n">判别力（σ）</th></tr></thead>
+<tbody>
+<tr><td>20 nm</td><td class="n">3.0%</td><td class="n">44%</td><td class="n"><span class="r">≈15σ</span></td></tr>
+<tr><td>50 nm</td><td class="n">2.4%</td><td class="n">≈30%</td><td class="n">≈12σ</td></tr>
+<tr><td>100 nm</td><td class="n">2.3%</td><td class="n">≈12%</td><td class="n">≈5σ</td></tr>
+</tbody>
+</table>
+<figcaption><b>表 4</b>　方案 B 的价值不在"精度更高"，而在"模型差异更大"。对照方案 A：0.5 μm 处误差 1.5%、模型差异约 5% → 判别力仅 3.3σ，只能"一致"，不能判别。</figcaption>
+</figure>
+
+<!-- ============ 4 ============ -->
+<h2><span class="num">SECTION 04</span>可交互计算器</h2>
+<p class="lead">拖动参数，七项误差与合成值实时重算。预设按钮对应两个方案的典型配置。</p>
+
+<div class="calc">
+  <div class="calc-head">
+    <div class="t">误差预算计算器</div>
+    <div class="btns">
+      <button data-preset="A" class="on">方案 A（0.5 μm）</button>
+      <button data-preset="B">方案 B（50 nm）</button>
+      <button data-preset="B20">方案 B（20 nm）</button>
+    </div>
+  </div>
+  <div class="calc-body">
+    <div class="calc-ctrl">
+      <div class="sl"><label>球半径 R <b id="v_R">150 μm</b></label><input type="range" id="R" min="0" max="100" value="100"></div>
+      <div class="sl"><label>间距 z <b id="v_z">500 nm</b></label><input type="range" id="z" min="0" max="100" value="100"></div>
+      <div class="sl"><label>间距误差 δd <b id="v_dd">0.51 nm</b></label><input type="range" id="dd" min="0" max="100" value="100"></div>
+      <div class="sl"><label>积分时间 T <b id="v_T">100 s</b></label><input type="range" id="T" min="0" max="100" value="100"></div>
+      <div class="sl"><label>表面 RMS σ <b id="v_sig">1.0 nm</b></label><input type="range" id="sig" min="0" max="100" value="100"></div>
+      <div class="sl"><label>球径误差 δR/R <b id="v_dR">0.5 %</b></label><input type="range" id="dR" min="0" max="100" value="100"></div>
+      <div class="sl"><label>残余电势 V<sub>rms</sub> <b id="v_V">11.6 mV</b></label><input type="range" id="V" min="0" max="100" value="100"></div>
+      <div class="sl"><label>力噪声 δF <b id="v_dF">0.30 pN</b></label><input type="range" id="dF" min="0" max="100" value="100"></div>
+      <div class="small" style="margin-top:14px">滑块为对数刻度；括号内为当前物理值。</div>
+    </div>
+    <div class="calc-out">
+      <div class="ohead">
+        <div>
+          <div class="small" style="margin-bottom:2px">合成不确定度</div>
+          <div class="big" id="tot">1.52%</div>
+        </div>
+        <div class="cap">
+          F<sub>C</sub> = <span id="fc">3.27 pN</span><br>
+          patch 占比 = <span id="pr">34.4%</span><br>
+          电势噪声 δV = <span id="dv">29 μV</span>
+        </div>
+      </div>
+      <div id="rows"></div>
+      <div class="legend"><span><i class="sw"></i>各项贡献</span><span><i class="sw d"></i>误差传播百分比的平方（主导项）</span></div>
+      <div class="verdict" id="verdict"></div>
+    </div>
+  </div>
+</div>
+
+<div class="box">
+<h5>怎么用</h5>
+<ul class="clean" style="margin:0">
+  <li><b>找主导项</b>：红色条最长的那一项就是瓶颈。改它，总误差才动。</li>
+  <li><b>验证"多积分没用"的边界</b>：方案 B 把 T 从 10 s 拉到 10000 s，总误差几乎不变——因为统计项本来就可忽略。</li>
+  <li><b>验证 δd 的杀伤力</b>：方案 B 在 20 nm 把 δd 从 0.5 拉到 0.1 nm，总误差从 10.3% 掉到 3.0%。</li>
+  <li><b>验证球径地板</b>：把 δR/R 从 2% 改到 0.5%，方案 B 在 100 nm 处从 2.33% 降到 1.1% 左右。</li>
+</ul>
+</div>
+
+<!-- ============ 5 ============ -->
+<h2><span class="num">SECTION 05</span>两方案对比与优化杠杆</h2>
+
+<figure>
+<table>
+<thead><tr><th style="width:150px">项目</th><th>方案 A（微米窗口）</th><th>方案 B（纳米窗口）</th></tr></thead>
+<tbody>
+<tr><td>球半径 / 刚度</td><td>150 μm / 4.74 N·m⁻¹</td><td>10 μm / 4.74 N·m⁻¹（只换球，不换芯片）</td></tr>
+<tr><td>最佳窗口</td><td><b>0.4–0.5 μm</b></td><td><b>50–100 nm</b>（若 δd₀＜0.2 nm，20 nm 也可）</td></tr>
+<tr><td>合成精度</td><td><b>1.3–1.5%</b></td><td>2.3–3.0%（乐观）/ 3–10%（δd₀≥0.2 nm）</td></tr>
+<tr><td>主导项</td><td>① 统计（∝z³）+ ⑦ 标定 1%</td><td>② 间距标定（∝1/z）+ ⑥ 球径 2%</td></tr>
+<tr><td>可忽略项</td><td>⑤ 粗糙度（微米尺度 10⁻³%）、③ patch 残差（0.2%）</td><td>① 统计（10⁻³%）、③ patch 残差（10⁻⁴%）</td></tr>
+<tr><td>优化杠杆</td><td>T×10（统计降 3.2 倍）；标定 1%→0.3%</td><td>δd₀ 0.5→0.1 nm（收益 3 倍）；δR/R 2%→0.5%</td></tr>
+<tr><td>不可约项</td><td>模型差异 ≈5%</td><td>模型差异 12–44%（<b>这就是目的</b>）</td></tr>
+<tr><td>判别力</td><td>≈3σ（只能"一致"）</td><td>5–15σ（可判别 Drude/Plasma）</td></tr>
+</tbody>
+</table>
+<figcaption><b>表 5</b>　两方案的误差结构对比。<b>核心差异</b>：A 是"精度高但物理浅"，B 是"精度略低但物理深"；A 的瓶颈可以靠时间换，B 的瓶颈只能靠计量换。</figcaption>
+</figure>
+
+<h3>5.1 两个反直觉结论</h3>
+<ol class="clean">
+  <li><b>方案 A 的窗口要比"0.4–1 μm"再往下收。</b>1 μm 处统计项已占 7.35%（F<sub>C</sub>∝1/z³），真正的甜点是 0.4–0.5 μm；1 μm 属于"可做但慢"（需 1.5 h/点）。</li>
+  <li><b>方案 B 不该硬上 20 nm。</b>若绝对间距只能定到 0.5 nm，20 nm 处误差 10%，反而不如 50–100 nm 的 2.3–4.6%；而 100 nm 处模型差异仍有约 12%，判别力 5σ，已经够用。</li>
+</ol>
+
+<h3>5.2 与旧方法放在同一把尺子上</h3>
+<figure>
+<table class="small">
+<thead><tr><th style="width:170px">实验</th><th>主导误差</th><th class="n" style="width:150px">宣称精度</th><th class="n" style="width:160px">系统项合计</th></tr></thead>
+<tbody>
+<tr><td>D1（qPlus，20 nm）</td><td>间距 0.7 nm（14%）+ 球面粗糙度未测 + patch 未评估</td><td class="n">统计 4.2%</td><td class="n">10–47%</td></tr>
+<tr><td>E1（纳米膜，100 nm）</td><td>间距 1 nm（4%）+ 膜振动 10 nm + 球面未成像</td><td class="n">χ²<sub>red</sub>=1.07</td><td class="n">未知（E2 认为两模型都不符）</td></tr>
+<tr><td><b>方案 A（0.5 μm）</b></td><td>统计 0.9% + 标定 1%</td><td class="n"><b>1.5%</b></td><td class="n">≈1.2%</td></tr>
+<tr><td><b>方案 B（50–100 nm）</b></td><td>间距标定 + 球径 2%</td><td class="n"><b>2.3–4.6%</b></td><td class="n">≈2.2%</td></tr>
+</tbody>
+</table>
+<figcaption><b>表 6</b>　同一把尺子下的对照。方案 A/B 的精度数字并不比 D1 的 4.2% 好多少，差别在于：<b>它们的误差项可核查、可独立复算，而 D1 的 4.2% 只是统计项</b>，系统项加起来是 10–47%。</figcaption>
+</figure>
+
+<!-- ============ 6 ============ -->
+<h2><span class="num">SECTION 06</span>公式与常数附录</h2>
+
+<h3>A. 基本关系</h3>
+<ul class="clean">
+  <li>理想导体平板压强：<i>P</i> = −π²ℏ<i>c</i>/(240<i>d</i>⁴)，能量密度 <i>E</i> = π²ℏ<i>c</i>/(720<i>d</i>³)</li>
+  <li>球—板（PFA）：<i>F</i><sub>C</sub> = 2π<i>R</i>·<i>E</i> = π³ℏ<i>cR</i>/(360<i>z</i>³)</li>
+  <li>间距敏感度：δ<i>P</i>/<i>P</i> = 4δ<i>d</i>/<i>d</i></li>
+  <li>patch/Casimir 比：ε<sub>0</sub><i>V</i>²<i>z</i>²/(2×(π²ℏ<i>c</i>/720)) ≈ 1.022×10¹⁶·<i>V</i>²<i>z</i>²</li>
+  <li>KPFM 电势噪声：δ<i>V</i> = <i>z</i>·δ<i>F</i>/(2π²ε<sub>0</sub><i>RV</i><sub>AC</sub>)</li>
+  <li>热噪声极限：δ<i>F</i> = √(2<i>k</i><sub>0</sub><i>k</i><sub>B</sub><i>T</i>/(π<i>f</i><sub>0</sub><i>Q</i>))</li>
+</ul>
+
+<h3>B. 常数</h3>
+<figure>
+<table class="small">
+<thead><tr><th style="width:150px">量</th><th class="n" style="width:170px">取值</th><th>用途</th></tr></thead>
+<tbody>
+<tr><td>ℏ<i>c</i></td><td class="n">3.16×10⁻²⁶ J·m</td><td>所有 Casimir 公式</td></tr>
+<tr><td>π²ℏ<i>c</i>/720</td><td class="n">4.332×10⁻²⁸ J·m</td><td>能量密度系数</td></tr>
+<tr><td>π³ℏ<i>c</i></td><td class="n">9.798×10⁻²⁵ J·m</td><td>球—板力系数</td></tr>
+<tr><td>ε<sub>0</sub></td><td class="n">8.854×10⁻¹² F/m</td><td>静电与 patch</td></tr>
+<tr><td><i>k</i><sub>B</sub></td><td class="n">1.381×10⁻²³ J/K</td><td>热噪声</td></tr>
+<tr><td>ħ<i>c</i>/<i>k</i><sub>B</sub><i>T</i>（77.8 K / 300 K）</td><td class="n">29.4 μm / 7.63 μm</td><td>热波长</td></tr>
+</tbody>
+</table>
+<figcaption><b>表 7</b>　常数与组合量。</figcaption>
+</figure>
+
+<h3>C. 参数来源</h3>
+<figure>
+<table class="small">
+<thead><tr><th style="width:190px">参数</th><th class="n" style="width:150px">取值</th><th>来源 / 说明</th></tr></thead>
+<tbody>
+<tr><td>k<sub>0</sub>（探针刚度）</td><td class="n">4.74 N/m</td><td>赵海燕论文（电容检测探针设计值）</td></tr>
+<tr><td>δF（力噪声）</td><td class="n">0.3 pN/√Hz</td><td>由实测 20 μV/√Hz 与 H<sub>F-V</sub> 反算（保守）；设计热噪声 41–150 fN</td></tr>
+<tr><td>V<sub>AC</sub></td><td class="n">0.2 V</td><td>赵海燕实验参数（高阶模态用 0.5 V）</td></tr>
+<tr><td>V<sub>rms</sub>（patch）</td><td class="n">11.6 mV</td><td>E1 的 Drude 拟合值（χ²<sub>red</sub>=1.07）</td></tr>
+<tr><td>δd<sub>eff</sub></td><td class="n">0.51 nm</td><td>干涉 0.1 nm（D4，3σ）+ 零点定义 0.5 nm</td></tr>
+<tr><td>σ（表面 RMS）</td><td class="n">1 nm</td><td>表面制备目标（1–2 μm² 面积上的 Rq）</td></tr>
+<tr><td>D1 粗糙度标定点</td><td class="n">2.37 nm @20 nm → 3%</td><td>D1 第 4.2 节（Drude 模型）</td></tr>
+<tr><td>球径误差</td><td class="n">0.5% / 2%</td><td>150 μm：SEM 内/外切球（D1 的 0.36%）；10 μm：保守估计</td></tr>
+</tbody>
+</table>
+<figcaption><b>表 8</b>　参数来源。凡标注"保守估计"的，均可在计算器中调整。</figcaption>
+</figure>
+
+<footer>
+  <p><b>关于本文。</b>这是"卡西米尔力测量精度分析"的配套计算附录，聚焦两套 MEMS-KPFM 方案的误差预算。物理模型与文献值来自：E1（Garcia-Sanchez 等, PRL 109, 027202, 2012）、D1（秦莉兰, 华中科技大学硕士论文, 2015）、臧凌晨（2025）、赵海燕（2026）、A1-05（Shi 等, PRD 110, 122007, 2024）、D3/D4（曹前进 2017、雷祥洲 2019）。</p>
+  <p><b>关于计算。</b>所有"本文计算"的数字均可在第 01 节的公式与附录 C 的参数下复算；计算器与正文使用同一套公式。理想导体基准与真实金属 Lifshitz 修正的差别只影响绝对值，不影响误差项的相对结构。</p>
+  <p><b>关于边界。</b>七项之外还有三项未计入：模型差异（5–44%，单列为判别力）、温度对热 Casimir 项的影响（1–2 μm 处约 10%，但对温度不敏感）、以及 patch 空间分布模型的不确定度（V<sub>rms</sub> 是否随 z 变化）。它们是"理论不确定度"，与实验误差分开管理。</p>
+  <p style="color:#9aa1ab;margin-top:14px">单文件离线文档 · 无外部依赖 · 黑白灰红四色 · 2026</p>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  const EC=4.332e-28, EPS0=8.8541878128e-12, HBC=3.16e-26;
+  const $=id=>document.getElementById(id);
+  // 对数/线性映射
+  const LOG={R:[0.25e-6,150e-6], z:[20e-9,2e-6], dd:[0.03e-9,2e-9], T:[1,10000], V:[1e-4,2e-2], dF:[4.1e-14,1e-12]};
+  const LIN={sig:[0.2,5], dR:[0.2,5]};
+  const state={};
+  function map(id,t){
+    if(LOG[id]){const [a,b]=LOG[id];return Math.pow(10,Math.log10(a)+t*(Math.log10(b)-Math.log10(a)));}
+    const [a,b]=LIN[id];return a+t*(b-a);
+  }
+  function unmap(id,v){
+    if(LOG[id]){const [a,b]=LOG[id];return (Math.log10(v)-Math.log10(a))/(Math.log10(b)-Math.log10(a));}
+    const [a,b]=LIN[id];return (v-a)/(b-a);
+  }
+  function fmtLen(v){
+    if(v>=1e-6) return parseFloat((v/1e-6).toPrecision(3))+' μm';
+    if(v>=5e-11) return parseFloat((v/1e-9).toPrecision(3))+' nm';
+    return parseFloat((v/1e-12).toPrecision(3))+' pm';
+  }
+  function fmtF(v){
+    if(v>=1e-6) return parseFloat((v/1e-6).toPrecision(3))+' μN';
+    if(v>=1e-9) return parseFloat((v/1e-9).toPrecision(3))+' nN';
+    if(v>=1e-12) return parseFloat((v/1e-12).toPrecision(3))+' pN';
+    return parseFloat((v/1e-15).toPrecision(3))+' fN';
+  }
+  function read(){
+    const o={};
+    ['R','z','dd','T','sig','dR','V','dF'].forEach(id=>{
+      const t=parseInt($(id).value,10)/100;
+      o[id]=map(id,t);
+    });
+    return o;
+  }
+  function calc(p){
+    const Fc=Math.PI**3*HBC*p.R/(360*Math.pow(p.z,3));
+    const stat=(p.dF/Math.sqrt(p.T))/Fc*100;
+    const sp=4*p.dd/p.z*100;
+    const ratio=EPS0*p.V*p.V*p.z*p.z/(2*EC);
+    const dV=p.z*p.dF/(2*Math.PI**2*EPS0*p.R*0.2);
+    const pres=2*1.022e16*p.V*dV*p.z*p.z*100;
+    const pfa=0.4*p.z/p.R*100;
+    const rough=3*Math.pow(p.sig/2.37,2)*Math.pow(20e-9/p.z,2);
+    const rres=0.4*rough;
+    const ball=p.dR;
+    const cal=1.0;
+    const items=[
+      {k:'stat', n:'① 统计（力噪声）', v:stat},
+      {k:'sp',   n:'② 间距标定',    v:sp},
+      {k:'pres', n:'③ patch 残差',  v:pres, note:'patch 占比 '+(ratio*100).toFixed(2)+'%'},
+      {k:'pfa',  n:'④ PFA 近似',    v:pfa},
+      {k:'rres', n:'⑤ 粗糙度残差',  v:rres, note:'修正量 '+(rough<0.01?rough.toExponential(1):rough.toFixed(2))+'%'},
+      {k:'ball', n:'⑥ 球半径',      v:ball},
+      {k:'cal',  n:'⑦ 标定',        v:cal}
+    ];
+    const tot=Math.sqrt(items.reduce((s,i)=>s+i.v*i.v,0));
+    return {Fc,items,tot,ratio:ratio*100,dV,dV_uV:dV*1e6};
+  }
+  function render(){
+    const p=read();
+    const r=calc(p);
+    // 数值标签
+    $('v_R').textContent=fmtLen(p.R);
+    $('v_z').textContent=fmtLen(p.z);
+    $('v_dd').textContent=fmtLen(p.dd);
+    $('v_T').textContent=(p.T>=100?Math.round(p.T):p.T.toPrecision(2))+' s';
+    $('v_sig').textContent=p.sig.toFixed(2)+' nm';
+    $('v_dR').textContent=p.dR.toFixed(1)+' %';
+    $('v_V').textContent=(p.V*1000).toPrecision(3)+' mV';
+    $('v_dF').textContent=fmtF(p.dF).replace('√Hz','')+'/√Hz';
+    // 输出
+    $('tot').textContent=r.tot.toFixed(2)+'%';
+    $('fc').textContent=fmtF(r.Fc);
+    $('pr').textContent=r.ratio.toFixed(r.ratio<0.1?3:2)+'%';
+    $('dv').textContent=r.dV_uV.toFixed(1)+' μV';
+    // 主导项
+    let dom=null;
+    r.items.forEach(i=>{if(!dom||i.v>dom.v)dom=i;});
+    // 条形：按 sqrt(贡献) 归一化，让各项可见
+    const maxv=Math.sqrt(dom.v);
+    let html='';
+    r.items.forEach(i=>{
+      const w=Math.max(0.6,100*Math.sqrt(i.v)/maxv);
+      const isDom=(i===dom && dom.v>1);
+      html+=`<div class="row"><div class="nm">${i.n}</div>`
+          + `<div class="track"><div class="seg${isDom?' dom':''}" style="width:${w}%"></div></div>`
+          + `<div class="vv">${i.v>=0.01?i.v.toFixed(i.v<1?3:2):i.v.toExponential(1)}%</div></div>`;
+      if(i.note){html+=`<div style="margin-left:122px;font-size:11.5px;color:#9aa1ab;line-height:1.4">${i.note}</div>`;}
+    });
+    $('rows').innerHTML=html;
+    // 判读
+    let v='';
+    if(dom.k==='sp'){
+      v=`<b>瓶颈是间距标定。</b>δd=${fmtLen(p.dd)} 在 z=${fmtLen(p.z)} 处被放大 4 倍。把 δd 减半，总误差降到约 ${(Math.sqrt(r.tot*r.tot-dom.v*dom.v+Math.pow(dom.v/2,2))).toFixed(2)}%；延长积分对总误差几乎无影响。`;
+    } else if(dom.k==='stat'){
+      v=`<b>瓶颈是统计噪声。</b>F<sub>C</sub>=${fmtF(r.Fc)}，而 ${fmtF(p.dF)}/√Hz 在 ${Math.round(p.T)} s 内给出 ${fmtF(p.dF/Math.sqrt(p.T))}。把 T 乘 10，统计项降 3.2 倍，总误差降到约 ${(Math.sqrt(r.tot*r.tot-dom.v*dom.v+Math.pow(dom.v/3.16,2))).toFixed(2)}%。`;
+    } else if(dom.k==='ball'){
+      v=`<b>瓶颈是球半径。</b>δR/R=${p.dR.toFixed(1)}% 直接进入总误差。改用多角度 SEM + 边缘拟合把 δR/R 降到 0.5%，总误差约 ${(Math.sqrt(r.tot*r.tot-dom.v*dom.v+0.25)).toFixed(2)}%。`;
+    } else if(dom.k==='pres'){
+      v=`<b>瓶颈是 patch 扣除残差。</b>patch 力占比 ${r.ratio.toFixed(2)}%，扣除后仍剩 ${dom.v.toFixed(2)}%。需要把 V<sub>rms</sub> 测得更准（当前 ${(p.V*1000).toFixed(2)} mV，电势噪声 ${r.dV_uV.toFixed(1)} μV），或缩小间距（patch 占比 ∝z²）。`;
+    } else if(dom.k==='cal'){
+      v=`<b>瓶颈是标定项。</b>V<sub>AC</sub>、H<sub>F-V</sub> 与 PLL 增益的 1% 已成为最大项；把它压到 0.3%，总误差约 ${(Math.sqrt(r.tot*r.tot-dom.v*dom.v+0.09)).toFixed(2)}%。此时其余项才是真正的限制。`;
+    } else {
+      v=`<b>瓶颈是 ${dom.n.replace(/^[①-⑦]\s*/,'')}。</b>当前贡献 ${dom.v.toFixed(2)}%，占总误差的 ${(100*dom.v*dom.v/(r.tot*r.tot)).toFixed(0)}%。`;
+    }
+    $('verdict').innerHTML=v;
+  }
+  function preset(name){
+    const cfg={
+      A:{R:150e-6,z:0.5e-6,dd:0.51e-9,T:100,sig:1,dR:0.5,V:0.0116,dF:0.3e-12},
+      B:{R:10e-6,z:50e-9,dd:0.1e-9,T:10,sig:1,dR:2,V:0.0116,dF:0.3e-12},
+      B20:{R:10e-6,z:20e-9,dd:0.5e-9,T:10,sig:1,dR:2,V:0.0116,dF:0.3e-12}
+    }[name];
+    Object.keys(cfg).forEach(k=>{$(k).value=Math.round(unmap(k,cfg[k])*100);});
+    document.querySelectorAll('.calc-head button').forEach(b=>b.classList.toggle('on',b.dataset.preset===name));
+    render();
+  }
+  ['R','z','dd','T','sig','dR','V','dF'].forEach(id=>$(id).addEventListener('input',()=>{
+    document.querySelectorAll('.calc-head button').forEach(b=>b.classList.remove('on'));
+    render();
+  }));
+  document.querySelectorAll('.calc-head button').forEach(b=>b.addEventListener('click',()=>preset(b.dataset.preset)));
+  preset('A');
+})();
+</script>
+</body>
+</html>
